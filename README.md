@@ -26,6 +26,18 @@ venire uccisi dal protagonista (es. sparando)
 - Il progetto è organizzato in più file
 - Ad ogni classe corrispondono due file: `NomeClasse.cpp` e `NomeClasse.hpp`
 
+## How to run
+- Linux
+1. Installa la libreria `ncurses` con la seguente linea di codice:
+    `$ sudo apt-get install libncurses5-dev libncursesw5-dev`
+2. Vai nella directory
+    `cd ..`
+3. Compilazione
+    `g++ HelloWorld.cpp -lncurses -o HelloWorld`
+4. Esecuzione
+    `./HelloWorld`
+
+
 ## Valutazione
 - Il progetto è parte integrante dell’esame ed è **obbligatorio**
 - Ha un voto massimo di 8 punti che si sommano al voto dello scritto (max 24)
