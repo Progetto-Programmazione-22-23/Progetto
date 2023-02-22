@@ -20,6 +20,12 @@ colpendo o entrando a contatto con il protagonista
 venire uccisi dal protagonista (es. sparando)
 - Game over quando la vita scende a 0
 
+## Impostazione del progetto
+- Il progetto deve essere realizzato usando le classi
+- Le stanze e gli elementi in una stanza devono essere gestiti tramite strutture dati dinamiche (prevedendo, quindi, inserimento e rimozione)
+- Il progetto è organizzato in più file
+- Ad ogni classe corrispondono due file: ՝NomeClasse.cpp՝ e ՝NomeClasse.hpp՝
+
 ## Valutazione
 - Il progetto è parte integrante dell’esame ed è **obbligatorio**
 - Ha un voto massimo di 8 punti che si sommano al voto dello scritto (max 24)
