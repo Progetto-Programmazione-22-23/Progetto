@@ -21,10 +21,10 @@ venire uccisi dal protagonista (es. sparando)
 - Game over quando la vita scende a 0
 
 ## ESEMPIO DIVISIONE DEL LAVORO ALL’INTERNO DI UN GRUPPO
-- Componente #1: si occupa delle mappe
-- Componente #2: implementa personaggi e nemici
-- Componente #3: si occupa della interazione con la libreria grafica
-- Componente #4: si fa carico dei potenziamenti, del mercato e del salvataggio di stato
+- Chris: si occupa delle mappe
+- Riki: implementa personaggi e nemici
+- Albi: si occupa della interazione con la libreria grafica
+- Ruggia: si fa carico dei potenziamenti, del mercato e del salvataggio di stato
 
 ## Impostazione del progetto
 - Il progetto deve essere realizzato usando le classi
