@@ -31,7 +31,7 @@ venire uccisi dal protagonista (es. sparando)
 1. Installa la libreria `ncurses` con la seguente linea di codice:
     `$ sudo apt-get install libncurses5-dev libncursesw5-dev`
 2. Vai nella directory
-    `cd ..`
+    `cd ../`
 3. Compilazione
     `g++ HelloWorld.cpp -lncurses -o HelloWorld`
 4. Esecuzione
