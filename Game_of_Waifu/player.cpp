@@ -55,16 +55,16 @@ void Player::mvright(){
 int Player::getmv(){
     int choice = wgetch(curwin);
     switch (choice){
-        case KEY_UP:
+        case 'w':
             mvup();
             break;
-        case KEY_DOWN:
+        case 's':
             mvdown();
             break;
-        case KEY_LEFT:
+        case 'a':
             mvleft();
             break;
-        case KEY_RIGHT:
+        case 'd':
             mvright();
             break;
         default:
