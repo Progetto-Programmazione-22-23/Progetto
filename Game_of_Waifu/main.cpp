@@ -15,7 +15,7 @@ void play(){
         wrefresh(playwin);
         keypad(playwin, true);
 
-        Player * p = new Player(playwin, 1, 1, '@');
+        Player * p = new Player(playwin, yMax/2+6, 1, '@');
     
         do {                                     // do while perchè deve stampare il personaggio prima del controllo
             p->display();

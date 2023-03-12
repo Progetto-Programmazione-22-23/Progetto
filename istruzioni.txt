@@ -1,7 +1,7 @@
 # inizia a giocare: 
 - per iniziare a giocare da terminale, navigare fino alla cartella contenente il progetto e digitare "make"!
 - puoi navigare nel menu grazie alle frecce direzionali
-    -premendo START, il gioco ha inizio. Puoi muoverti con i tasti 'wasd'
+    -premendo START, il gioco ha inizio. Puoi muoverti con i tasti 'wasd' e puoi saltare a sinistra (con 'q') o a destra (con 'e')!
 
 # come uscire:
 - una volta fatto partire il programma, ovunque ti trovi, se hai bisogno di chiudere il gioco ti basterà premere ctrl+C (utile in fase di test nel caso si bloccasse qualcosa).

@@ -14,6 +14,8 @@ public:
     void mvdown();
     void mvleft();
     void mvright();
+    void jumpdx();
+    void jumpsx();
     int getmv();
     void display();
 
@@ -52,6 +54,63 @@ void Player::mvright(){
     if (xLoc > xMax-2) xLoc = xMax-2;
 }
 
+// void Player::jump(){
+//     for (int i = 0; i < 2; i++){
+//         mvwaddch(curwin, yLoc, xLoc, ' ');
+//         yLoc--;
+//         display();
+
+//     }
+// }
+
+void Player::jumpsx() {
+    // Salta in alto
+    for(int i=0; i<3; i++) {
+        mvwaddch(curwin, yLoc, xLoc, ' ');
+        yLoc--;
+        xLoc--;
+        if (yLoc < 1) yLoc = 1;
+        if (xLoc < 1) xLoc = 1;
+        display();
+        wrefresh(curwin);
+        napms(150);
+    }
+    // Scende al suolo
+    for(int i=0; i<3; i++) {
+        mvwaddch(curwin, yLoc, xLoc, ' ');
+        yLoc++;
+        xLoc--;
+        if (xLoc < 1) xLoc = 1;
+        display();
+        wrefresh(curwin);
+        napms(100);
+    }
+}
+
+void Player::jumpdx() {
+    // Salta in alto
+    for(int i=0; i<3; i++) {
+        mvwaddch(curwin, yLoc, xLoc, ' ');
+        yLoc--;
+        xLoc++;
+        if (yLoc < 1) yLoc = 1;
+        if (xLoc > xMax-2) xLoc = xMax-2;
+        display();
+        wrefresh(curwin);
+        napms(100);
+    }
+    // Scende al suolo
+    for(int i=0; i<3; i++) {
+        mvwaddch(curwin, yLoc, xLoc, ' ');
+        yLoc++;
+        xLoc++;
+        if (xLoc > xMax-2) xLoc = xMax-2;
+        display();
+        wrefresh(curwin);
+        napms(150);
+    }
+}
+
 int Player::getmv(){
     int choice = wgetch(curwin);
     switch (choice){
@@ -67,6 +126,12 @@ int Player::getmv(){
         case 'd':
             mvright();
             break;
+        case 'q':
+            jumpsx();
+            break;
+        case 'e':
+            jumpdx();
+            break;
         default:
             break;
     }
@@ -76,3 +141,4 @@ int Player::getmv(){
 void Player::display(){
     mvwaddch(curwin, yLoc, xLoc, character);
 }
+
