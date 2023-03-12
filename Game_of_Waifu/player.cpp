@@ -10,14 +10,15 @@ protected:
 public:
     Player (WINDOW * win, int y, int x, char  c);
 
-    void mvup();
-    void mvdown();
+    // void mvup();
+    // void mvdown();
     void mvleft();
     void mvright();
     void jumpdx();
     void jumpsx();
     int getmv();
     void display();
+    //void gravity();
 
 };
 
@@ -30,42 +31,36 @@ Player::Player(WINDOW * win, int y, int x, char c) {
     character = c;
 }
 
-void Player::mvup(){
-    mvwaddch(curwin, yLoc, xLoc, ' ');
-    yLoc--;
-    if (yLoc < 1) yLoc = 1;
-}
+// void Player::mvup(){
+//     mvwaddch(curwin, yLoc, xLoc, ' ');
+//     yLoc--;
+//     if (yLoc < 1) yLoc = 1;
+// }
 
-void Player::mvdown(){
-    mvwaddch(curwin, yLoc, xLoc, ' ');
-    yLoc++;
-    if (yLoc > yMax-2) yLoc = yMax-2;
-}
+// void Player::mvdown(){
+//     mvwaddch(curwin, yLoc, xLoc, ' ');
+//     yLoc++;
+//     if (yLoc > yMax-2) yLoc = yMax-2;
+// }
 
 void Player::mvleft(){
     mvwaddch(curwin, yLoc, xLoc, ' ');
+    this->character = '<';
     xLoc--;
     if(xLoc < 1) xLoc = 1;
 }
 
 void Player::mvright(){
     mvwaddch(curwin, yLoc, xLoc, ' ');
+    this->character = '>';
     xLoc++;
     if (xLoc > xMax-2) xLoc = xMax-2;
 }
 
-// void Player::jump(){
-//     for (int i = 0; i < 2; i++){
-//         mvwaddch(curwin, yLoc, xLoc, ' ');
-//         yLoc--;
-//         display();
-
-//     }
-// }
-
 void Player::jumpsx() {
+    this->character = '^';
     // Salta in alto
-    for(int i=0; i<3; i++) {
+    for(int i = 0; i < 4; i++){
         mvwaddch(curwin, yLoc, xLoc, ' ');
         yLoc--;
         xLoc--;
@@ -73,23 +68,36 @@ void Player::jumpsx() {
         if (xLoc < 1) xLoc = 1;
         display();
         wrefresh(curwin);
-        napms(150);
+        napms(50);              // millisecondi di stop
+    }
+    // Verso sinistra
+    this->character = '<';
+    for(int i = 0; i < 4; i++){
+        mvwaddch(curwin, yLoc, xLoc, ' ');
+        xLoc--;
+        if (xLoc < 1) xLoc = 1;
+        display();
+        wrefresh(curwin);
+        napms(50);
     }
     // Scende al suolo
-    for(int i=0; i<3; i++) {
+    this->character = 'v';
+    for(int i = 0; i < 4; i++){
         mvwaddch(curwin, yLoc, xLoc, ' ');
         yLoc++;
         xLoc--;
         if (xLoc < 1) xLoc = 1;
         display();
         wrefresh(curwin);
-        napms(100);
+        napms(50);
     }
+    this->character = '<';
 }
 
 void Player::jumpdx() {
+    this->character = '^';
     // Salta in alto
-    for(int i=0; i<3; i++) {
+    for(int i = 0; i < 4; i++){
         mvwaddch(curwin, yLoc, xLoc, ' ');
         yLoc--;
         xLoc++;
@@ -97,29 +105,41 @@ void Player::jumpdx() {
         if (xLoc > xMax-2) xLoc = xMax-2;
         display();
         wrefresh(curwin);
-        napms(100);
+        napms(50);
+    }
+    // Verso destra
+    this->character = '>';
+    for(int i = 0; i < 4; i++){
+        mvwaddch(curwin, yLoc, xLoc, ' ');
+        xLoc++;
+        if (xLoc > xMax-2) xLoc = xMax-2;
+        display();
+        wrefresh(curwin);
+        napms(50);
     }
     // Scende al suolo
-    for(int i=0; i<3; i++) {
+    this->character = 'v';
+    for(int i = 0; i < 4; i++){
         mvwaddch(curwin, yLoc, xLoc, ' ');
         yLoc++;
         xLoc++;
         if (xLoc > xMax-2) xLoc = xMax-2;
         display();
         wrefresh(curwin);
-        napms(150);
+        napms(50);
     }
+    this->character = '>';
 }
 
 int Player::getmv(){
     int choice = wgetch(curwin);
     switch (choice){
-        case 'w':
-            mvup();
-            break;
-        case 's':
-            mvdown();
-            break;
+        // case 'w':
+        //     mvup();
+        //     break;
+        // case 's':
+        //     mvdown();
+        //     break;
         case 'a':
             mvleft();
             break;
@@ -137,6 +157,14 @@ int Player::getmv(){
     }
     return choice;
 }
+
+// void Player::gravity(){
+//     while(1){
+//         if (yLoc == '_'){
+//             yLoc--;
+//         }
+//     }
+// }
 
 void Player::display(){
     mvwaddch(curwin, yLoc, xLoc, character);
