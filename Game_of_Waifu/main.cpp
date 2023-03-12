@@ -5,7 +5,7 @@
 #include "player.cpp"
 using namespace std;
 
-void play(){
+void start(){
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
 
@@ -74,7 +74,7 @@ int main(int argc, char ** argv){
 
     if (highlights == 0){
         clear();
-        play();
+        start();
     }
     // printw("hai scelto: %s", scelte[highlights].c_str());
 
