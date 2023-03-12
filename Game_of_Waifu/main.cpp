@@ -11,7 +11,7 @@ void play(){
 
     WINDOW * playwin = newwin(20, 60, yMax/2-10, 10);
         box (playwin, 0, 0);
-        mvwprintw(stdscr, 1, 1, "         Move: a/d      Jump sx: q       Jump dx: e       Esc: ctrl+C");
+        mvwprintw(stdscr, 1, 1, "        Move: a/d    Jump: w    Jump sx: q    Jump dx: e    Esc: ctrl+C");
         refresh();
         wrefresh(playwin);
         keypad(playwin, true);
