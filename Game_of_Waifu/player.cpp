@@ -14,6 +14,7 @@ public:
     // void mvdown();
     void mvleft();
     void mvright();
+    void jump();
     void jumpdx();
     void jumpsx();
     int getmv();
@@ -57,7 +58,29 @@ void Player::mvright(){
     if (xLoc > xMax-2) xLoc = xMax-2;
 }
 
-void Player::jumpsx() {
+void Player::jump(){
+    this->character = '^';
+    // Salta in alto
+    for(int i = 0; i < 4; i++){
+        mvwaddch(curwin, yLoc, xLoc, ' ');
+        yLoc--;
+        if (yLoc < 1) yLoc = 1;
+        display();
+        wrefresh(curwin);
+        napms(75);              // millisecondi di stop
+    }
+    this->character = 'v';
+    for(int i = 0; i < 4; i++){
+        mvwaddch(curwin, yLoc, xLoc, ' ');
+        yLoc++;
+        display();
+        wrefresh(curwin);
+        napms(75);
+    }
+    this->character = '>';
+}
+
+void Player::jumpsx(){
     this->character = '^';
     // Salta in alto
     for(int i = 0; i < 4; i++){
@@ -68,7 +91,7 @@ void Player::jumpsx() {
         if (xLoc < 1) xLoc = 1;
         display();
         wrefresh(curwin);
-        napms(50);              // millisecondi di stop
+        napms(50);
     }
     // Verso sinistra
     this->character = '<';
@@ -94,7 +117,7 @@ void Player::jumpsx() {
     this->character = '<';
 }
 
-void Player::jumpdx() {
+void Player::jumpdx(){
     this->character = '^';
     // Salta in alto
     for(int i = 0; i < 4; i++){
@@ -145,6 +168,9 @@ int Player::getmv(){
             break;
         case 'd':
             mvright();
+            break;
+        case 'w':
+            jump();
             break;
         case 'q':
             jumpsx();
