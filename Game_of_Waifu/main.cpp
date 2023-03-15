@@ -9,19 +9,24 @@ void start(){
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
 
-    // WINDOW * playwin = newwin(20, 60, yMax/2-10, 10);
-    //     box (playwin, 0, 0);
-    mvwprintw(stdscr, 1, 1, "        Move: a/d    Jump: w    Jump sx: q    Jump dx: e    Esc: ctrl+C");
-    //     refresh();
-    //     wrefresh(playwin);
-    //     keypad(playwin, true);
+    WINDOW * playwin = newwin(yMax-(yMax/10), xMax-(xMax/10), yMax/20, xMax/20);
+    box (playwin, 0, 0);
+    // mvwprintw(playwin, 2, 2, "        Move: a/d    Jump: w    Jump sx: q    Jump dx: e    Esc: ctrl+C");
+    refresh();
+    wrefresh(playwin);
+    keypad(playwin, true);
 
-        Player * p = new Player(stdscr, yMax-2, 1, '>');
+    int pyMax, pxMax;
+    getmaxyx(playwin, pyMax, pxMax);
+    Player * p = new Player(playwin, pyMax-2, 1, '>');
+    mvwprintw(stdscr, (yMax/20)-1 , 1, "        Move: a/d    Jump: w    Jump sx: q    Jump dx: e    Esc: ctrl+C");
+    refresh();
+    wrefresh(playwin);
     
-        do {                                     // do while perchè deve stampare il personaggio prima del controllo
-            p->display();
-            wrefresh(stdscr);
-        } while (p->getmv() != 'x');
+    do {                                     // do while perchè deve stampare il personaggio prima del controllo
+        p->display();
+        wrefresh(playwin);
+    } while (p->getmv() != 'x');
 
 }
 
