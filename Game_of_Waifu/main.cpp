@@ -5,7 +5,7 @@
 #include "player.cpp"
 using namespace std;
 
-void start(){
+void start(game g=new_game){
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
 
@@ -18,7 +18,13 @@ void start(){
 
     int pyMax, pxMax;
     getmaxyx(playwin, pyMax, pxMax);
-    Player * p = new Player(playwin, pyMax-2, 1, '>');
+
+    if(g.nuovo) {
+        g.player_pos[0] = 2;
+        g.player_pos[1] = pyMax-2;
+    }
+
+    Player * p = new Player(playwin, g.player_pos[1], g.player_pos[0], '>');
     mvwprintw(stdscr, (yMax/20)-1 , 1, "        Move: a/d    Jump: w    Jump sx: q    Jump dx: e    Esc: ctrl+C");
     refresh();
     wrefresh(playwin);
@@ -47,7 +53,7 @@ int main(int argc, char ** argv){
     wrefresh(menuwin);
     keypad(menuwin, true);         // to get key input (up, down, left, right);
 
-    string scelte[4] = {"start", "options", "info", "credits"};
+    string scelte[4] = {"start", "continue", "options", "info"};
     int choice;
     int highlights = 0;
 
@@ -80,6 +86,10 @@ int main(int argc, char ** argv){
     if (highlights == 0){
         clear();
         start();
+    }
+    else if(highlights == 1){
+        clear();
+        start(get_last_game());
     }
     // printw("hai scelto: %s", scelte[highlights].c_str());
 

@@ -1,5 +1,5 @@
 #include <ncurses.h>
-
+#include "save.cpp"
 
 class Player {
 protected:
@@ -194,5 +194,6 @@ int Player::getmv(){
 
 void Player::display(){
     mvwaddch(curwin, yLoc, xLoc, character);
+    save_player_pos(xLoc,yLoc);
 }
 
