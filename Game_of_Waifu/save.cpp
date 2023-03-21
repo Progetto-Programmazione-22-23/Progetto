@@ -12,7 +12,16 @@ game get_last_game() {
     game last;
 
     //WIP
-    last = new_game;
+    int xplayer, yplayer;
+    ifstream in;
+    in.open("player.txt");
+    in>>xplayer>>yplayer;
+
+    in.close();
+
+    last.nuovo=false;
+    last.player_pos[0]=xplayer;
+    last.player_pos[1]=yplayer;
 
     return last;
 }
