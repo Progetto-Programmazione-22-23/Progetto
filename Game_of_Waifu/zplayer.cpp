@@ -1,4 +1,5 @@
 #include <ncurses.h>
+#include "save.cpp"
 
 #define G 2
 
@@ -78,5 +79,6 @@ public:
 
     void display(){
         mvwaddch(curwin, yLoc, xLoc, character);
+        save_player_pos(xLoc,yLoc);
     }
 };
