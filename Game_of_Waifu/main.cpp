@@ -2,7 +2,7 @@
 #include <string>
 #include <ctime>
 #include <cstdlib>
-#include "player.cpp"
+#include "zplayer.cpp"
 using namespace std;
 
 void start(game g=new_game){
