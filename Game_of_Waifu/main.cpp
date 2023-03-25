@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <chrono>
 #include <thread>
+#include <cstring>
 #include "zplayer.cpp"
 using namespace std;
 
@@ -34,13 +35,34 @@ void start (game g = current_game){
     }
 
     Player player = Player(playerwin, g.player_pos[1], g.player_pos[0], '@');
+    start_color();
+    init_pair(1, COLOR_RED, COLOR_BLACK);
+    init_pair(2, COLOR_GREEN, COLOR_BLACK);
 
 
     // Loop di gioco
     bool loop = true;
     while (loop){
         clear();
-        mvwprintw(stdscr, (yMax/20)-1 , 1, "        Move: A/D    Jump: W    Quit: X");
+
+        char cuori[11] ="";
+        for(int i=0;i<g.vita*2;i++) {
+            if(i%2==0) strcat(cuori,"<");
+            else strcat(cuori,"3");
+        }
+        attron(COLOR_PAIR(1));
+        mvwprintw(stdscr, (yMax/20)-1 , 9,cuori);
+        attroff(COLOR_PAIR(1));
+
+        char money[8] = "Money: ";
+        char dollars[10];
+        sprintf(dollars, "%d", g.money);
+        strcat(money,dollars);
+        strcat(money,"$");
+        attron(COLOR_PAIR(2));
+        mvwprintw(stdscr, (yMax/20)-1 , 30, money);
+        attroff(COLOR_PAIR(2));
+
         refresh();
         wrefresh(playwin);
         box(playwin, 0, 0);
