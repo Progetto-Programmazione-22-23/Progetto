@@ -3,10 +3,10 @@ using namespace std;
 
 struct game {
     bool nuovo;
-    int player_pos[2];
+    int player_pos[2], money;
 };
 
-game current_game = {true,{0,0}};
+game current_game = {true};
 
 game get_last_game() {
     game last;
@@ -29,9 +29,14 @@ game get_last_game() {
     return last;
 }
 
-void save_player_pos(int x, int y) {
+void save_all() {
     ofstream out;
     out.open("player.txt");
-    out<<x<<"\n"<<y;
+    out<<current_game.player_pos[0]<<"\n"<<current_game.player_pos[0];
     out.close();
+}
+
+void save_player_pos(int x, int y) {
+    current_game.player_pos[0] = x;
+    current_game.player_pos[1] = y;
 }

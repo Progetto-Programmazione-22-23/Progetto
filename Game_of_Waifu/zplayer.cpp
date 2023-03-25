@@ -89,7 +89,7 @@ public:
     return character;
   }
 
-  void getmv(){
+  void getmv(bool &loop){
     int ch;
     ch = getch();
     switch(ch) {
@@ -101,6 +101,10 @@ public:
         break;
       case 'w':
         jump();
+        break;
+      case 'x':
+        save_all();
+        loop = false;
         break;
       case ERR:
         stop();
