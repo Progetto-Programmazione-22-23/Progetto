@@ -7,7 +7,7 @@
 #include "zplayer.cpp"
 using namespace std;
 
-void start (game g = new_game){
+void start (game g = current_game){
 
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
