@@ -103,7 +103,7 @@ public:
         jump();
         break;
       case 'x':
-        save_all();
+        current_game.saveAll();
         loop = false;
         break;
       case ERR:
@@ -116,6 +116,6 @@ public:
 
   void display() {
     mvwaddch(curwin, y, x, character);
-    save_player_pos(x, y);
+    current_game.setPlayerPos(x, y);
   }
 };

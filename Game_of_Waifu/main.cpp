@@ -8,7 +8,7 @@
 #include "zplayer.cpp"
 using namespace std;
 
-void start (game g = current_game){
+void start(){
 
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
@@ -29,12 +29,10 @@ void start (game g = current_game){
     int pryMax, prxMax;
     getmaxyx(playerwin, pryMax, prxMax);
 
-    if(g.nuovo) {
-        g.player_pos[0] = 2;
-        g.player_pos[1] = pryMax-2;
-    }
+    if(current_game.isNew())
+        current_game.setPlayerPos(2,pryMax-2);
 
-    Player player = Player(playerwin, g.player_pos[1], g.player_pos[0], '@');
+    Player player = Player(playerwin, current_game.getPlayerY(), current_game.getPlayerX(), '@');
     start_color();
     init_pair(1, COLOR_RED, COLOR_BLACK);
     init_pair(2, COLOR_GREEN, COLOR_BLACK);
@@ -46,7 +44,7 @@ void start (game g = current_game){
         clear();
 
         char cuori[11] ="";
-        for(int i=0;i<g.vita*2;i++) {
+        for(int i=0;i<current_game.getVita()*2;i++) {
             if(i%2==0) strcat(cuori,"<");
             else strcat(cuori,"3");
         }
@@ -56,7 +54,7 @@ void start (game g = current_game){
 
         char money[8] = "Money: ";
         char dollars[10];
-        sprintf(dollars, "%d", g.money);
+        sprintf(dollars, "%d", current_game.getMoney());
         strcat(money,dollars);
         strcat(money,"$");
         attron(COLOR_PAIR(2));
@@ -134,13 +132,10 @@ int main(int argc, char ** argv){
         }
     }
 
-    if (highlights == 0){
+    if (highlights <= 1){
         clear();
+        if(highlights == 1) current_game.continueLast();
         start();
-    }
-    else if(highlights == 1){
-        clear();
-        start(get_last_game());
     }
 
     getch();

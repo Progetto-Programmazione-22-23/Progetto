@@ -1,53 +1,70 @@
 #include <fstream>
+#include "save.hpp"
 using namespace std;
 
-struct game {
-    bool nuovo;
-    int player_pos[2], money;
-    double vita;
-};
+igame fresh = {true,0,0,0,5.0};
+Game current_game = Game(fresh);
 
-game current_game = {true,{0,0},0,5};
+Game::Game(igame s) {
+    this->setting = s;
+}
 
-game get_last_game() {
-    game last;
+void Game::saveAll() {
+    ofstream out;
+    out.open("player.txt");
+    out<<setting.xplayer<<"\n"
+    <<setting.yplayer<<"\n"
+    <<setting.money<<"\n"
+    <<setting.vita<<"\n";
+    out.close();
+}
 
-    //WIP
+void Game::continueLast() {
+    igame last;
+
     int data, i=0;
     ifstream in;
     in.open("player.txt");
     while(in>>data) {
-        if(i==0) last.player_pos[0] = data;
-        else if(i==1) last.player_pos[1] = data;
+        if(i==0) last.xplayer = data;
+        else if(i==1) last.yplayer = data;
         else if(i==2) last.money = data;
         else if(i==3) last.vita = data;
         i++;
     }
 
     in.close();
-
     last.nuovo=false;
     
-
-    return last;
+    setting = last;
 }
 
-void save_all() {
-    ofstream out;
-    out.open("player.txt");
-    out<<current_game.player_pos[0]<<"\n"<<current_game.player_pos[0]<<"\n"<<current_game.money<<"\n"<<current_game.vita;
-    out.close();
+bool Game::isNew() {
+    return setting.nuovo;
 }
 
-void save_player_pos(int x, int y) {
-    current_game.player_pos[0] = x;
-    current_game.player_pos[1] = y;
+void Game::setPlayerPos(int x, int y) {
+    setting.xplayer = x;
+    setting.yplayer = y;
 }
 
-void save_money(int x) {
-    current_game.money = x;
+int Game::getPlayerX() {
+    return setting.xplayer;
+}
+int Game::getPlayerY() {
+    return setting.yplayer;
 }
 
-void save_vita(double x) {
-    current_game.vita = x;
+void Game::setMoney(int x) {
+    setting.money = x;
+}
+int Game::getMoney() {
+    return setting.money;
+}
+
+void Game::setVita(double x) {
+    setting.vita = x;
+}
+double Game::getVita() {
+    return setting.vita;
 }
