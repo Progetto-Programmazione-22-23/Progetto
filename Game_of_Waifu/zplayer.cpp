@@ -56,8 +56,9 @@ public:
   }
 
   void update() {
+    // erase();
     if (this->is_jumping) {
-      mvwaddch(curwin, y, x, ' ');
+      //mvwaddch(curwin, y, x, ' ');
       this->y_velocity += GRAVITY;
     }
     this->x += this->x_velocity;

@@ -41,7 +41,8 @@ void start(){
     // Loop di gioco
     bool loop = true;
     while (loop){
-        clear();
+
+        // erase();
 
         char cuori[11] ="";
         for(int i=0;i<current_game.getVita()*2;i++) {
@@ -72,9 +73,11 @@ void start(){
 
         player.display();
 
-        refresh();
+        // refresh();
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(45));       
+        napms(35);
+
+        // std::this_thread::sleep_for(std::chrono::milliseconds(40));       
         // !!! modificando il numero di milliseconds aumento o diminuisco gli fps. se li aumento il gioco va più fluido, ma i tempi di risposta
         // del player ai tasti è molto più lento (50 è un buon valore per la fluidità, ma non buono per gli input). Al contrario 40 è un ottimo 
         // valore per gli input, ma il gioco sfarfalla. Come risolvere? Non ne ho idea. 45 non è perfetto nè come sfarfallio nè come input... ma
