@@ -1,0 +1,272 @@
+[33mcommit 06fe0792b3107ac84f2de0034f4e7834344b2130[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: RikiMuzzi <riccardo.muzzi02@gmail.com>
+Date:   Wed Mar 29 17:07:56 2023 +0200
+
+    pipipopo
+
+[33mcommit efca77f114eb2fed5b871caea69ff6151d6fa12a[m
+Author: glxcee <gfrozenartz@gmail.com>
+Date:   Sun Mar 26 17:32:14 2023 +0200
+
+    OOP per l'oggetto Game, *laneve happy*
+
+[33mcommit 100ab4807e5e3eb15522451435e43019ec2d3a54[m
+Author: glxcee <gfrozenartz@gmail.com>
+Date:   Sat Mar 25 21:00:11 2023 +0100
+
+    vita e cash
+
+[33mcommit 44edcc06e4ac849c43fc195c0d5ce70aa7210bfa[m
+Merge: a4957e9 f445b7d
+Author: glxcee <gfrozenartz@gmail.com>
+Date:   Sat Mar 25 20:01:56 2023 +0100
+
+    tasto X per quittare, salva tutto
+
+[33mcommit a4957e98b64a588d036a97d6faff62414858f464[m
+Author: glxcee <gfrozenartz@gmail.com>
+Date:   Sat Mar 25 19:19:26 2023 +0100
+
+    idk
+
+[33mcommit f445b7dcc7b2f4e30c0b461fdc7cf33ab1724956[m
+Author: RikiMuzzi <riccardo.muzzi02@gmail.com>
+Date:   Sat Mar 25 14:49:13 2023 +0100
+
+    riaggiunta cornice di gioco. Problema nel loop
+
+[33mcommit f4e9f5148847bec363befcec6a0e5c7910403005[m
+Author: RikiMuzzi <riccardo.muzzi02@gmail.com>
+Date:   Sat Mar 25 14:46:09 2023 +0100
+
+    riaggiunta la cornice di gioco.  problema nel loop
+
+[33mcommit 7c548ae2f51f6bd319a774655c5a12023e516019[m
+Author: RikiMuzzi <riccardo.muzzi02@gmail.com>
+Date:   Fri Mar 24 20:14:01 2023 +0100
+
+    player salterino
+
+[33mcommit 2c6554634b79ca08882ed782968a14f7142b7f15[m
+Author: RikiMuzzi <riccardo.muzzi02@gmail.com>
+Date:   Wed Mar 22 12:05:47 2023 +0100
+
+    zplayer
+
+[33mcommit fcf1b2bb270a3ac2bf5c991aafb9e5435abbcbb9[m
+Author: RikiMuzzi <riccardo.muzzi02@gmail.com>
+Date:   Wed Mar 22 11:56:35 2023 +0100
+
+    okok
+
+[33mcommit 19236b1e4cdf401996eb935d4d206be0147b4d0b[m
+Author: RikiMuzzi <riccardo.muzzi02@gmail.com>
+Date:   Wed Mar 22 11:54:13 2023 +0100
+
+    pipi
+
+[33mcommit 54b3b4b61af917f3e3839b298407f29a02a9d3ad[m
+Author: glxcee <gfrozenartz@gmail.com>
+Date:   Tue Mar 21 20:14:38 2023 +0100
+
+    continue funzionante
+
+[33mcommit b9152a23c26d6c1883e5995e5127a8c32c596881[m
+Author: glxcee <gfrozenartz@gmail.com>
+Date:   Tue Mar 21 20:05:26 2023 +0100
+
+    primi metodi di salvataggio, tasto continue
+
+[33mcommit 35f05e75004fafda22e249d58d5ca798d2c4248e[m
+Author: glxcee <gfrozenartz@gmail.com>
+Date:   Tue Mar 21 17:31:27 2023 +0100
+
+    meow2
+
+[33mcommit 1ccc897cf9690de2f78c4ae0ec4f1089fe56f93e[m
+Author: glxcee <gfrozenartz@gmail.com>
+Date:   Tue Mar 21 17:24:33 2023 +0100
+
+    meow
+
+[33mcommit c0f1135aceccb912e4569c5c85f5dca86b84fb4d[m
+Merge: 31a3b81 83fcf72
+Author: glxcee <gfrozenartz@gmail.com>
+Date:   Wed Mar 15 21:01:42 2023 +0100
+
+    cristo
+
+[33mcommit 31a3b8184baae786d0fc726f3f2b1456669c9c75[m
+Merge: 8dbe7da 0a77cd3
+Author: glxcee <gfrozenartz@gmail.com>
+Date:   Wed Mar 15 21:00:33 2023 +0100
+
+    Merge branch 'main' of https://github.com/Progetto-Programmazione-22-23/Progetto
+
+[33mcommit 83fcf72a7f967baf130bf0b041a18c96c05ad701[m
+Author: RikiMuzzi <riccardo.muzzi02@gmail.com>
+Date:   Wed Mar 15 19:06:18 2023 +0100
+
+    sono op
+
+[33mcommit e44a4ecf31167271de7ed9dccbfceba6158c4793[m
+Author: RikiMuzzi <riccardo.muzzi02@gmail.com>
+Date:   Wed Mar 15 18:51:49 2023 +0100
+
+    boobs
+
+[33mcommit 0a77cd3e249ff624234bf975ae4a6ed6f6c8fd3a[m
+Author: RikiMuzzi <riccardo.muzzi02@gmail.com>
+Date:   Wed Mar 15 18:48:02 2023 +0100
+
+    pipipopu easy clap
+
+[33mcommit 8dbe7da1342d18c49e245bda3469dd00797b4aff[m
+Author: glxcee <gfrozenartz@gmail.com>
+Date:   Wed Mar 15 18:30:55 2023 +0100
+
+    testing linux
+
+[33mcommit 1b7ae743f0453b999ab4e6a7897a6b50c18f1653[m
+Author: RikiMuzzi <riccardo.muzzi02@gmail.com>
+Date:   Sun Mar 12 20:15:22 2023 +0100
+
+    wow
+
+[33mcommit 9ddbe925c188559d34d6c555935252bbc9481805[m
+Author: RikiMuzzi <riccardo.muzzi02@gmail.com>
+Date:   Sun Mar 12 20:13:47 2023 +0100
+
+    for real
+
+[33mcommit 4fd849f3e6b709f073092fbddbdc44e1cc371f3c[m
+Author: RikiMuzzi <riccardo.muzzi02@gmail.com>
+Date:   Sun Mar 12 20:10:59 2023 +0100
+
+    that looks good!
+
+[33mcommit cd030759df6ac2c780d816b9e1b6df7b25d592f7[m
+Author: RikiMuzzi <riccardo.muzzi02@gmail.com>
+Date:   Sun Mar 12 19:14:06 2023 +0100
+
+    Ora il personaggio è quasi bello quanto ruggia
+
+[33mcommit b1cbdcc4d6194be48d248ee416376c05830830f0[m
+Author: RikiMuzzi <riccardo.muzzi02@gmail.com>
+Date:   Sun Mar 12 11:20:35 2023 +0100
+
+    ma che ti sembro un mostro?
+
+[33mcommit 887a2702a5ddebda59468edbc498d0a8d3db4bd1[m
+Author: RikiMuzzi <riccardo.muzzi02@gmail.com>
+Date:   Sat Mar 11 23:03:57 2023 +0100
+
+    pls onii-chan... take care of me <3
+
+[33mcommit 908f5a8d57ea700ef8a47481ba57a0692180de7f[m
+Author: RikiMuzzi <riccardo.muzzi02@gmail.com>
+Date:   Sat Mar 11 23:01:15 2023 +0100
+
+    pls onii-chan... take care of me <3
+
+[33mcommit 9d64e0b0af92a638547cefa46edfe09fdaa3de44[m
+Author: RikiMuzzi <riccardo.muzzi02@gmail.com>
+Date:   Sat Mar 11 22:47:21 2023 +0100
+
+    pls onii-chan, take care of me...
+
+[33mcommit 96a544cd835f6235cd51cdebef042f1619ceff37[m
+Author: RikiMuzzi <riccardo.muzzi02@gmail.com>
+Date:   Sat Mar 11 22:44:19 2023 +0100
+
+    damn, nice cock
+
+[33mcommit 47d8906ce6b46510c357a5fd412698104cda12eb[m
+Author: RikiMuzzi <riccardo.muzzi02@gmail.com>
+Date:   Sat Mar 11 22:41:50 2023 +0100
+
+    aggiunto menu base e scheletro personaggio
+
+[33mcommit b17b2c0bc057c5e5de279e758213b598f255672b[m
+Author: RikiMuzzi <riccardo.muzzi02@gmail.com>
+Date:   Sat Mar 11 22:40:17 2023 +0100
+
+    menu base e personaggio
+
+[33mcommit 876f30be500b7a8870733c903ecf03a152c95ef1[m
+Author: RikiMuzzi <riccardo.muzzi02@gmail.com>
+Date:   Wed Mar 1 20:26:10 2023 +0100
+
+    pipipopo
+
+[33mcommit fb7f5b2b186416d897e018e6e361e5f17b8a20ed[m
+Author: B3rt0nes <albertozuccari8@gmail.com>
+Date:   Wed Feb 22 17:42:50 2023 +0100
+
+    aggiunto file oggetti
+
+[33mcommit 81eb07817ba7b62d4ebc00e1c7734432f6a4791c[m
+Author: B3rt0nes <albertozuccari8@gmail.com>
+Date:   Wed Feb 22 15:51:26 2023 +0100
+
+    added subdivisione sample by prof
+
+[33mcommit 7d83b3a6cebd7b12c1b35823ecc1ca94ec50ce17[m
+Author: B3rt0nes <albertozuccari8@gmail.com>
+Date:   Wed Feb 22 15:50:29 2023 +0100
+
+    added subdivisione sample by prof
+
+[33mcommit 0f44cda5629aaac9d2ea2970dbcfb1fac829b694[m
+Author: B3rt0nes <albertozuccari8@gmail.com>
+Date:   Wed Feb 22 15:32:05 2023 +0100
+
+    Update HelloWorld.cpp
+
+[33mcommit 0bfbf617d363633069504bcf01f91c19096cf1ae[m
+Author: B3rt0nes <albertozuccari8@gmail.com>
+Date:   Wed Feb 22 15:30:50 2023 +0100
+
+    Aggiunta la cartella Hello World per prove
+
+[33mcommit 16cd36dab13d7c8ac9713915bff4cb913efe93a1[m
+Author: B3rt0nes <albertozuccari8@gmail.com>
+Date:   Wed Feb 22 15:28:40 2023 +0100
+
+    Aggiunte le command line per l'esecuzione Linux
+
+[33mcommit 78a07e2c55a97b73923ac274d5850f843b51608a[m
+Author: B3rt0nes <albertozuccari8@gmail.com>
+Date:   Wed Feb 22 15:28:07 2023 +0100
+
+    Aggiunte le command line per l'esecuzione Linux
+
+[33mcommit 4b01a189695152fa8b28cf5c72e3686c5b30faf3[m
+Author: B3rt0nes <albertozuccari8@gmail.com>
+Date:   Wed Feb 22 15:09:57 2023 +0100
+
+    Aggiunte le impostazioni
+
+[33mcommit f6090d7eb332718fa939610e208b3ceddfce6b1d[m
+Author: B3rt0nes <albertozuccari8@gmail.com>
+Date:   Wed Feb 22 15:08:54 2023 +0100
+
+    Aggiunte le impostazioni
+
+[33mcommit 807846343210e24a84eb70c6a8616dd50cad8467[m
+Author: B3rt0nes <albertozuccari8@gmail.com>
+Date:   Wed Feb 22 14:45:17 2023 +0100
+
+    Aggiunte le specifiche
+
+[33mcommit b63a09d01d740678bfe94e268280b7c36ce185a8[m
+Author: B3rt0nes <albertozuccari8@gmail.com>
+Date:   Wed Feb 22 14:37:20 2023 +0100
+
+    Added valutazione
+
+[33mcommit f3b9a1428dcd56c18a75f4935bfa6cb2a7659ae3[m
+Author: Alberto Zuccari <90896315+B3rt0nes@users.noreply.github.com>
+Date:   Wed Feb 22 14:33:56 2023 +0100
+
+    Initial commit
