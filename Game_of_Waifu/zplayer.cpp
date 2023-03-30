@@ -103,7 +103,7 @@ public:
       case 'w':
         jump();
         break;
-      case 'x':
+      case 27:
         current_game.saveAll();
         loop = false;
         break;

@@ -2,7 +2,7 @@
 #include "save.hpp"
 using namespace std;
 
-igame fresh = {true,0,0,0,5.0};
+igame fresh = {true,0,0,0,10,10,1,0,};//{Item(1,300,"Healthy Armor",1,4),Item(),Item()}};
 Game current_game = Game(fresh);
 
 Game::Game(igame s) {
@@ -15,7 +15,8 @@ void Game::saveAll() {
     out<<setting.xplayer<<"\n"
     <<setting.yplayer<<"\n"
     <<setting.money<<"\n"
-    <<setting.vita<<"\n";
+    <<setting.vita<<"\n"
+    <<setting.maxvita<<"\n";
     out.close();
 }
 
@@ -30,6 +31,7 @@ void Game::continueLast() {
         else if(i==1) last.yplayer = data;
         else if(i==2) last.money = data;
         else if(i==3) last.vita = data;
+        else if(i==4) last.maxvita = data;
         i++;
     }
 
@@ -62,9 +64,16 @@ int Game::getMoney() {
     return setting.money;
 }
 
-void Game::setVita(double x) {
+void Game::setVita(int x) {
     setting.vita = x;
 }
-double Game::getVita() {
+int Game::getVita() {
     return setting.vita;
+}
+
+void Game::setMaxVita(int x) {
+    setting.maxvita = x;
+}
+int Game::getMaxVita() {
+    return setting.maxvita;
 }

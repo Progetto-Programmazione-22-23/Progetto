@@ -34,8 +34,10 @@ void start(){
 
     Player player = Player(playerwin, current_game.getPlayerY(), current_game.getPlayerX(), '@');
     start_color();
+    init_color(8,128,128,128);
     init_pair(1, COLOR_RED, COLOR_BLACK);
     init_pair(2, COLOR_GREEN, COLOR_BLACK);
+    init_pair(3, 8, COLOR_BLACK);
 
 
     // Loop di gioco
@@ -44,14 +46,27 @@ void start(){
 
         // erase();
 
-        char cuori[11] ="";
-        for(int i=0;i<current_game.getVita()*2;i++) {
-            if(i%2==0) strcat(cuori,"<");
-            else strcat(cuori,"3");
+        // controlla l'armatura WIP
+        current_game.setMaxVita(14);
+
+        char cuori_pieni[15] ="";
+        int actual, missing;
+        for(actual=0;actual<current_game.getVita();actual++) {
+            if(actual%2==0) strcat(cuori_pieni,"<");
+            else strcat(cuori_pieni,"3");
         }
         attron(COLOR_PAIR(1));
-        mvwprintw(stdscr, (yMax/20)-1 , 9,cuori);
+        mvwprintw(stdscr, (yMax/20)-1 , 9,cuori_pieni);
         attroff(COLOR_PAIR(1));
+        char cuori_vuoti[15] = "";
+        for(missing=actual;missing<current_game.getMaxVita();missing++) {
+            if(missing%2==0) strcat(cuori_vuoti,"<");
+            else strcat(cuori_vuoti,"3");
+        }
+        attron(COLOR_PAIR(3));
+        mvwprintw(stdscr, (yMax/20)-1 , 9+actual,cuori_vuoti);
+        attroff(COLOR_PAIR(3));
+
 
         char money[8] = "Money: ";
         char dollars[10];
