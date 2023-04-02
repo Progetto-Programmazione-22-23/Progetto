@@ -1,199 +1,108 @@
-#include <ncurses.h>
-#include "save.cpp"
-
-class Player {
-protected:
-    int yLoc, xLoc, yMax, xMax;
-    char character;
-    WINDOW * curwin;
-
-public:
-    Player (WINDOW * win, int y, int x, char  c);
-
-    // void mvup();
-    // void mvdown();
-    void mvleft();
-    void mvright();
-    void jump();
-    void jumpdx();
-    void jumpsx();
-    int getmv();
-    void display();
-    //void gravity();
-
-};
+#include "player.hpp"
 
 Player::Player(WINDOW * win, int y, int x, char c) {
-    curwin = win;
-    yLoc = y;
-    xLoc = x;
+    this->curwin = win;
+    this->x = x;
+    this->y = y;
+    this->x_velocity = 0;
+    this->y_velocity = 0;
+    this->is_jumping = false;
+    this->character = c;
     getmaxyx(curwin, yMax, xMax);
-    keypad(curwin, true);
-    character = c;
-}
+  }
 
-// void Player::mvup(){
-//     mvwaddch(curwin, yLoc, xLoc, ' ');
-//     yLoc--;
-//     if (yLoc < 1) yLoc = 1;
-// }
-
-// void Player::mvdown(){
-//     mvwaddch(curwin, yLoc, xLoc, ' ');
-//     yLoc++;
-//     if (yLoc > yMax-2) yLoc = yMax-2;
-// }
-
-void Player::mvleft(){
-    mvwaddch(curwin, yLoc, xLoc, ' ');
-    this->character = '<';
-    xLoc--;
-    if(xLoc < 1) xLoc = 1;
-}
-
-void Player::mvright(){
-    mvwaddch(curwin, yLoc, xLoc, ' ');
-    this->character = '>';
-    xLoc++;
-    if (xLoc > xMax-2) xLoc = xMax-2;
-}
-
-void Player::jump(){
-    this->character = '^';
-    // Salta in alto
-    for(int i = 0; i < 4; i++){
-        mvwaddch(curwin, yLoc, xLoc, ' ');
-        yLoc--;
-        if (yLoc < 1) yLoc = 1;
-        display();
-        wrefresh(curwin);
-        napms(75);              // millisecondi di stop
+  void Player::move_left() {
+    mvwaddch(curwin, y, x, ' ');
+    this->x_velocity -= HORIZONTAL_ACCELERATION;
+    if (this->x_velocity < -HORIZONTAL_MAX_VELOCITY) {
+      this->x_velocity = -HORIZONTAL_MAX_VELOCITY;
     }
-    this->character = 'v';
-    for(int i = 0; i < 4; i++){
-        mvwaddch(curwin, yLoc, xLoc, ' ');
-        yLoc++;
-        display();
-        wrefresh(curwin);
-        napms(75);
-    }
-    this->character = '>';
-}
+  }
 
-void Player::jumpsx(){
-    this->character = '^';
-    // Salta in alto
-    for(int i = 0; i < 4; i++){
-        mvwaddch(curwin, yLoc, xLoc, ' ');
-        yLoc--;
-        xLoc--;
-        if (yLoc < 1) yLoc = 1;
-        if (xLoc < 1) xLoc = 1;
-        display();
-        wrefresh(curwin);
-        napms(50);
+  void Player::move_right() {
+    mvwaddch(curwin, y, x, ' ');
+    this->x_velocity += HORIZONTAL_ACCELERATION;
+    if (this->x_velocity > HORIZONTAL_MAX_VELOCITY) {
+      this->x_velocity = HORIZONTAL_MAX_VELOCITY;
     }
-    // Verso sinistra
-    this->character = '<';
-    for(int i = 0; i < 4; i++){
-        mvwaddch(curwin, yLoc, xLoc, ' ');
-        xLoc--;
-        if (xLoc < 1) xLoc = 1;
-        display();
-        wrefresh(curwin);
-        napms(50);
-    }
-    // Scende al suolo
-    this->character = 'v';
-    for(int i = 0; i < 4; i++){
-        mvwaddch(curwin, yLoc, xLoc, ' ');
-        yLoc++;
-        xLoc--;
-        if (xLoc < 1) xLoc = 1;
-        display();
-        wrefresh(curwin);
-        napms(50);
-    }
-    this->character = '<';
-}
+  }
 
-void Player::jumpdx(){
-    this->character = '^';
-    // Salta in alto
-    for(int i = 0; i < 4; i++){
-        mvwaddch(curwin, yLoc, xLoc, ' ');
-        yLoc--;
-        xLoc++;
-        if (yLoc < 1) yLoc = 1;
-        if (xLoc > xMax-2) xLoc = xMax-2;
-        display();
-        wrefresh(curwin);
-        napms(50);
-    }
-    // Verso destra
-    this->character = '>';
-    for(int i = 0; i < 4; i++){
-        mvwaddch(curwin, yLoc, xLoc, ' ');
-        xLoc++;
-        if (xLoc > xMax-2) xLoc = xMax-2;
-        display();
-        wrefresh(curwin);
-        napms(50);
-    }
-    // Scende al suolo
-    this->character = 'v';
-    for(int i = 0; i < 4; i++){
-        mvwaddch(curwin, yLoc, xLoc, ' ');
-        yLoc++;
-        xLoc++;
-        if (xLoc > xMax-2) xLoc = xMax-2;
-        display();
-        wrefresh(curwin);
-        napms(50);
-    }
-    this->character = '>';
-}
+  void Player::stop(){
+    if (!is_jumping) this->x_velocity = 0;
+  }
 
-int Player::getmv(){
-    int choice = wgetch(curwin);
-    switch (choice){
-        // case 'w':
-        //     mvup();
-        //     break;
-        // case 's':
-        //     mvdown();
-        //     break;
-        case 'a':
-            mvleft();
-            break;
-        case 'd':
-            mvright();
-            break;
-        case 'w':
-            jump();
-            break;
-        case 'q':
-            jumpsx();
-            break;
-        case 'e':
-            jumpdx();
-            break;
-        default:
-            break;
+  void Player::jump() {
+    bool fast = true;
+    if (x_velocity == 0) fast = false;
+    if (!this->is_jumping) {
+      this->y_velocity = JUMP_VELOCITY;
+      if (!fast) this->x_velocity = x_velocity*10;
+      else this->x_velocity = x_velocity*1.5;
+      this->is_jumping = true;
     }
-    return choice;
-}
+  }
 
-// void Player::gravity(){
-//     while(1){
-//         if (yLoc == '_'){
-//             yLoc--;
-//         }
-//     }
-// }
+  void Player::update() {
+    // erase();
+    if (this->is_jumping) {
+      //mvwaddch(curwin, y, x, ' ');
+      this->y_velocity += GRAVITY;
+    }
+    this->x += this->x_velocity;
+    this->y += this->y_velocity;
 
-void Player::display(){
-    mvwaddch(curwin, yLoc, xLoc, character);
-    save_player_pos(xLoc,yLoc);
-}
+    if (this->y >= yMax-2) {
+      this->y = yMax-2;
+      this->y_velocity = 0;
+      this->is_jumping = false;
+    }
+    if (this->x < 1) {
+      this->x = 1;
+      this->x_velocity = 0;
+    } else if (this->x > xMax - 2) {
+      this->x = xMax - 2;
+      this->x_velocity = 0;
+    }
+  }
 
+  int Player::getX(){
+    return x;
+  }
+
+  int Player::getY(){
+    return y;
+  }
+
+  char Player::getChar(){
+    return character;
+  }
+
+  void Player::getmv(bool &loop){
+    int ch;
+    ch = getch();
+    switch(ch) {
+      case 'd':
+        move_right();
+        break;
+      case 'a':
+        move_left();
+        break;
+      case 'w':
+        jump();
+        break;
+      case 27:
+        current_game.saveAll();
+        loop = false;
+        break;
+      case ERR:
+        stop();
+        break;
+      default:
+        break;
+    }
+  }
+
+  void Player::display() {
+    mvwaddch(curwin, y, x, character);
+    current_game.setPlayerPos(x, y);
+  }

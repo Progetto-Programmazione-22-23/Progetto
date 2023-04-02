@@ -5,7 +5,7 @@
 #include <chrono>
 #include <thread>
 #include <cstring>
-#include "zplayer.cpp"
+#include "player.cpp"
 using namespace std;
 
 void start(){
@@ -22,7 +22,7 @@ void start(){
 
     //Player player = Player(playwin, g.player_pos[1], g.player_pos[0], '@');
 
-    WINDOW * playerwin = newwin(yMax-(yMax/10)-4, xMax-(xMax/10)-4, yMax/20+2, xMax/20+2);
+    WINDOW * playerwin = newwin(yMax-(yMax/10)-2, xMax-(xMax/10)-2, yMax/20+2, xMax/20+1);
     box(playerwin, 0, 0);
     keypad(playerwin, true);
     nodelay(playerwin, TRUE);
