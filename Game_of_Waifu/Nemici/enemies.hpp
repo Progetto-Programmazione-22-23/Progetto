@@ -2,6 +2,11 @@
 #include <stdlib.h>
 #include "save.cpp"
 
+#define GRAVITY 0.4
+#define JUMP_VELOCITY -3
+#define HORIZONTAL_ACCELERATION 2
+#define HORIZONTAL_MAX_VELOCITY 2
+
 class Nemico{
     protected:
         int life;
@@ -16,5 +21,6 @@ class Nemico{
         int getY();
         char getChar();
         int random(int max);
+        void update();
         void display();
 };
