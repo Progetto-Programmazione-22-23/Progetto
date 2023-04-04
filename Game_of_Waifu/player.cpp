@@ -12,7 +12,7 @@ Player::Player(WINDOW * win, int y, int x, char c) {
   }
 
   void Player::move_left() {
-    mvwaddch(curwin, y, x, ' ');
+    //mvwaddch(curwin, y, x, ' ');
     this->x_velocity -= HORIZONTAL_ACCELERATION;
     if (this->x_velocity < -HORIZONTAL_MAX_VELOCITY) {
       this->x_velocity = -HORIZONTAL_MAX_VELOCITY;
@@ -20,7 +20,7 @@ Player::Player(WINDOW * win, int y, int x, char c) {
   }
 
   void Player::move_right() {
-    mvwaddch(curwin, y, x, ' ');
+    //mvwaddch(curwin, y, x, ' ');
     this->x_velocity += HORIZONTAL_ACCELERATION;
     if (this->x_velocity > HORIZONTAL_MAX_VELOCITY) {
       this->x_velocity = HORIZONTAL_MAX_VELOCITY;

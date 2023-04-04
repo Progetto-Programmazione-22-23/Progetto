@@ -32,6 +32,20 @@ int Nemico::random(int max) {
     return rand() % max;
 }
 
+void Nemico::update() {
+    // erase();
+    this->x += this->x_velocity;
+    this->y += this->y_velocity;
+
+    if (this->x < 1) {
+      this->x = 1;
+      this->x_velocity = 0;
+    } else if (this->x > xMax - 2) {
+      this->x = xMax - 2;
+      this->x_velocity = 0;
+    }
+}
+
 void Nemico::display() {
     mvwaddch(curwin, y, x, character);
     current_game.setPlayerPos(x, y);
