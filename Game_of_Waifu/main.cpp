@@ -6,7 +6,6 @@
 #include <thread>
 #include <cstring>
 #include "player.cpp"
-
 using namespace std;
 
 void start(){
