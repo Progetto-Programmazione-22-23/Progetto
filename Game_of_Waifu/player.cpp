@@ -90,6 +90,8 @@ Player::Player(WINDOW * win, int y, int x, char c) {
       case 'w':
         jump();
         break;
+      case 'i':
+        open_inventory();
       case 27:
         current_game.saveAll();
         loop = false;
@@ -101,6 +103,11 @@ Player::Player(WINDOW * win, int y, int x, char c) {
         break;
     }
   }
+
+void Player::open_inventory(){
+  // disegna una finestra sopra lo schermo
+  // deve anche mettere in pausa il gioco.
+}
 
   void Player::display() {
     mvwaddch(curwin, y, x, character);

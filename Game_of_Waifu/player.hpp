@@ -13,6 +13,7 @@ class Player {
         bool is_jumping;
         char character;
         WINDOW * curwin;
+        WINDOW * inv;
     public:
         Player(WINDOW * win = NULL, int y = 0, int x = 0, char c = ' ');
         void move_left();
@@ -25,5 +26,5 @@ class Player {
         void getmv(bool &loop);
         void update();
         void display();
-
+        void open_inventory();
 };
