@@ -6,7 +6,7 @@
 #include <thread>
 #include <cstring>
 #include "player.cpp"
-#include "Nemici/Mob/TonyEffe.cpp"
+#include "TonyEffe.cpp"
 using namespace std;
 
 void mobspawner(WINDOW *win, int yM, int xM){
