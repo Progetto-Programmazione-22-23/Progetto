@@ -13,7 +13,6 @@ class Nemico{
         int y, x, yMax, xMax;
         float x_velocity, y_velocity;
         char character;
-        bool terra;
         WINDOW * curwin;
     public:
         Nemico(WINDOW * win = NULL, int y = 0, int x = 0, int l = 0, char c = ' ');
