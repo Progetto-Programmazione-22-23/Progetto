@@ -1,13 +1,11 @@
 #include "enemies.hpp"
 
-Nemico::Nemico (WINDOW * win, int y, int x, int l, char c) {
+Nemico::Nemico (WINDOW * win, int y, int x, int xv, int yv) {
     this->curwin = win;
     this->x = x;
     this->y = y;
-    this->x_velocity = 0;
-    this->y_velocity = 0;
-    this->life = l;
-    this->character = c;
+    this->x_velocity = xv;
+    this->y_velocity = yv;
     getmaxyx(curwin, yMax, xMax);
 }
 

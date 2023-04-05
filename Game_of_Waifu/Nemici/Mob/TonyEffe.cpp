@@ -1,7 +1,8 @@
 #include "TonyEffe.hpp"
 
-Tony::Tony(WINDOW * win, int y, int x, int l, char c):NemicoTerra(win, y, x){
-    this->terra = true;
-    this->life = 10;
+Tony::Tony(WINDOW * win, int y, int x, int xv, int yv) : Nemico(win, yv, xv){
+    this->flyer = false;
     this->character = 'T';
+    this->life = 10;
 }
+

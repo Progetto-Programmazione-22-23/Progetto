@@ -6,7 +6,12 @@
 #include <thread>
 #include <cstring>
 #include "player.cpp"
+#include "Nemici/Mob/TonyEffe.cpp"
 using namespace std;
+
+void mobspawner(WINDOW *win, int yM, int xM){
+    Tony tony = Tony(win, yM-2, xM-2, 0, 0);
+}
 
 void interface(int yMax){
 
@@ -80,6 +85,8 @@ void start(){
         current_game.setMaxVita(14);
 
         interface(yMax);
+
+        mobspawner(playerwin, pryMax, prxMax);
         
         //erase();
         box(playwin, 0, 0);

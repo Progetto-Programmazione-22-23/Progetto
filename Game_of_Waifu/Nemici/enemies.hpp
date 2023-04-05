@@ -13,9 +13,10 @@ class Nemico{
         int y, x, yMax, xMax;
         float x_velocity, y_velocity;
         char character;
+        bool flyer;
         WINDOW * curwin;
     public:
-        Nemico(WINDOW * win = NULL, int y = 0, int x = 0, int l = 0, char c = ' ');
+        Nemico(WINDOW * win = NULL, int y = 0, int x = 0, int xv = 0, int yv = 0);
         void stop();
         int getX();
         int getY();
