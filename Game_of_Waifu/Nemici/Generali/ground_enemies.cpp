@@ -1,5 +1,9 @@
 #include "ground_enemies.hpp"
 
+NemicoTerra::NemicoTerra(WINDOW * win, int y, int x, int l, char c, bool t) : Nemico (win, y, x, l, c){
+    this->terra = true;
+}
+
 void NemicoTerra::mv(){
     int x = random(2);
     if (x%2 == 0) {

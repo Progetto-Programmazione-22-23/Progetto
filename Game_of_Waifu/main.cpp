@@ -8,6 +8,36 @@
 #include "player.cpp"
 using namespace std;
 
+void interface(int yMax){
+
+    char cuori_pieni[15] ="";
+    int actual, missing;
+    for(actual=0;actual<current_game.getVita();actual++) {
+        if(actual%2==0) strcat(cuori_pieni,"<");
+        else strcat(cuori_pieni,"3");
+    }
+    attron(COLOR_PAIR(1));
+    mvwprintw(stdscr, (yMax/20)-1 , 9,cuori_pieni);
+    attroff(COLOR_PAIR(1));
+    char cuori_vuoti[15] = "";
+    for(missing=actual;missing<current_game.getMaxVita();missing++) {
+        if(missing%2==0) strcat(cuori_vuoti,"<");
+        else strcat(cuori_vuoti,"3");
+    }
+    attron(COLOR_PAIR(3));
+    mvwprintw(stdscr, (yMax/20)-1 , 9+actual,cuori_vuoti);
+        attroff(COLOR_PAIR(3));
+
+    char money[8] = "Money: ";
+    char dollars[10];
+    sprintf(dollars, "%d", current_game.getMoney());
+    strcat(money,dollars);
+    strcat(money,"$");
+    attron(COLOR_PAIR(2));
+    mvwprintw(stdscr, (yMax/20)-1 , 30, money);
+    attroff(COLOR_PAIR(2));
+}
+
 void start(){
 
     int yMax, xMax;
@@ -44,42 +74,17 @@ void start(){
     bool loop = true;
     while (loop){
 
-        // erase();
+        // erase
 
         // controlla l'armatura WIP
         current_game.setMaxVita(14);
 
-        char cuori_pieni[15] ="";
-        int actual, missing;
-        for(actual=0;actual<current_game.getVita();actual++) {
-            if(actual%2==0) strcat(cuori_pieni,"<");
-            else strcat(cuori_pieni,"3");
-        }
-        attron(COLOR_PAIR(1));
-        mvwprintw(stdscr, (yMax/20)-1 , 9,cuori_pieni);
-        attroff(COLOR_PAIR(1));
-        char cuori_vuoti[15] = "";
-        for(missing=actual;missing<current_game.getMaxVita();missing++) {
-            if(missing%2==0) strcat(cuori_vuoti,"<");
-            else strcat(cuori_vuoti,"3");
-        }
-        attron(COLOR_PAIR(3));
-        mvwprintw(stdscr, (yMax/20)-1 , 9+actual,cuori_vuoti);
-        attroff(COLOR_PAIR(3));
-
-
-        char money[8] = "Money: ";
-        char dollars[10];
-        sprintf(dollars, "%d", current_game.getMoney());
-        strcat(money,dollars);
-        strcat(money,"$");
-        attron(COLOR_PAIR(2));
-        mvwprintw(stdscr, (yMax/20)-1 , 30, money);
-        attroff(COLOR_PAIR(2));
-
+        interface(yMax);
+        
+        //erase();
+        box(playwin, 0, 0);
         refresh();
         wrefresh(playwin);
-        box(playwin, 0, 0);
         wrefresh(playerwin);
 
         player.getmv(loop);
@@ -88,15 +93,7 @@ void start(){
 
         player.display();
 
-        // refresh();
-
         napms(35);
-
-        // std::this_thread::sleep_for(std::chrono::milliseconds(40));       
-        // !!! modificando il numero di milliseconds aumento o diminuisco gli fps. se li aumento il gioco va più fluido, ma i tempi di risposta
-        // del player ai tasti è molto più lento (50 è un buon valore per la fluidità, ma non buono per gli input). Al contrario 40 è un ottimo 
-        // valore per gli input, ma il gioco sfarfalla. Come risolvere? Non ne ho idea. 45 non è perfetto nè come sfarfallio nè come input... ma
-        // diciamo che se fanno entrambi mezzo schifo è come se fossero entrambi mezzo ok ;_;
     } 
 }
 
