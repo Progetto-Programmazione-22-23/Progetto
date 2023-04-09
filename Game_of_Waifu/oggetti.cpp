@@ -1,13 +1,13 @@
 #include "oggetti.hpp"
 
-Item allItems[2] = {Item(),Item(1)};
+Item allItems[2] = {Item(),Item(1,10,"lmao")};
 
-Item::Item(int id, int price, char name[], int category, int amount) {
+Item::Item(int id, int price, char name[]) {
     this->id = id;
     this->price = price;
     strcpy(this->name, name);
-    this->category = category;
-    this->amount = amount;
+    //this->category = category;
+    //this->amount = amount;
 }
 int Item::getId() { return id; }
 int Item::getPrice() { return price; }

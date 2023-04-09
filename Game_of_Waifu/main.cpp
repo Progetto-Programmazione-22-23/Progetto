@@ -15,7 +15,7 @@ void mobspawner(WINDOW *win, int yM, int xM){
     Tony tony = Tony(win, yM-2, xM-2, 0, 0);
 }
 
-void interface(int yMax){
+void interface(int yMax, int xMax){
 
     char cuori_pieni[15] ="";
     int actual, missing;
@@ -43,6 +43,13 @@ void interface(int yMax){
     attron(COLOR_PAIR(2));
     mvwprintw(stdscr, (yMax/20)-1 , 30, money);
     attroff(COLOR_PAIR(2));
+
+    Inventory playerInv = current_game.getInventory();
+    for(int i=0;i<3;i++) {
+        char hotbar_item[20];
+        playerInv.getBarItem(0,i).getName(hotbar_item);
+        mvwprintw(stdscr, i+1, xMax-9, hotbar_item);
+    }
 }
 
 void start(){
@@ -86,7 +93,7 @@ void start(){
         // controlla l'armatura WIP
         current_game.setMaxVita(14);
 
-        interface(yMax);
+        interface(yMax, xMax);
 
         mobspawner(playerwin, pryMax, prxMax);
         

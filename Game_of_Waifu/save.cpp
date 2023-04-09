@@ -6,9 +6,8 @@ using namespace std;
 igame fresh = {true,0,0,0,10,10,1,0,Inventory()};//{Item(1,300,"Healthy Armor",1,4),Item(),Item()}};
 Game current_game = Game(fresh);
 
-Game::Game(igame s) {
-    this->setting = s;
-}
+Game::Game(igame s) { this->setting = s; }
+Inventory Game::getInventory() { return this->setting.inventory; }
 
 void Game::saveAll() {
     ofstream out;

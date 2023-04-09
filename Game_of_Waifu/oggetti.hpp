@@ -1,11 +1,12 @@
 #include <string.h>
+#define CATEGORIES 2
 
 class Item {
     protected:
-        int id, price, amount, category;
+        int id, price, modifiers[2];
         char name[20];
     public:
-        Item(int id=0, int price=0, char name[]="ciao", int category=0, int amount=0);
+        Item(int id=0, int price=0, char name[]="ciao");
         int getId();
         int getPrice();
         void getName(char* name);

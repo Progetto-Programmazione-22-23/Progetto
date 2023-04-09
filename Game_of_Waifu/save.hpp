@@ -25,5 +25,5 @@ class Game {
         int getVita();
         void setMaxVita(int x);
         int getMaxVita();
-        //Inventory getInventory();
+        Inventory getInventory();
 };
