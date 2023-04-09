@@ -1,5 +1,4 @@
 #include <ncurses.h>
-#include "save.cpp"
 
 #define GRAVITY 0.4
 #define JUMP_VELOCITY -3
