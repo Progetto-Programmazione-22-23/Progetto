@@ -2,7 +2,9 @@
 
 struct igame {
     bool nuovo;
-    int xplayer, yplayer, money, vita, maxvita, damage, armor;
+    int xplayer, yplayer, money, vita, maxvita, damage, res;
+    Inventory inventory;
+    //Inventory inventory;
 
 };
 
@@ -23,4 +25,5 @@ class Game {
         int getVita();
         void setMaxVita(int x);
         int getMaxVita();
+        //Inventory getInventory();
 };

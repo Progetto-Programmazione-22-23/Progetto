@@ -1,7 +1,8 @@
 #include "oggetti.hpp"
-#include <string.h>
 
-Item::Item(int id, int price, char* name, int category, int amount) {
+Item allItems[2] = {Item(),Item(1)};
+
+Item::Item(int id, int price, char name[], int category, int amount) {
     this->id = id;
     this->price = price;
     strcpy(this->name, name);
@@ -12,12 +13,24 @@ int Item::getId() { return id; }
 int Item::getPrice() { return price; }
 void Item::getName(char* name) { strcpy(name,this->name); }
 
+Inventory::Inventory(pitemlist inv) {
+    this->inv = inv;
+    for(int i=0;i<3;i++) {
+        this->hotbar[i] = Item();
+        this->armor[i] = Item();
+    }
+}
+void Inventory::setBars(Item hotbar[], Item armor[]) {
+    for(int i=0;i<3;i++) {
+        this->hotbar[i] = hotbar[i];
+        this->armor[i] = armor[i];
+    }
+}
+Item Inventory::getBarItem(bool hot_armor, int i) {
+    if(hot_armor) return this->hotbar[i];
+    else return this->armor[i];
+}
+pitemlist Inventory::getInventoryHead() { return this->inv;}
+
+
 //Item shop_list[2] = {Item(),Item(1,300,"Healthy Armor",1,4)}
-
-class Usable : public Item {
-
-};
-
-class PowerUp : public Item {
-
-};
