@@ -3,7 +3,7 @@
 using namespace std;
 
 //Item test = ;
-igame fresh = {true,0,0,0,10,10,1,0,Inventory()};//{Item(1,300,"Healthy Armor",1,4),Item(),Item()}};
+igame fresh = {true,0,0,0,10,14,1,0,Inventory()};//{Item(1,300,"Healthy Armor",1,4),Item(),Item()}};
 Game current_game = Game(fresh);
 
 Game::Game(igame s) { this->setting = s; }

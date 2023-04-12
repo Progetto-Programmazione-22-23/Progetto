@@ -1,6 +1,6 @@
 #include "oggetti.hpp"
 
-Item allItems[2] = {Item(),Item(1,10,"lmao")};
+Item allItems[2] = {Item(),Item(1,10,"lmam")};
 
 Item::Item(int id, int price, char name[]) {
     this->id = id;
@@ -27,7 +27,7 @@ void Inventory::setBars(Item hotbar[], Item armor[]) {
     }
 }
 Item Inventory::getBarItem(bool hot_armor, int i) {
-    if(hot_armor) return this->hotbar[i];
+    if(!hot_armor) return this->hotbar[i];
     else return this->armor[i];
 }
 pitemlist Inventory::getInventoryHead() { return this->inv;}

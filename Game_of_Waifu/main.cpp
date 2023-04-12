@@ -47,6 +47,7 @@ void interface(int yMax, int xMax){
     Inventory playerInv = current_game.getInventory();
     for(int i=0;i<3;i++) {
         char hotbar_item[20];
+        //sprintf(hotbar_item, "%d", playerInv.getBarItem(0,i).getId());
         playerInv.getBarItem(0,i).getName(hotbar_item);
         mvwprintw(stdscr, i+1, xMax-9, hotbar_item);
     }
@@ -91,7 +92,7 @@ void start(){
         // erase
 
         // controlla l'armatura WIP
-        current_game.setMaxVita(14);
+        //current_game.setMaxVita(14);
 
         interface(yMax, xMax);
 
