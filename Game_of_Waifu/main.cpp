@@ -2,11 +2,8 @@
 #include <string>
 #include <ctime>
 #include <cstdlib>
-#include <chrono>
-#include <thread>
 #include <cstring>
 #include "save.cpp"
-//#include "player.cpp"
 #include "player.cpp"
 #include "TonyEffe.cpp"
 using namespace std;
@@ -88,11 +85,10 @@ void start(){
     // Loop di gioco
     bool loop = true;
     while (loop){
-
-        // erase
+        erase();
 
         // controlla l'armatura WIP
-        //current_game.setMaxVita(14);
+        // current_game.setMaxVita(14);
 
         interface(yMax, xMax);
 
