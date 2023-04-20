@@ -46,7 +46,7 @@ void interface(int yMax, int xMax){
         char hotbar_item[20];
         sprintf(hotbar_item, "%d", playerInv.getBarItem(0,i).getPrice());
         //playerInv.getBarItem(0,i).getName(hotbar_item);
-        mvwprintw(stdscr, i+1, xMax-9, hotbar_item);
+        mvwprintw(stdscr, (yMax/20)-1, 40+(2*i), hotbar_item);
     }
 }
 

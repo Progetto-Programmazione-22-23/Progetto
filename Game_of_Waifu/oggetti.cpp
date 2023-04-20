@@ -1,13 +1,14 @@
 #include "oggetti.hpp"
 
-Item allItems[2];
+Item allItems[3];
 
 void loadItems() {
     std::ifstream in;
     in.open("items.txt");
     int a, b, i=0;
-    while(in>>a>>b) {
-        allItems[i] = Item(i, b, "bau");
+    char c[20];
+    while(in>>a>>b>>c) {
+        allItems[i] = Item(a, b, c);
         i++;
     }
 
@@ -38,11 +39,18 @@ void Inventory::setBars(Item hotbar[], Item armor[]) {
         this->armor[i] = armor[i];
     }
 }
+
+// hot_armor 0: hotbar, 1: armor
 Item Inventory::getBarItem(bool hot_armor, int i) {
     if(!hot_armor) return this->hotbar[i];
     else return this->armor[i];
 }
+void Inventory::setBarItem(bool hot_armor, int i, Item item) {
+    if(!hot_armor) this->hotbar[i] = item;
+    else this->armor[i] = item;
+}
 pitemlist Inventory::getInventoryHead() { return this->inv;}
+
 
 
 //Item shop_list[2] = {Item(),Item(1,300,"Healthy Armor",1,4)}

@@ -30,6 +30,8 @@ class Inventory {
         Inventory(pitemlist inv=NULL);
         void setBars(Item hotbar[], Item armor[]);
         Item getBarItem(bool hot_armor, int i);
+        void setBarItem(bool hot_armor, int i, Item item);
         pitemlist getInventoryHead();
+        
         //pitemlist insertInInv(Item el);
 };

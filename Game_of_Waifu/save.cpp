@@ -1,12 +1,19 @@
-
 #include "save.hpp"
 
 //Item test = ;
 igame fresh = {0,0,0,13,14,1,0,Inventory(),true};//{Item(1,300,"Healthy Armor",1,4),Item(),Item()}};
 Game current_game = Game(fresh);
 
-Game::Game(igame s) { this->setting = s; }
+Game::Game(igame s) { this->setting = s;  this->state = 0; }
 Inventory Game::getInventory() { return this->setting.inventory; }
+void Game::setInventory(Inventory inv) { this->setting.inventory = inv;}
+
+void debugging() {
+    current_game.setMoney(current_game.getMoney()+1);
+    //Inventory inv = current_game.getInventory();
+    //inv.setBarItem(0,1,allItems[1]);
+    //current_game.setInventory(inv);
+}
 
 void Game::saveAll() {
     std::ofstream out;
@@ -54,6 +61,8 @@ void Game::continueLast() {
     this->setting = last;
 }
 
+int Game::getState() { return this->state; }
+void Game::UpState() { this->state++;}
 
 bool Game::eNuovo() {
     return this->setting.nuovo2;

@@ -96,6 +96,8 @@ Player::Player(WINDOW * win, int y, int x, char c) {
         current_game.saveAll();
         loop = false;
         break;
+      case 'x':
+        debugging();
       case ERR:
         stop();
         break;

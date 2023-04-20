@@ -10,11 +10,14 @@ struct igame {
 
 class Game {
     igame setting;
+    int state;
 
     public:
         Game(igame s);
         void saveAll();
         void continueLast();
+        int getState();
+        void UpState();
         void setPlayerPos(int x, int y);
         int getPlayerX();
         int getPlayerY();
@@ -27,4 +30,6 @@ class Game {
         void setMaxVita(int x);
         int getMaxVita();
         Inventory getInventory();
+        void setInventory(Inventory inv);
+        
 };
