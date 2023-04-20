@@ -1,9 +1,9 @@
 #include "oggetti.cpp"
 
 struct igame {
-    bool nuovo;
     int xplayer, yplayer, money, vita, maxvita, damage, res;
     Inventory inventory;
+    bool nuovo2;
     //Inventory inventory;
 
 };
@@ -19,6 +19,7 @@ class Game {
         int getPlayerX();
         int getPlayerY();
         bool isNew();
+        bool eNuovo();
         void setMoney(int x);
         int getMoney();
         void setVita(int x);

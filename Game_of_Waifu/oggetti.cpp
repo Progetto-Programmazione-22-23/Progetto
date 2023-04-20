@@ -1,6 +1,18 @@
 #include "oggetti.hpp"
 
-Item allItems[2] = {Item(),Item(1,10,"lmam")};
+Item allItems[2];
+
+void loadItems() {
+    std::ifstream in;
+    in.open("items.txt");
+    int a, b, i=0;
+    while(in>>a>>b) {
+        allItems[i] = Item(i, b, "bau");
+        i++;
+    }
+
+    in.close();
+}
 
 Item::Item(int id, int price, char name[]) {
     this->id = id;

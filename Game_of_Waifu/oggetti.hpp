@@ -1,4 +1,5 @@
 #include <string.h>
+#include <fstream>
 #define CATEGORIES 2
 
 class Item {
@@ -11,6 +12,8 @@ class Item {
         int getPrice();
         void getName(char* name);
 };
+
+void loadItems();
 
 struct itemlist {
     Item val;

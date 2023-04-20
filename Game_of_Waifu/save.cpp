@@ -1,16 +1,15 @@
-#include <fstream>
+
 #include "save.hpp"
-using namespace std;
 
 //Item test = ;
-igame fresh = {true,0,0,0,10,14,1,0,Inventory()};//{Item(1,300,"Healthy Armor",1,4),Item(),Item()}};
+igame fresh = {0,0,0,13,14,1,0,Inventory(),true};//{Item(1,300,"Healthy Armor",1,4),Item(),Item()}};
 Game current_game = Game(fresh);
 
 Game::Game(igame s) { this->setting = s; }
 Inventory Game::getInventory() { return this->setting.inventory; }
 
 void Game::saveAll() {
-    ofstream out;
+    std::ofstream out;
     out.open("player.txt");
     out<<setting.xplayer<<"\n"
     <<setting.yplayer<<"\n"
@@ -29,7 +28,7 @@ void Game::continueLast() {
     igame last;
 
     int data, i=0;
-    ifstream in;
+    std::ifstream in;
     in.open("player.txt");
     Item hotbar[3], armor[3];
     while(in>>data) {
@@ -46,7 +45,7 @@ void Game::continueLast() {
     }
 
     in.close();
-    last.nuovo=false;
+    last.nuovo2=false;
 
     Inventory playerInv = Inventory();
     playerInv.setBars(hotbar, armor);
@@ -55,8 +54,9 @@ void Game::continueLast() {
     this->setting = last;
 }
 
-bool Game::isNew() {
-    return setting.nuovo;
+
+bool Game::eNuovo() {
+    return this->setting.nuovo2;
 }
 
 void Game::setPlayerPos(int x, int y) {

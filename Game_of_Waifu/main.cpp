@@ -47,14 +47,13 @@ void interface(int yMax, int xMax){
     Inventory playerInv = current_game.getInventory();
     for(int i=0;i<3;i++) {
         char hotbar_item[20];
-        //sprintf(hotbar_item, "%d", playerInv.getBarItem(0,i).getId());
-        playerInv.getBarItem(0,i).getName(hotbar_item);
+        sprintf(hotbar_item, "%d", playerInv.getBarItem(0,i).getPrice());
+        //playerInv.getBarItem(0,i).getName(hotbar_item);
         mvwprintw(stdscr, i+1, xMax-9, hotbar_item);
     }
 }
 
 void start(){
-
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
 
@@ -74,8 +73,9 @@ void start(){
     int pryMax, prxMax;
     getmaxyx(playerwin, pryMax, prxMax);
 
-    if(current_game.isNew())
+    if(current_game.eNuovo())
         current_game.setPlayerPos(2,pryMax-2);
+
 
     Player player = Player(playerwin, current_game.getPlayerY(), current_game.getPlayerX(), '@');
     start_color();
@@ -138,6 +138,7 @@ int main(int argc, char ** argv){
     int choice;
     int highlights = 0;
 
+    loadItems();
     while (1){
         for (int i = 0; i < 4; i++){                              // costruisco il menu
             if (i == highlights) wattron(menuwin, A_REVERSE);
