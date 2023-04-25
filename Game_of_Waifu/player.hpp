@@ -19,6 +19,7 @@ class Player {
         void move_right();
         void stop();
         void jump();
+        void attack();
         int getX();
         int getY();
         char getChar();

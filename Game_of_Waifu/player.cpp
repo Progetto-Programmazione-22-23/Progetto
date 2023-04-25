@@ -42,6 +42,12 @@ Player::Player(WINDOW * win, int y, int x, char c) {
     }
   }
 
+  void Player::attack() {
+    // booleano che controlla se ho un'arma selezionata
+    // true -> uso l'arma
+    // false -> attacco base corpo a corpo
+  }
+
   void Player::update() {
     // erase();
     if (this->is_jumping) {
@@ -89,6 +95,9 @@ Player::Player(WINDOW * win, int y, int x, char c) {
         break;
       case 'w':
         jump();
+        break;
+      case ' ':
+        attack();
         break;
       case '1':
         current_game.getInventory()->setSelected(1);
