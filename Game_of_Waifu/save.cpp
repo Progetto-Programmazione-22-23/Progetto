@@ -1,15 +1,17 @@
 #include "save.hpp"
+#include <iostream>
 
 //Item test = ;
 igame fresh = {0,0,0,13,14,1,0,Inventory(),true};//{Item(1,300,"Healthy Armor",1,4),Item(),Item()}};
 Game current_game = Game(fresh);
 
 Game::Game(igame s) { this->setting = s;  this->state = 0; }
-Inventory Game::getInventory() { return this->setting.inventory; }
+Inventory* Game::getInventory() { return &(this->setting.inventory); }
 void Game::setInventory(Inventory inv) { this->setting.inventory = inv;}
 
 void debugging() {
-    current_game.setMoney(current_game.getMoney()+1);
+    std::cout<<"sus";
+    //current_game.setMoney(current_game.getMoney()+1);
     //Inventory inv = current_game.getInventory();
     //inv.setBarItem(0,1,allItems[1]);
     //current_game.setInventory(inv);
@@ -46,8 +48,8 @@ void Game::continueLast() {
         else if(i==4) last.maxvita = data;
         else if(i==5) last.damage = data;
         else if(i==6) last.res = data;
-        else if(i<=9) hotbar[i-7] = allItems[data];
-        else if(i<=12) armor[i-10] = allItems[data];
+        else if(i<=9) hotbar[i-7] = getItem(allItems, data);
+        else if(i<=12) armor[i-10] = getItem(allItems, data);
         i++;
     }
 

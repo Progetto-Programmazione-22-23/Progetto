@@ -41,12 +41,18 @@ void interface(int yMax, int xMax){
     mvwprintw(stdscr, (yMax/20)-1 , 30, money);
     attroff(COLOR_PAIR(2));
 
-    Inventory playerInv = current_game.getInventory();
+    Inventory* playerInv = current_game.getInventory();
+    int spacing = 20;
     for(int i=0;i<3;i++) {
-        char hotbar_item[20];
-        sprintf(hotbar_item, "%d", playerInv.getBarItem(0,i).getPrice());
-        //playerInv.getBarItem(0,i).getName(hotbar_item);
-        mvwprintw(stdscr, (yMax/20)-1, 40+(2*i), hotbar_item);
+        char hotbar_item[29];
+        sprintf(hotbar_item, "[%d] ", i+1);
+        char item_name[25];
+        playerInv->getBarItem(0,i).getName(item_name);
+        strcat(hotbar_item, item_name);
+        if(i+1==playerInv->getSelected()) attron(COLOR_PAIR(4));
+        mvwprintw(stdscr, yMax-2, spacing, hotbar_item);
+        if(i+1==playerInv->getSelected()) attroff(COLOR_PAIR(4));
+        spacing += strlen(hotbar_item) + 3;
     }
 }
 
@@ -80,6 +86,7 @@ void start(){
     init_pair(1, COLOR_RED, COLOR_BLACK);
     init_pair(2, COLOR_GREEN, COLOR_BLACK);
     init_pair(3, 8, COLOR_BLACK);
+    init_pair(4, COLOR_BLACK, COLOR_WHITE);
 
 
     // Loop di gioco

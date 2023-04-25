@@ -90,6 +90,15 @@ Player::Player(WINDOW * win, int y, int x, char c) {
       case 'w':
         jump();
         break;
+      case '1':
+        current_game.getInventory()->setSelected(1);
+        break;
+      case '2':
+        current_game.getInventory()->setSelected(2);
+        break;
+      case '3':
+        current_game.getInventory()->setSelected(3);
+        break;
       case 'i':
         open_inventory();
       case 27:
@@ -98,6 +107,7 @@ Player::Player(WINDOW * win, int y, int x, char c) {
         break;
       case 'x':
         debugging();
+        break;
       case ERR:
         stop();
         break;
