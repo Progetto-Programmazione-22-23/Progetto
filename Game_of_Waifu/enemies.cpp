@@ -46,5 +46,5 @@ void Nemico::update() {
 
 void Nemico::display() {
     mvwaddch(curwin, y, x, character);
-    current_game.setPlayerPos(x, y);
+    // current_game.setPlayerPos(x, y);
 }
