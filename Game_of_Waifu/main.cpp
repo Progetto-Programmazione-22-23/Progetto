@@ -5,11 +5,10 @@
 #include <cstring>
 #include "save.cpp"
 #include "player.cpp"
-#include "TonyEffe.cpp"
 using namespace std;
 
 void mobspawner(WINDOW *win, int yM, int xM){
-    Tony tony = Tony(win, yM-2, xM-2, 0, 0);
+    //
 }
 
 void interface(int yMax, int xMax){
@@ -92,7 +91,7 @@ void start(){
     // Loop di gioco
     bool loop = true;
     while (loop){
-        erase();
+        // erase();
 
         // controlla l'armatura WIP
         // current_game.setMaxVita(14);
