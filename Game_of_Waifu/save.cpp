@@ -1,7 +1,5 @@
 #include "save.hpp"
-#include <iostream>
 
-//Item test = ;
 igame fresh = {0,0,0,13,14,1,0,Inventory(),true};//{Item(1,300,"Healthy Armor",1,4),Item(),Item()}};
 Game current_game = Game(fresh);
 
@@ -10,7 +8,7 @@ Inventory* Game::getInventory() { return &(this->setting.inventory); }
 void Game::setInventory(Inventory inv) { this->setting.inventory = inv;}
 
 void debugging() {
-    std::cout<<"sus";
+    //std::cout<<"sus";
     //current_game.setMoney(current_game.getMoney()+1);
     //Inventory inv = current_game.getInventory();
     //inv.setBarItem(0,1,allItems[1]);

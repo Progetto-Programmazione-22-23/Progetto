@@ -1,5 +1,4 @@
 #include "oggetti.hpp"
-#include <iostream>
 
 void spacePhrase(char s[]) {
     for(int i=0; i<strlen(s); i++) 
@@ -29,28 +28,27 @@ void loadItems() {
     int id, price, rarity, upgrade_id;
     char name[25], desc[60];
     bool shop, bar;
-    while(in>>id>>price>>name>>shop>>bar>>desc) {
+    while(in>>id>>price>>name>>shop>>bar>>rarity>>upgrade_id>>desc) {
         //std::cout<<id<<price<<name<<shop<<bar<<rarity<<upgrade_id<<desc<<"\n";
         spacePhrase(name);
         spacePhrase(desc);
         //allItems = addItem(allItems, Item(id,price,name,shop,bar,rarity,upgrade_id,desc));
-        allItems = addItem(allItems, Item(id,price,name,shop,bar,desc));
+        allItems = addItem(allItems, Item(id,price,name,shop,bar,rarity,upgrade_id,desc));
     }
     in.close();
 }
 
-//Item::Item(int id, int price, char name[], bool shoppable, bool hot_armor, int rarity, int upgrade, char desc[]) {
-Item::Item(int id, int price, char name[], bool shoppable, bool hot_armor, char desc[]) {
+Item::Item(int id, int price, char name[], bool shoppable, bool hot_armor, int rarity, int upgrade, char desc[]) {
+//Item::Item(int id, int price, char name[], bool shoppable, bool hot_armor, char desc[]) {
     this->id = id;
     this->price = price;
     strcpy(this->name, name);
-    /*
+    
     this->shoppable = shoppable;
     this->hot_armor = hot_armor;
     this->rarity = rarity;
     this->upgrade = upgrade;
     strcpy(this->desc, desc);
-    */
 }
 int Item::getId() { return id; }
 int Item::getPrice() { return price; }
@@ -58,8 +56,8 @@ void Item::getName(char* name) { strcpy(name,this->name); }
 void Item::getDesc(char* desc) { strcpy(desc,this->desc); }
 bool Item::isShoppable() { return shoppable; }
 bool Item::getBar() { return hot_armor; }
-//int Item::getRarity() { return rarity; }
-//int Item::upgradesFrom() { return upgrade; }
+int Item::getRarity() { return rarity; }
+int Item::upgradesFrom() { return upgrade; }
 
 Inventory::Inventory(pitemlist inv) {
     this->inv = inv;
@@ -90,3 +88,12 @@ void Inventory::setSelected(int hot) {
     this->selected = hot;
 }
 int Inventory::getSelected() { return selected; }
+bool Inventory::isActive(bool hot_armor, int id) {
+    if(!hot_armor) return hotbar[selected].getId() == id;
+    else {
+        bool found = false;
+        for(int i=0;i<3 && !found;i++) {
+            found = armor[i].getId() == id;
+        }
+    }
+}

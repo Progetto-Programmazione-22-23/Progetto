@@ -33,9 +33,8 @@ void interface(int yMax, int xMax){
 
     char money[8] = "Money: ";
     char dollars[10];
-    sprintf(dollars, "%d", current_game.getMoney());
+    sprintf(dollars, "%d$", current_game.getMoney());
     strcat(money,dollars);
-    strcat(money,"$");
     attron(COLOR_PAIR(2));
     mvwprintw(stdscr, (yMax/20)-1 , 30, money);
     attroff(COLOR_PAIR(2));
@@ -53,6 +52,10 @@ void interface(int yMax, int xMax){
         if(i+1==playerInv->getSelected()) attroff(COLOR_PAIR(4));
         spacing += strlen(hotbar_item) + 3;
     }
+
+    char testin[4];
+    sprintf(testin, "[%d] ", playerInv->getBarItem(0,1).getPrice());
+    //mvwprintw(stdscr, yMax-2, 70, testin);
 }
 
 void start(){
@@ -124,6 +127,7 @@ int main(int argc, char ** argv){
     initscr();
     noecho();
     cbreak();
+    curs_set(0);
 
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);

@@ -35,7 +35,7 @@ Player::Player(WINDOW * win, int y, int x, char c) {
     bool fast = true;
     if (x_velocity == 0) fast = false;
     if (!this->is_jumping) {
-      this->y_velocity = JUMP_VELOCITY;
+      this->y_velocity = JUMP_VELOCITY ;
       if (!fast) this->x_velocity = x_velocity*10;
       else this->x_velocity = x_velocity*1.5;
       this->is_jumping = true;
@@ -51,8 +51,10 @@ Player::Player(WINDOW * win, int y, int x, char c) {
   void Player::update() {
     // erase();
     if (this->is_jumping) {
+      double k = 1;
+      //if(current_game.getInventory()->) k = 1.5;
       //mvwaddch(curwin, y, x, ' ');
-      this->y_velocity += GRAVITY;
+      this->y_velocity += GRAVITY/k ;   // dividi per aumentare, molt. per diminuire
     }
     this->x += this->x_velocity;
     this->y += this->y_velocity;
