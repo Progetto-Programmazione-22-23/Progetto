@@ -55,7 +55,7 @@ void interface(int yMax, int xMax){
 
     char testin[4];
     sprintf(testin, "[%d] ", playerInv->getBarItem(0,1).getPrice());
-    //mvwprintw(stdscr, yMax-2, 70, testin);
+    mvwprintw(stdscr, yMax-2, 70, testin);
 }
 
 void start(){
