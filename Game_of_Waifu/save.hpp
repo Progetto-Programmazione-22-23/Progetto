@@ -1,7 +1,7 @@
 #include "oggetti.cpp"
 
 struct igame {
-    int xplayer, yplayer, money, vita, maxvita, damage, res;
+    double xplayer, yplayer, money, vita, stats[CATEGORIES];
     Inventory inventory;
     bool nuovo2;
     //Inventory inventory;
@@ -27,8 +27,10 @@ class Game {
         int getMoney();
         void setVita(int x);
         int getVita();
+        void updateStats();
         void setMaxVita(int x);
         int getMaxVita();
+        double getLuck();
         Inventory* getInventory();
         void setInventory(Inventory inv);
         

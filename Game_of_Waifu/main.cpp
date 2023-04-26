@@ -13,6 +13,8 @@ void mobspawner(WINDOW *win, int yM, int xM){
 
 void interface(int yMax, int xMax){
 
+    
+
     char cuori_pieni[15] ="";
     int actual, missing;
     for(actual=0;actual<current_game.getVita();actual++) {
@@ -52,10 +54,10 @@ void interface(int yMax, int xMax){
         if(i+1==playerInv->getSelected()) attroff(COLOR_PAIR(4));
         spacing += strlen(hotbar_item) + 3;
     }
-
+    
     char testin[4];
     sprintf(testin, "[%d] ", playerInv->getBarItem(0,1).getPrice());
-    mvwprintw(stdscr, yMax-2, 70, testin);
+    //mvwprintw(stdscr, yMax-2, 70, testin);
 }
 
 void start(){
@@ -93,12 +95,16 @@ void start(){
 
     // Loop di gioco
     bool loop = true;
+    int state = -1;
     while (loop){
         // erase();
 
         // controlla l'armatura WIP
         // current_game.setMaxVita(14);
-
+        if(state!=current_game.getState()) {
+            current_game.updateStats();
+            state = current_game.getState();
+        }
         interface(yMax, xMax);
 
         mobspawner(playerwin, pryMax, prxMax);

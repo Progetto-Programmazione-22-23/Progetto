@@ -1,6 +1,6 @@
 #include "save.hpp"
 
-igame fresh = {0,0,0,13,14,1,0,Inventory(),true};//{Item(1,300,"Healthy Armor",1,4),Item(),Item()}};
+igame fresh = {0,0,0,13,{14,1,0,0,0,0},Inventory(),true};//{Item(1,300,"Healthy Armor",1,4),Item(),Item()}};
 Game current_game = Game(fresh);
 
 Game::Game(igame s) { this->setting = s;  this->state = 0; }
@@ -15,16 +15,24 @@ void debugging() {
     //current_game.setInventory(inv);
 }
 
+void Game::updateStats() {
+    double s[CATEGORIES] = {};
+    for(int i=0;i<3;i++) {
+        for(int j=0;j<CATEGORIES;j++) {
+            s[j] += setting.inventory.getBarItem(1,i).getModifier(j);
+        }
+    }
+}
+
 void Game::saveAll() {
     std::ofstream out;
     out.open("player.txt");
     out<<setting.xplayer<<"\n"
     <<setting.yplayer<<"\n"
     <<setting.money<<"\n"
-    <<setting.vita<<"\n"
-    <<setting.maxvita<<"\n"
-    <<setting.damage<<"\n"
-    <<setting.res<<"\n";
+    <<setting.vita<<"\n";
+    for(int j=0;j<CATEGORIES;j++) 
+        out<<setting.stats[j]<<"\n";
     for(int j=0;j<2;j++) for(int i=0;i<3;i++) 
         out<<setting.inventory.getBarItem(j,i).getId()<<"\n";
     //for(pitemlist l = setting.inventory.getInventoryHead();l!=NULL;l=l->next)
@@ -34,7 +42,8 @@ void Game::saveAll() {
 void Game::continueLast() {
     igame last;
 
-    int data, i=0;
+    double data; 
+    int i=0;
     std::ifstream in;
     in.open("player.txt");
     Item hotbar[3], armor[3];
@@ -43,11 +52,9 @@ void Game::continueLast() {
         else if(i==1) last.yplayer = data;
         else if(i==2) last.money = data;
         else if(i==3) last.vita = data;
-        else if(i==4) last.maxvita = data;
-        else if(i==5) last.damage = data;
-        else if(i==6) last.res = data;
-        else if(i<=9) hotbar[i-7] = getItem(allItems, data);
-        else if(i<=12) armor[i-10] = getItem(allItems, data);
+        else if(i<=3+CATEGORIES) last.stats[i-4] = data; // i = 4
+        else if(i<=6+CATEGORIES) hotbar[i-(CATEGORIES+4)] = getItem(allItems, (int)data);
+        else if(i<=9+CATEGORIES) armor[i-(CATEGORIES+7)] = getItem(allItems, (int)data);
         i++;
     }
 
@@ -95,8 +102,8 @@ int Game::getVita() {
 }
 
 void Game::setMaxVita(int x) {
-    setting.maxvita = x;
+    setting.stats[0] = x;
 }
 int Game::getMaxVita() {
-    return setting.maxvita;
+    return setting.stats[0];
 }

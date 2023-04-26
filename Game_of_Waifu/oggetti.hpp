@@ -1,16 +1,18 @@
 #include <string.h>
 #include <fstream>
-#define CATEGORIES 2
+#define CATEGORIES 6
 
 class Item {
     protected:
-        int id, price, rarity, upgrade, modifiers[2];
+        int id, price, rarity, upgrade;
+        double modifiers[CATEGORIES];
         //int id, price, modifiers[2];
         char name[25], desc[60];
         bool shoppable=false, hot_armor=true;
     public:
         Item(int id=0, int price=0, char name[]="ciao", bool shoppable=false, bool hot_armor=true, int rarity=0, int upgrade=0, char desc[]="");
         //Item(int id=0, int price=0, char name[]="", bool shoppable=false, bool hot_armor=true, char desc[]="");
+        void setModifiers(int mods[]);
         int getId();
         int getPrice();
         void getName(char* name);
@@ -19,7 +21,8 @@ class Item {
         bool getBar();
         int upgradesFrom();
         int getRarity();
-        void setModifiers(int modifiers[]);
+        double getModifier(int i);
+        void setModifiers(double modifiers[]);
 };
 
 
