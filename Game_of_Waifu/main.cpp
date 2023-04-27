@@ -13,8 +13,6 @@ void mobspawner(WINDOW *win, int yM, int xM){
 
 void interface(int yMax, int xMax){
 
-    
-
     char cuori_pieni[15] ="";
     int actual, missing;
     for(actual=0;actual<current_game.getVita();actual++) {
@@ -25,33 +23,40 @@ void interface(int yMax, int xMax){
     mvwprintw(stdscr, (yMax/20)-1 , 9,cuori_pieni);
     attroff(COLOR_PAIR(1));
     char cuori_vuoti[15] = "";
-    for(missing=actual;missing<current_game.getMaxVita();missing++) {
+    for(missing=actual;missing<10+current_game.getMaxVita();missing++) {
         if(missing%2==0) strcat(cuori_vuoti,"<");
         else strcat(cuori_vuoti,"3");
     }
     attron(COLOR_PAIR(3));
     mvwprintw(stdscr, (yMax/20)-1 , 9+actual,cuori_vuoti);
-        attroff(COLOR_PAIR(3));
+    attroff(COLOR_PAIR(3));
 
-    char money[8] = "Money: ";
-    char dollars[10];
-    sprintf(dollars, "%d$", current_game.getMoney());
-    strcat(money,dollars);
+    char removeExtra[11];
+    for(int i=0;i<11-current_game.getMaxVita();i++)
+        strcat(removeExtra, " ");
+    mvwprintw(stdscr, (yMax/20)-1 , 19+current_game.getMaxVita(), removeExtra);
+
+    char money[18];
+    sprintf(money, "Money: %d$", current_game.getMoney());
     attron(COLOR_PAIR(2));
     mvwprintw(stdscr, (yMax/20)-1 , 30, money);
     attroff(COLOR_PAIR(2));
 
+    char values[80];
+    sprintf(values, "Forza %.1f | Magia %.1f | Resis. %.1f | Veloc. %.1f | Fortuna %.1f", 
+    current_game.getAtk(), current_game.getMagic(), current_game.getRes(), current_game.getSpeed(), current_game.getLuck());
+    mvwprintw(stdscr, (yMax/20)-1 , 45, values);
+
+
     Inventory* playerInv = current_game.getInventory();
     int spacing = 20;
     for(int i=0;i<3;i++) {
-        char hotbar_item[29];
-        sprintf(hotbar_item, "[%d] ", i+1);
-        char item_name[25];
+        char hotbar_item[29], item_name[25];
         playerInv->getBarItem(0,i).getName(item_name);
-        strcat(hotbar_item, item_name);
-        if(i+1==playerInv->getSelected()) attron(COLOR_PAIR(4));
+        sprintf(hotbar_item, "[%d] %s", i+1, item_name);
+        if(i==playerInv->getSelected()) attron(COLOR_PAIR(4));
         mvwprintw(stdscr, yMax-2, spacing, hotbar_item);
-        if(i+1==playerInv->getSelected()) attroff(COLOR_PAIR(4));
+        if(i==playerInv->getSelected()) attroff(COLOR_PAIR(4));
         spacing += strlen(hotbar_item) + 3;
     }
     
@@ -86,10 +91,10 @@ void start(){
 
     Player player = Player(playerwin, current_game.getPlayerY(), current_game.getPlayerX(), '@');
     start_color();
-    init_color(8,128,128,128);
+    //init_color(16,124,252,0);
     init_pair(1, COLOR_RED, COLOR_BLACK);
     init_pair(2, COLOR_GREEN, COLOR_BLACK);
-    init_pair(3, 8, COLOR_BLACK);
+    init_pair(3, 245, COLOR_BLACK);
     init_pair(4, COLOR_BLACK, COLOR_WHITE);
 
 

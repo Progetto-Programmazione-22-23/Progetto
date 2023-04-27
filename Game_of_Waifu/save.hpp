@@ -21,17 +21,18 @@ class Game {
         void setPlayerPos(int x, int y);
         int getPlayerX();
         int getPlayerY();
-        bool isNew();
         bool eNuovo();
         void setMoney(int x);
         int getMoney();
-        void setVita(int x);
-        int getVita();
+        void setVita(double x);
+        double getVita();
         void updateStats();
-        void setMaxVita(int x);
-        int getMaxVita();
+        double getMaxVita();
+        double getAtk();
+        double getMagic();
+        double getRes();
+        double getSpeed();
         double getLuck();
         Inventory* getInventory();
-        void setInventory(Inventory inv);
         
 };

@@ -1,11 +1,10 @@
 #include "save.hpp"
 
-igame fresh = {0,0,0,13,{14,1,0,0,0,0},Inventory(),true};//{Item(1,300,"Healthy Armor",1,4),Item(),Item()}};
+igame fresh = {0,0,0,7,{0,0,0,0,0,0},Inventory(),true};//{Item(1,300,"Healthy Armor",1,4),Item(),Item()}};
 Game current_game = Game(fresh);
 
 Game::Game(igame s) { this->setting = s;  this->state = 0; }
 Inventory* Game::getInventory() { return &(this->setting.inventory); }
-void Game::setInventory(Inventory inv) { this->setting.inventory = inv;}
 
 void debugging() {
     //std::cout<<"sus";
@@ -17,10 +16,15 @@ void debugging() {
 
 void Game::updateStats() {
     double s[CATEGORIES] = {};
-    for(int i=0;i<3;i++) {
-        for(int j=0;j<CATEGORIES;j++) {
+    for(int i=0;i<3;i++)
+        for(int j=0;j<CATEGORIES;j++)
             s[j] += setting.inventory.getBarItem(1,i).getModifier(j);
-        }
+
+    for(int j=0;j<CATEGORIES;j++)
+        s[j] += setting.inventory.getBarItem(0,setting.inventory.getSelected()).getModifier(j);
+    
+    for(int i=0;i<CATEGORIES;i++) {
+        setting.stats[i] = s[i];
     }
 }
 
@@ -94,16 +98,17 @@ int Game::getMoney() {
     return setting.money;
 }
 
-void Game::setVita(int x) {
+void Game::setVita(double x) {
     setting.vita = x;
 }
-int Game::getVita() {
+double Game::getVita() {
     return setting.vita;
 }
-
-void Game::setMaxVita(int x) {
-    setting.stats[0] = x;
-}
-int Game::getMaxVita() {
+double Game::getMaxVita() {
     return setting.stats[0];
 }
+double Game::getAtk() { return setting.stats[1];}
+double Game::getMagic(){ return setting.stats[2];}
+double Game::getRes(){ return setting.stats[3];}
+double Game::getSpeed(){ return setting.stats[4];}
+double Game::getLuck(){ return setting.stats[5];}

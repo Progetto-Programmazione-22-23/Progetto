@@ -1,5 +1,5 @@
 #include "oggetti.hpp"
-#include <iostream>
+//#include <iostream>
 
 void spacePhrase(char s[]) {
     for(int i=0; i<strlen(s); i++) 
@@ -106,5 +106,6 @@ bool Inventory::isActive(bool hot_armor, int id) {
         for(int i=0;i<3 && !found;i++) {
             found = armor[i].getId() == id;
         }
+        return found;
     }
 }

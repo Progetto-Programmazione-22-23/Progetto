@@ -102,15 +102,15 @@ Player::Player(WINDOW * win, int y, int x, char c) {
         attack();
         break;
       case '1':
-        current_game.getInventory()->setSelected(1);
+        current_game.getInventory()->setSelected(0);
         current_game.UpState();
         break;
       case '2':
-        current_game.getInventory()->setSelected(2);
+        current_game.getInventory()->setSelected(1);
         current_game.UpState();
         break;
       case '3':
-        current_game.getInventory()->setSelected(3);
+        current_game.getInventory()->setSelected(2);
         current_game.UpState();
         break;
       case 'i':
