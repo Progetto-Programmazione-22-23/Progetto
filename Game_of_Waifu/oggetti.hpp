@@ -42,6 +42,8 @@ class Inventory {
         pitemlist inv;
         Item hotbar[3], armor[3];
         int selected;
+        Item remove(int index);
+        int firstSlot(bool hot_armor);
     public:
         Inventory(pitemlist inv=NULL);
         void setBars(Item hotbar[], Item armor[]);
@@ -51,6 +53,8 @@ class Inventory {
         void setSelected(int hot);
         int getSelected();
         bool isActive(bool hot_armor, int id);
+        void giveItem(Item item);
+        void equip(int index);
         
         //pitemlist insertInInv(Item el);
 };

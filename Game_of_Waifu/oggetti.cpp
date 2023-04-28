@@ -75,13 +75,42 @@ Inventory::Inventory(pitemlist inv) {
         this->hotbar[i] = Item();
         this->armor[i] = Item();
     }
-    this->selected = 1;
+    this->selected = 0;
 }
 void Inventory::setBars(Item hotbar[], Item armor[]) {
     for(int i=0;i<3;i++) {
         this->hotbar[i] = hotbar[i];
         this->armor[i] = armor[i];
     }
+}
+
+int Inventory::firstSlot(bool hot_armor) {
+    int free=-1;
+    if(!hot_armor)
+        for(int i=0;i<3 && free<0;i++)
+            
+    return free;
+}
+Item Inventory::remove(int index) {
+    Item removed;
+    if(index==0) {
+        removed = this->inv->val;
+        this->inv = this->inv->next;
+    }
+    else {
+        pitemlist t = this->inv;
+        for(int i=0;i<index-1 && t!=NULL;i++) t = t->next;
+        
+        if(t!=NULL) {
+            removed = t->next->val;
+            t->next = t->next->next;
+        }
+    }
+    
+    return removed;
+}
+void Inventory::giveItem(Item item) {
+    this->inv = addItem(this->inv, item);
 }
 
 

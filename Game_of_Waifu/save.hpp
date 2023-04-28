@@ -1,7 +1,7 @@
 #include "oggetti.cpp"
 
 struct igame {
-    double xplayer, yplayer, money, vita, stats[CATEGORIES];
+    double xplayer, yplayer, map, money, vita, stats[CATEGORIES];
     Inventory inventory;
     bool nuovo2;
     //Inventory inventory;

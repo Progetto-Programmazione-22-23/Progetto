@@ -1,6 +1,6 @@
 #include "save.hpp"
 
-igame fresh = {0,0,0,7,{0,0,0,0,0,0},Inventory(),true};//{Item(1,300,"Healthy Armor",1,4),Item(),Item()}};
+igame fresh = {0,0,0,0,7,{0,0,0,0,0,0},Inventory(),true};//{Item(1,300,"Healthy Armor",1,4),Item(),Item()}};
 Game current_game = Game(fresh);
 
 Game::Game(igame s) { this->setting = s;  this->state = 0; }
@@ -33,13 +33,15 @@ void Game::saveAll() {
     out.open("player.txt");
     out<<setting.xplayer<<"\n"
     <<setting.yplayer<<"\n"
+    <<setting.map<<"\n"
     <<setting.money<<"\n"
     <<setting.vita<<"\n";
     for(int j=0;j<CATEGORIES;j++) 
         out<<setting.stats[j]<<"\n";
     for(int j=0;j<2;j++) for(int i=0;i<3;i++) 
         out<<setting.inventory.getBarItem(j,i).getId()<<"\n";
-    //for(pitemlist l = setting.inventory.getInventoryHead();l!=NULL;l=l->next)
+    for(pitemlist l = setting.inventory.getInventoryHead();l!=NULL;l=l->next)
+        out<<l->val.getId()<<"\n";
     out.close();
 }
 
@@ -51,21 +53,23 @@ void Game::continueLast() {
     std::ifstream in;
     in.open("player.txt");
     Item hotbar[3], armor[3];
+    Inventory playerInv = Inventory();
     while(in>>data) {
         if(i==0) last.xplayer = data;
         else if(i==1) last.yplayer = data;
-        else if(i==2) last.money = data;
-        else if(i==3) last.vita = data;
-        else if(i<=3+CATEGORIES) last.stats[i-4] = data; // i = 4
-        else if(i<=6+CATEGORIES) hotbar[i-(CATEGORIES+4)] = getItem(allItems, (int)data);
-        else if(i<=9+CATEGORIES) armor[i-(CATEGORIES+7)] = getItem(allItems, (int)data);
+        else if(i==2) last.map = data;
+        else if(i==3) last.money = data;
+        else if(i==4) last.vita = data;
+        else if(i<=4+CATEGORIES) last.stats[i-5] = data; // i = 4
+        else if(i<=7+CATEGORIES) hotbar[i-(CATEGORIES+5)] = getItem(allItems, (int)data);
+        else if(i<=10+CATEGORIES) armor[i-(CATEGORIES+8)] = getItem(allItems, (int)data);
+        else playerInv.giveItem(getItem(allItems, (int)data));
         i++;
     }
 
     in.close();
     last.nuovo2=false;
 
-    Inventory playerInv = Inventory();
     playerInv.setBars(hotbar, armor);
     last.inventory = playerInv;
     
