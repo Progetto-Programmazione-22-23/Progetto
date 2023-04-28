@@ -3,4 +3,4 @@
 3 12 Zampa-di-Baby-Bunny 0 0 1 0 -a- 4 9 2 3 9 10
 4 69 Rabadon 0 0 5 0 -miao- 0 0 0 0 0 0
 5 420 Faccetta-Nera 0 0 6 0 -bau- 0 0 0 0 0 0
-6 20 Redbull 0 0 1 0 -Ti mette le ali- 0 0 0 0 0 0
+6 20 Redbull 0 0 1 0 Ti-mette-le-ali 0 0 0 0 0 0
