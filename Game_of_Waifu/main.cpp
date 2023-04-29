@@ -8,10 +8,10 @@
 #include "enemies.cpp"
 using namespace std;
 
-void mobspawner(Mob k){
-    //k.update();
-    k.display();
-}
+// void mobspawner(Mob k){
+//     //k.update();
+//     k.display();
+// }
 
 void interface(int yMax, int xMax){
 
@@ -99,7 +99,7 @@ void start(){
     init_pair(3, 245, COLOR_BLACK);
     init_pair(4, COLOR_BLACK, COLOR_WHITE);
 
-    Mob koopa = Mob(playerwin, pryMax-2, prxMax/2, 'M', 0, 0);
+    // Mob koopa = Mob(playerwin, pryMax-2, prxMax/2, 'M', 0, 0);
 
 
     // Loop di gioco
@@ -116,7 +116,7 @@ void start(){
         }
         interface(yMax, xMax);
 
-        mobspawner(koopa);
+        // mobspawner(koopa);
         
         //erase();
         box(playwin, 0, 0);
@@ -198,5 +198,3 @@ int main(int argc, char ** argv){
 
     return 0;
 }
-
-

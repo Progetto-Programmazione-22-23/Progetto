@@ -52,7 +52,7 @@ Player::Player(WINDOW * win, int y, int x, char c) {
     mvwaddch(curwin, y, x, ' ');
     // erase();
     if (this->is_jumping) {
-      double k = 1.5;
+      double k = 1;
       //if(current_game.getInventory()->) k = 1.5;
       this->y_velocity += GRAVITY/k ;   // dividi per aumentare, molt. per diminuire
     }
