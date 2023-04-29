@@ -49,11 +49,11 @@ Player::Player(WINDOW * win, int y, int x, char c) {
   }
 
   void Player::update() {
+    mvwaddch(curwin, y, x, ' ');
     // erase();
     if (this->is_jumping) {
-      double k = 1;
+      double k = 1.5;
       //if(current_game.getInventory()->) k = 1.5;
-      //mvwaddch(curwin, y, x, ' ');
       this->y_velocity += GRAVITY/k ;   // dividi per aumentare, molt. per diminuire
     }
     this->x += this->x_velocity;

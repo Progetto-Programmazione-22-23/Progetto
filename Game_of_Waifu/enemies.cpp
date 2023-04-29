@@ -1,36 +1,37 @@
 #include "enemies.hpp"
 
-Nemico::Nemico (WINDOW * win, int y, int x, int xv, int yv) {
+Mob::Mob (WINDOW * win, int y, int x, char ch, int xv, int yv) {
     this->curwin = win;
     this->x = x;
     this->y = y;
+    this->character = ch;
     this->x_velocity = xv;
     this->y_velocity = yv;
     getmaxyx(curwin, yMax, xMax);
 }
 
-void Nemico::stop() {
+void Mob::stop() {
     this->x_velocity = 0;
     this->y_velocity = 0;
 }
 
-int Nemico::getX() {
+int Mob::getX() {
     return this->x;
 }
 
-int Nemico::getY() {
+int Mob::getY() {
     return this->y;
 }
 
-char Nemico::getChar() {
+char Mob::getChar() {
     return this->character;
 }
 
-int Nemico::random(int max) {
+int Mob::random(int max) {
     return rand() % max;
 }
 
-void Nemico::update() {
+void Mob::update() {
     // erase();
     this->x += this->x_velocity;
     this->y += this->y_velocity;
@@ -44,7 +45,7 @@ void Nemico::update() {
     }
 }
 
-void Nemico::display() {
+void Mob::display() {
     mvwaddch(curwin, y, x, character);
     // current_game.setPlayerPos(x, y);
 }

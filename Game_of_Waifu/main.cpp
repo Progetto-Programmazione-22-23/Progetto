@@ -5,10 +5,12 @@
 #include <cstring>
 #include "save.cpp"
 #include "player.cpp"
+#include "enemies.cpp"
 using namespace std;
 
-void mobspawner(WINDOW *win, int yM, int xM){
-    //
+void mobspawner(Mob k){
+    //k.update();
+    k.display();
 }
 
 void interface(int yMax, int xMax){
@@ -97,6 +99,8 @@ void start(){
     init_pair(3, 245, COLOR_BLACK);
     init_pair(4, COLOR_BLACK, COLOR_WHITE);
 
+    Mob koopa = Mob(playerwin, pryMax-2, prxMax/2, 'M', 0, 0);
+
 
     // Loop di gioco
     bool loop = true;
@@ -112,7 +116,7 @@ void start(){
         }
         interface(yMax, xMax);
 
-        mobspawner(playerwin, pryMax, prxMax);
+        mobspawner(koopa);
         
         //erase();
         box(playwin, 0, 0);

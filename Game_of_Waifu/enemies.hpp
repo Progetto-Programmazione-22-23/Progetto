@@ -8,7 +8,7 @@
 #define HORIZONTAL_ACCELERATION 2
 #define HORIZONTAL_MAX_VELOCITY 2
 
-class Nemico{
+class Mob{
     protected:
         int life;
         int y, x, yMax, xMax;
@@ -17,7 +17,7 @@ class Nemico{
         bool flyer;
         WINDOW * curwin;
     public:
-        Nemico(WINDOW * win = NULL, int y = 0, int x = 0, int xv = 0, int yv = 0);
+        Mob(WINDOW * win = NULL, int y = 0, int x = 0, char ch = ' ', int xv = 0, int yv = 0);
         void stop();
         int getX();
         int getY();
