@@ -30,8 +30,8 @@ class Mobs{
     protected:
         pnemici Moblist;
     public:
-        void InsMob(pnemici hd);
-        void Death(pnemici hd, nemico x);
+        pnemici InsMob(pnemici hd, Mob x);
+        void Death(pnemici hd);
         void update(pnemici hd);
         void display(pnemici hd);
 };

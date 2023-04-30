@@ -32,12 +32,21 @@ int Mob::random(int max) {
     return rand() % max;
 }
 
-void Mobs::InsMob(pnemici hd) {
-    // headins o taleins, ancora non so 
+pnemici Mobs::InsMob(pnemici hd, Mob x) {
+    pnemici nhd = NULL;
+    nhd->nem = x;
+    nhd->next = hd;
+    return nhd;
 }
 
-void Mobs::Death(pnemici hd, nemico x) {
-    
+void Mobs::Death(pnemici hd) {
+    while (hd->nem.getlife() == 0){
+         hd = hd->next;
+    }
+    while (hd->next != NULL){
+        if (hd->next->nem.getlife() == 0) hd->next = hd->next->next;
+        hd = hd->next;
+    }
 }
 
 void Mobs::update(pnemici hd) {
