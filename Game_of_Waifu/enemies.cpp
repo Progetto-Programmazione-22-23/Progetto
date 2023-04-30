@@ -1,46 +1,53 @@
 #include "enemies.hpp"
 
-
-
-Mob::Mob (WINDOW * win, int y, int x, char ch) {
-    this->nemlist->curwin = win;
-    this->nemlist->x = x;
-    this->nemlist->y = y;
-    this->nemlist->character = ch;
+Mob::Mob (WINDOW * win, int l, int y, int x, char ch, bool fl) {
+    this->curwin = win;
+    this->life = l;
+    this->x = x;
+    this->y = y;
+    this->character = ch;
 }
 
 int Mob::getX() {
-    return this->nemlist->x;
+    return this->x;
 }
 
 int Mob::getY() {
-    return this->nemlist->y;
+    return this->y;
 }
 
 char Mob::getChar() {
-    return this->nemlist->character;
+    return this->character;
+}
+
+WINDOW* Mob::getwin(){
+    return this->curwin;
+}
+
+int Mob::getlife(){
+    return this->life;
 }
 
 int Mob::random(int max) {
     return rand() % max;
 }
 
-void Mob::InsMob(pnemici hd) {
+void Mobs::InsMob(pnemici hd) {
     // headins o taleins, ancora non so 
 }
 
-void Mob::Death(pnemici hd) {
-    // remove from list
+void Mobs::Death(pnemici hd, nemico x) {
+    
 }
 
-void Mob::update(pnemici hd) {
+void Mobs::update(pnemici hd) {
     // movimento dei vari mob verso il player
     // simil pathfinding
 }
 
-void Mob::display(pnemici hd) {
+void Mobs::display(pnemici hd) {
     while(hd != NULL){
-        mvwaddch(hd->curwin, hd->y, hd->x, hd->character);
+        mvwaddch(hd->nem.getwin(), hd->nem.getY(), hd->nem.getX(), hd->nem.getChar());
         hd = hd->next;
     }
 }
