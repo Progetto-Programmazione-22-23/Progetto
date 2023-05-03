@@ -11,6 +11,8 @@ using namespace std;
 
 void interface(int yMax, int xMax){
 
+/*ok*/
+
     char cuori_pieni[15] ="";
     int actual, missing;
     for(actual=0;actual<current_game.getVita();actual++) {
@@ -91,6 +93,25 @@ void start(){
     init_pair(2, COLOR_GREEN, COLOR_BLACK);
     init_pair(3, 245, COLOR_BLACK);
     init_pair(4, COLOR_BLACK, COLOR_WHITE);
+
+
+
+    // disegna la mappa
+    // mvwprintw(playerwin, 1, 1, "+--------------------------------+");
+    // for (int i = 2; i < 10; i++) {
+    //     mvwprintw(playerwin, i, 1, "|                                |");
+    // }
+    // mvwprintw(playerwin, 10, 1, "|                                                                      *****               ");
+    // mvwprintw(playerwin, 11, 1, "|                                                                     ********             ");
+    // mvwprintw(playerwin, 12, 1, "|                                              ____                    *****               ");
+    // mvwprintw(playerwin, 13, 1, "|                  _______                   _/    \_                                      ");
+    // mvwprintw(playerwin, 14, 1, "|                //       \\               _/        \_              _______               ");
+    // mvwprintw(playerwin, 15, 1, "|               //         \\            _/            \            |_?_|_$_|              ");
+    // mvwprintw(playerwin, 16, 1, "|              //           \\__________/               \                           __     ");
+    // mvwprintw(playerwin, 17, 1, "|             //                                         \                        x|       ");
+    // mvwprintw(playerwin, 18, 1, "|____________//___________________________________________\_______________________x|_______");
+
+
 
     /*MOB LIST*/
     Mob Koopa (playerwin, 3, 1, pryMax-2, prxMax/2, 'K', false);
