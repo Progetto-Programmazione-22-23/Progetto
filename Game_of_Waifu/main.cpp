@@ -4,14 +4,10 @@
 #include <cstdlib>
 #include <cstring>
 #include "save.cpp"
-#include "player.cpp"
+// #include "player.cpp"
+#include "enemies.cpp"
 // #include "enemies.cpp"
 using namespace std;
-
-// void mobspawner(Mob k){
-//     //k.update();
-//     k.display();
-// }
 
 void interface(int yMax, int xMax){
 
@@ -78,8 +74,6 @@ void start(){
     int pyMax, pxMax;
     getmaxyx(playwin, pyMax, pxMax);
 
-    //Player player = Player(playwin, g.player_pos[1], g.player_pos[0], '@');
-
     WINDOW * playerwin = newwin(yMax-(yMax/10)-2, xMax-(xMax/10)-2, yMax/20+2, xMax/20+1);
     box(playerwin, 0, 0);
     keypad(playerwin, true);
@@ -90,7 +84,6 @@ void start(){
     if(current_game.eNuovo())
         current_game.setPlayerPos(2,pryMax-2);
 
-
     Player player = Player(playerwin, current_game.getPlayerY(), current_game.getPlayerX(), '@');
     start_color();
     //init_color(16,124,252,0);
@@ -99,15 +92,21 @@ void start(){
     init_pair(3, 245, COLOR_BLACK);
     init_pair(4, COLOR_BLACK, COLOR_WHITE);
 
-    // Mob koopa = Mob(playerwin, pryMax-2, prxMax/2, 'M', 0, 0);
+    /*MOB LIST*/
+    Mob Koopa (playerwin, 3, 1, pryMax-2, prxMax/2, 'K', false);
+    Mob Pidgeon (playerwin, 3, 1, pryMax/2, prxMax/2+15, 'V', true);
 
+    pnemici hd = NULL; 
+    hd = InsMob(hd, Koopa);
+    hd = InsMob(hd, Pidgeon);
 
     // Loop di gioco
+    int cont = 0;
     bool loop = true;
     int state = -1;
     while (loop){
         // erase();
-
+        cont++;
         // controlla l'armatura WIP
         // current_game.setMaxVita(14);
         if(state!=current_game.getState()) {
@@ -116,7 +115,9 @@ void start(){
         }
         interface(yMax, xMax);
 
-        // mobspawner(koopa);
+        /*CONTROLLO DEI MOB*/
+        if (cont%3 == 0) update(hd, player, pryMax-6);
+        display(hd);
         
         //erase();
         box(playwin, 0, 0);

@@ -1,11 +1,13 @@
 #include "enemies.hpp"
 
-Mob::Mob (WINDOW * win, int l, int y, int x, char ch, bool fl) {
+Mob::Mob (WINDOW * win, int l, int d, int y, int x, char ch, bool fl) {
     this->curwin = win;
     this->life = l;
+    this->dmg = d;
     this->x = x;
     this->y = y;
     this->character = ch;
+    this->fly = fl;
 }
 
 int Mob::getX() {
@@ -28,33 +30,67 @@ int Mob::getlife(){
     return this->life;
 }
 
+bool Mob::getfly(){
+    return this->fly;
+}
+
 int Mob::random(int max) {
     return rand() % max;
 }
 
-pnemici Mobs::InsMob(pnemici hd, Mob x) {
-    pnemici nhd = NULL;
+void Mob::mvleft(){
+    this->x--;
+}
+
+void Mob::mvright(){
+    this->x++;
+}
+
+void Mob::mvup(){
+    this->y--;
+}
+
+void Mob::mvdown(){
+    this->y++;
+}
+
+pnemici InsMob(pnemici hd, Mob x) {
+    pnemici nhd = new nemico;
     nhd->nem = x;
     nhd->next = hd;
     return nhd;
 }
 
-void Mobs::Death(pnemici hd) {
+pnemici Death(pnemici hd) {
     while (hd->nem.getlife() == 0){
          hd = hd->next;
     }
+    pnemici nhd = hd;
     while (hd->next != NULL){
         if (hd->next->nem.getlife() == 0) hd->next = hd->next->next;
         hd = hd->next;
     }
+    return nhd;
 }
 
-void Mobs::update(pnemici hd) {
-    // movimento dei vari mob verso il player
-    // simil pathfinding
+void update(pnemici hd, Player pl, int minY) {                                        // simil pathfinding
+    while (hd != NULL) {
+        mvwaddch(hd->nem.getwin(), hd->nem.getY(), hd->nem.getX(), ' ');
+        if (!hd->nem.getfly()){
+            if (pl.getX() < hd->nem.getX()) hd->nem.mvleft();
+            else if (pl.getX() > hd->nem.getX()) hd->nem.mvright();
+        } else if (hd->nem.getfly()){
+            if (pl.getX() < hd->nem.getX()) hd->nem.mvleft();
+            else if (pl.getX() > hd->nem.getX()) hd->nem.mvright();
+            if (pl.getY() < hd->nem.getY()) hd->nem.mvup();
+            else if (pl.getY() > hd->nem.getY() && hd->nem.getY() < minY) hd->nem.mvdown();
+        }
+        if (pl.getX() == hd->nem.getX() && pl.getY() == hd->nem.getY()) /*takedmg(this->dmg)*/; // danni al player
+        hd = hd->next;
+    }
 }
 
-void Mobs::display(pnemici hd) {
+void display(pnemici hd) {
     while(hd != NULL){
         mvwaddch(hd->nem.getwin(), hd->nem.getY(), hd->nem.getX(), hd->nem.getChar());
         hd = hd->next;
