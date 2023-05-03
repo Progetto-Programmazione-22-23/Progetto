@@ -23,6 +23,7 @@ class Player {
         int getX();
         int getY();
         char getChar();
+        void takedmg(int d);
         void getmv(bool &loop);
         void update();
         void display();

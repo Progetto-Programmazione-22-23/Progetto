@@ -1,23 +1,30 @@
 #include <ncurses.h>
 #include <stdlib.h>
+#include "player.cpp"
 //#include "save.cpp"
 
 class Mob{
     protected:
-        int life;
+        int life, dmg;
         int x, y;
         char character;
         bool fly;
         WINDOW *curwin;
     public:
-        Mob(WINDOW * win = NULL, int l = 0, int y = 0, int x = 0, char ch = ' ', bool f = false);
+        Mob(WINDOW * win = NULL, int l = 0, int d = 0, int y = 0, int x = 0, char ch = ' ', bool f = false);
         int getX();
         int getY();
         char getChar();
         int getlife();
+        bool getfly();
         WINDOW* getwin();
+
         int random(int max);
         void stop();
+        void mvleft();
+        void mvright();
+        void mvup();
+        void mvdown();
 };
 
 struct nemico {
@@ -26,12 +33,7 @@ struct nemico {
 };
 typedef nemico* pnemici;
 
-class Mobs{
-    protected:
-        pnemici Moblist;
-    public:
-        pnemici InsMob(pnemici hd, Mob x);
-        void Death(pnemici hd);
-        void update(pnemici hd);
-        void display(pnemici hd);
-};
+pnemici InsMob(pnemici hd, Mob x);
+pnemici Death(pnemici hd);
+void update(pnemici hd, Player pl, int minY);
+void display(pnemici hd);
