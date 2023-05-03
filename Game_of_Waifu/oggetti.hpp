@@ -55,6 +55,7 @@ class Inventory {
         bool isActive(bool hot_armor, int id);
         void giveItem(Item item);
         void equip(int index);
+        void unequip(bool hot_armor, int index);
         
         //pitemlist insertInInv(Item el);
 };

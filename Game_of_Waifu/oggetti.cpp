@@ -86,9 +86,14 @@ void Inventory::setBars(Item hotbar[], Item armor[]) {
 
 int Inventory::firstSlot(bool hot_armor) {
     int free=-1;
-    if(!hot_armor)
-        for(int i=0;i<3 && free<0;i++)
-            
+    for(int i=0;i<3 && free<0;i++) {
+        if(!hot_armor) {
+            if(this->hotbar[i].getId() == 0) free = i;
+        }
+        else {
+            if(this->armor[i].getId() == 0) free = i;
+        }
+    }  
     return free;
 }
 Item Inventory::remove(int index) {
@@ -112,7 +117,14 @@ Item Inventory::remove(int index) {
 void Inventory::giveItem(Item item) {
     this->inv = addItem(this->inv, item);
 }
-
+void Inventory::equip(int index) {
+    Item item = Inventory::remove(index);
+    bool bar = item.getBar();
+    Inventory::setBarItem(bar, Inventory::firstSlot(bar), item);
+}
+void Inventory::unequip(bool hot_armor, int index) {
+    //Inventory::giveItem()
+}
 
 // hot_armor 0: hotbar, 1: armor
 Item Inventory::getBarItem(bool hot_armor, int i) {
