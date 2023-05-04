@@ -1,28 +1,41 @@
 #include <ncurses.h>
 #include <stdlib.h>
+#include "player.cpp"
 //#include "save.cpp"
 
-
-#define GRAVITY 0.4
-#define JUMP_VELOCITY -3
-#define HORIZONTAL_ACCELERATION 2
-#define HORIZONTAL_MAX_VELOCITY 2
-
-class Nemico{
+class Mob{
     protected:
-        int life;
-        int y, x, yMax, xMax;
-        float x_velocity, y_velocity;
+        int life, dmg;
+        int x, y;
         char character;
-        bool flyer;
-        WINDOW * curwin;
+        bool fly;
+        WINDOW *curwin;
     public:
-        Nemico(WINDOW * win = NULL, int y = 0, int x = 0, int xv = 0, int yv = 0);
-        void stop();
+        Mob(WINDOW * win = NULL, int l = 0, int d = 0, int y = 0, int x = 0, char ch = ' ', bool f = false);
         int getX();
         int getY();
         char getChar();
+        int getlife();
+        bool getfly();
+        WINDOW* getwin();
+        int getDmg();
+
         int random(int max);
-        void update();
-        void display();
+        void stop();
+        void mvleft();
+        void mvright();
+        void mvup();
+        void mvdown();
 };
+
+struct nemico {
+    Mob nem;
+    nemico * next;
+};
+typedef nemico* pnemici;
+
+pnemici InsMob(pnemici hd, Mob x);
+pnemici Death(pnemici hd);
+void update(pnemici hd, Player pl, int minY);
+void display(pnemici hd);
+void takeDmg(int dmg);

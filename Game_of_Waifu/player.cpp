@@ -42,18 +42,26 @@ Player::Player(WINDOW * win, int y, int x, char c) {
     }
   }
 
+  int ds = 1; // 0: destra, 1: sinistra
   void Player::attack() {
     // booleano che controlla se ho un'arma selezionata
     // true -> uso l'arma
     // false -> attacco base corpo a corpo
+    int s = current_game.getInventory()->getSelected();
+    int id = current_game.getInventory()->getBarItem(0,s).getId();
+    if(id!=0) {
+      if(id == 1) {
+        mvwaddch(curwin, current_game.getPlayerY(), current_game.getPlayerX()+ds, '-');
+      }
+    }
   }
 
   void Player::update() {
+    mvwaddch(curwin, y, x, ' ');
     // erase();
     if (this->is_jumping) {
       double k = 1;
       //if(current_game.getInventory()->) k = 1.5;
-      //mvwaddch(curwin, y, x, ' ');
       this->y_velocity += GRAVITY/k ;   // dividi per aumentare, molt. per diminuire
     }
     this->x += this->x_velocity;
@@ -91,15 +99,17 @@ Player::Player(WINDOW * win, int y, int x, char c) {
     switch(ch) {
       case 'd':
         move_right();
+        ds = 1;
         break;
       case 'a':
         move_left();
+        ds = -1;
         break;
       case 'w':
         jump();
         break;
       case ' ':
-        attack();
+        Player::attack();
         break;
       case '1':
         current_game.getInventory()->setSelected(0);
