@@ -137,20 +137,20 @@ void start(){
         interface(yMax, xMax);
 
         /*CONTROLLO DEI MOB*/
-        if (cont%3 == 0) update(hd, player, pryMax-6);
-        display(hd);
+        if (cont%3 == 0) update(hd, player, pryMax-6);  // ogni 3 loop muove i nemici
+        display(hd);    // disegna i nemici
         
         //erase();
-        box(playwin, 0, 0);
+        box(playwin, 0, 0); // aggiorna le finestre
         refresh();
         wrefresh(playwin);
         wrefresh(playerwin);
 
-        player.getmv(loop);
+        player.getmv(loop); // prende user input 
 
-        player.update();
+        player.update();    // aggiorna il pg
 
-        player.display();
+        player.display();   // disegna il pg
 
         napms(35);
     } 
