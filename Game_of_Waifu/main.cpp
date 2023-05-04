@@ -97,19 +97,19 @@ void start(){
 
 
     // disegna la mappa
-    // mvwprintw(playerwin, 1, 1, "+--------------------------------+");
-    // for (int i = 2; i < 10; i++) {
-    //     mvwprintw(playerwin, i, 1, "|                                |");
-    // }
-    // mvwprintw(playerwin, 10, 1, "|                                                                      *****               ");
-    // mvwprintw(playerwin, 11, 1, "|                                                                     ********             ");
-    // mvwprintw(playerwin, 12, 1, "|                                              ____                    *****               ");
-    // mvwprintw(playerwin, 13, 1, "|                  _______                   _/    \_                                      ");
-    // mvwprintw(playerwin, 14, 1, "|                //       \\               _/        \_              _______               ");
-    // mvwprintw(playerwin, 15, 1, "|               //         \\            _/            \            |_?_|_$_|              ");
-    // mvwprintw(playerwin, 16, 1, "|              //           \\__________/               \                           __     ");
-    // mvwprintw(playerwin, 17, 1, "|             //                                         \                        x|       ");
-    // mvwprintw(playerwin, 18, 1, "|____________//___________________________________________\_______________________x|_______");
+    mvwprintw(playerwin, 1, 1, "+--------------------------------+");
+    for (int i = 2; i < 10; i++) {
+        mvwprintw(playerwin, i, 1, "|                                |");
+    }
+    mvwprintw(playerwin, 10, 1, "|                                                                      *****               ");
+    mvwprintw(playerwin, 11, 1, "|                                                                     ********             ");
+    mvwprintw(playerwin, 12, 1, "|                                              ____                    *****               ");
+    mvwprintw(playerwin, 13, 1, "|                  _______                   _/    \_                                      ");
+    mvwprintw(playerwin, 14, 1, "|                //       \\               _/        \_              _______               ");
+    mvwprintw(playerwin, 15, 1, "|               //         \\            _/            \            |_?_|_$_|              ");
+    mvwprintw(playerwin, 16, 1, "|              //           \\__________/               \                           __     ");
+    mvwprintw(playerwin, 17, 1, "|             //                                         \                        x|       ");
+    mvwprintw(playerwin, 18, 1, "|____________//___________________________________________\_______________________x|_______");
 
 
 
