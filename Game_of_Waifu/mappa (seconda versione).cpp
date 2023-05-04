@@ -84,4 +84,4 @@ int main() {
     // ripristina lo stato precedente di ncurses e termina il programma
     endwin();
     return 0
-
+}
