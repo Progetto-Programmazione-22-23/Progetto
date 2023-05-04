@@ -12,7 +12,7 @@ class Player {
         bool is_jumping;
         char character;
         WINDOW * curwin;
-        WINDOW * inv;
+        // WINDOW * invnt;
     public:
         Player(WINDOW * win = NULL, int y = 0, int x = 0, char c = ' ');
         void move_left();

@@ -2,6 +2,7 @@
 
 Player::Player(WINDOW * win, int y, int x, char c) {
     this->curwin = win;
+    // this->invnt = inv;
     this->x = x;
     this->y = y;
     this->x_velocity = 0;
@@ -142,9 +143,11 @@ Player::Player(WINDOW * win, int y, int x, char c) {
   }
 
 void Player::open_inventory(){
-
-  // disegna una finestra sopra lo schermo
-  // deve anche mettere in pausa il gioco.
+  clear();
+  // clear del gioco
+  // disegna un box per l'inventario
+  // da le opzioni per muoversi nell'inventario ed uscire
+  // se esce deve ridisegnare l'inventario come quando si apre il gioco
 }
 
   void Player::display() {

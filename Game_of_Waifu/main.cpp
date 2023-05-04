@@ -69,13 +69,15 @@ void start(){
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
 
+    /*TUTTO (anche vita ed inventario rapido)*/
     WINDOW * playwin = newwin(yMax-(yMax/10), xMax-(xMax/10), yMax/20, xMax/20);
     // box(playwin, 0, 0);
     keypad(playwin, true);
     nodelay(playwin, TRUE);
     int pyMax, pxMax;
-    getmaxyx(playwin, pyMax, pxMax);
+    getmaxyx(playwin, pyMax, pxMax); 
 
+    /*FINESTRA CON PG*/
     WINDOW * playerwin = newwin(yMax-(yMax/10)-2, xMax-(xMax/10)-2, yMax/20+2, xMax/20+1);
     box(playerwin, 0, 0);
     keypad(playerwin, true);
@@ -97,19 +99,19 @@ void start(){
 
 
     // disegna la mappa
-    mvwprintw(playerwin, 1, 1, "+--------------------------------+");
-    for (int i = 2; i < 10; i++) {
-        mvwprintw(playerwin, i, 1, "|                                |");
-    }
-    mvwprintw(playerwin, 10, 1, "|                                                                      *****               ");
-    mvwprintw(playerwin, 11, 1, "|                                                                     ********             ");
-    mvwprintw(playerwin, 12, 1, "|                                              ____                    *****               ");
-    mvwprintw(playerwin, 13, 1, "|                  _______                   _/    \_                                      ");
-    mvwprintw(playerwin, 14, 1, "|                //       \\               _/        \_              _______               ");
-    mvwprintw(playerwin, 15, 1, "|               //         \\            _/            \            |_?_|_$_|              ");
-    mvwprintw(playerwin, 16, 1, "|              //           \\__________/               \                           __     ");
-    mvwprintw(playerwin, 17, 1, "|             //                                         \                        x|       ");
-    mvwprintw(playerwin, 18, 1, "|____________//___________________________________________\_______________________x|_______");
+    // mvwprintw(playerwin, 1, 1, "+--------------------------------+");
+    // for (int i = 2; i < 10; i++) {
+    //     mvwprintw(playerwin, i, 1, "|                                |");
+    // }
+    // mvwprintw(playerwin, 10, 1, "|                                                                      *****               ");
+    // mvwprintw(playerwin, 11, 1, "|                                                                     ********             ");
+    // mvwprintw(playerwin, 12, 1, "|                                              ____                    *****               ");
+    // mvwprintw(playerwin, 13, 1, "|                  _______                   _/    \_                                      ");
+    // mvwprintw(playerwin, 14, 1, "|                //       \\               _/        \_              _______               ");
+    // mvwprintw(playerwin, 15, 1, "|               //         \\            _/            \            |_?_|_$_|              ");
+    // mvwprintw(playerwin, 16, 1, "|              //           \\__________/               \                           __     ");
+    // mvwprintw(playerwin, 17, 1, "|             //                                         \                        x|       ");
+    // mvwprintw(playerwin, 18, 1, "|____________//___________________________________________\_______________________x|_______");
 
 
 
@@ -137,8 +139,8 @@ void start(){
         interface(yMax, xMax);
 
         /*CONTROLLO DEI MOB*/
-        if (cont%3 == 0) update(hd, player, pryMax-6);  // ogni 3 loop muove i nemici
-        display(hd);    // disegna i nemici
+        if (cont%3 == 0) update(hd, player, pryMax-6); // ogni 3 loop muove i nemici
+        display(hd); // disegna i nemici
         
         //erase();
         box(playwin, 0, 0); // aggiorna le finestre
@@ -148,11 +150,11 @@ void start(){
 
         player.getmv(loop); // prende user input 
 
-        player.update();    // aggiorna il pg
+        player.update(); // aggiorna il pg
 
-        player.display();   // disegna il pg
+        player.display(); // disegna il pg
 
-        napms(35);
+        napms(35); //ferma il loop per 35ms
     } 
 }
 
@@ -174,7 +176,7 @@ int main(int argc, char ** argv){
     wborder(menuwin, 0, 0, (int)'=', (int)'=', (int)'<', (int)'>', (int)'<', (int)'>');
     refresh();
     wrefresh(menuwin);
-    keypad(menuwin, true);         // to get key input (up, down, left, right);
+    keypad(menuwin, true); // to get key input (up, down, left, right);
     nodelay(stdscr, TRUE);
 
     string scelte[4] = {"start", "continue", "options", "info"};
@@ -183,14 +185,14 @@ int main(int argc, char ** argv){
 
     loadItems();
     while (1){
-        for (int i = 0; i < 4; i++){                              // costruisco il menu
+        for (int i = 0; i < 4; i++){ // costruisco il menu
             if (i == highlights) wattron(menuwin, A_REVERSE);
             mvwprintw(menuwin, i+1, 2, "%s", scelte[i].c_str());
             wattroff(menuwin, A_REVERSE);
         }
         choice = wgetch(menuwin);
 
-        switch(choice){                // mi muovo nel menu
+        switch(choice){ // mi muovo nel menu
             case KEY_UP:
                 highlights--;
                 if (highlights == -1) highlights = 0;
@@ -203,7 +205,7 @@ int main(int argc, char ** argv){
                 break;
         }
         
-        if (choice == 10){            // quando premo invio
+        if (choice == 10){ // quando premo invio
             break;
         }
     }
