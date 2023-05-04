@@ -18,6 +18,7 @@ class Mob{
         int getlife();
         bool getfly();
         WINDOW* getwin();
+        int getDmg();
 
         int random(int max);
         void stop();
@@ -37,3 +38,4 @@ pnemici InsMob(pnemici hd, Mob x);
 pnemici Death(pnemici hd);
 void update(pnemici hd, Player pl, int minY);
 void display(pnemici hd);
+void takeDmg(int dmg);

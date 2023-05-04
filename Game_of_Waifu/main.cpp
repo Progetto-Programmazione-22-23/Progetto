@@ -118,7 +118,7 @@ void start(){
     Mob Pidgeon (playerwin, 3, 1, pryMax/2, prxMax/2+15, 'V', true);
 
     pnemici hd = NULL; 
-    hd = InsMob(hd, Koopa);
+    //hd = InsMob(hd, Koopa);
     hd = InsMob(hd, Pidgeon);
 
     // Loop di gioco

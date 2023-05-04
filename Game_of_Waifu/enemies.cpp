@@ -34,6 +34,8 @@ bool Mob::getfly(){
     return this->fly;
 }
 
+int Mob::getDmg() { return this->dmg;}
+
 int Mob::random(int max) {
     return rand() % max;
 }
@@ -85,9 +87,16 @@ void update(pnemici hd, Player pl, int minY) {                                  
             if (pl.getY() < hd->nem.getY()) hd->nem.mvup();
             else if (pl.getY() > hd->nem.getY() && hd->nem.getY() < minY) hd->nem.mvdown();
         }
-        if (pl.getX() == hd->nem.getX() && pl.getY() == hd->nem.getY()) /*takedmg(this->dmg)*/; // danni al player
+        if (pl.getX() == hd->nem.getX() && pl.getY() == hd->nem.getY())
+            takeDmg(hd->nem.getDmg()); /*takedmg(this->dmg)*/ // danni al player
         hd = hd->next;
     }
+}
+
+void takeDmg(int dmg) {
+    int total = current_game.getVita() - dmg;
+    if(total < 0) total = 0;
+    current_game.setVita(total);
 }
 
 void display(pnemici hd) {
