@@ -7,6 +7,7 @@
 // #include "player.cpp"
 #include "enemies.cpp"
 // #include "enemies.cpp"
+#include "gui.cpp"
 using namespace std;
 
 void interface(int yMax, int xMax){
@@ -136,9 +137,6 @@ void start(){
         }
         interface(yMax, xMax);
 
-        /*CONTROLLO DEI MOB*/
-        if (cont%3 == 0) update(hd, player, pryMax-6);
-        display(hd);
         
         //erase();
         box(playwin, 0, 0);
@@ -148,9 +146,15 @@ void start(){
 
         player.getmv(loop);
 
+// PAUSE per l'inventario: subroutine
+
         player.update();
 
         player.display();
+
+        /*CONTROLLO DEI MOB*/
+        if (cont%3 == 0) update(hd, player, pryMax-6);
+        display(hd);
 
         napms(35);
     } 

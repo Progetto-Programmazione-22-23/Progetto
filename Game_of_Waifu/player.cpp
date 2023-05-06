@@ -125,6 +125,7 @@ Player::Player(WINDOW * win, int y, int x, char c) {
         break;
       case 'i':
         open_inventory();
+        break;
       case 27:
         current_game.saveAll();
         loop = false;
