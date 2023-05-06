@@ -4,13 +4,13 @@
 
 class Item {
     protected:
-        int id, price, rarity, upgrade;
+        int id, price, rarity, upgrade, amount;
         double modifiers[CATEGORIES];
         //int id, price, modifiers[2];
         char name[25], desc[60];
         bool shoppable=false, hot_armor=true;
     public:
-        Item(int id=0, int price=0, char name[]="ciao", bool shoppable=false, bool hot_armor=true, int rarity=0, int upgrade=0, char desc[]="");
+        Item(int id=0, int price=0, char name[]="ciao", bool shoppable=false, bool hot_armor=true, int rarity=0, int upgrade=0, char desc[]="", int amount=0);
         //Item(int id=0, int price=0, char name[]="", bool shoppable=false, bool hot_armor=true, char desc[]="");
         void setModifiers(int mods[]);
         int getId();
@@ -21,6 +21,7 @@ class Item {
         bool getBar();
         int upgradesFrom();
         int getRarity();
+        int getAmount();
         double getModifier(int i);
         void setModifiers(double modifiers[]);
 };

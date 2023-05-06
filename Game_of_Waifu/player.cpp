@@ -50,9 +50,14 @@ Player::Player(WINDOW * win, int y, int x, char c) {
     // false -> attacco base corpo a corpo
     int s = current_game.getInventory()->getSelected();
     int id = current_game.getInventory()->getBarItem(0,s).getId();
+    int amount = current_game.getInventory()->getBarItem(0,s).getAmount();
     if(id!=0) {
-      if(id == 1) {
-        mvwaddch(curwin, current_game.getPlayerY(), current_game.getPlayerX()+ds, '-');
+      if(id <= 10) {
+        int x = current_game.getPlayerX(), y = current_game.getPlayerY();
+        for(int i=1; i<=amount; i++) {
+          mvwaddch(curwin, y, x+ds*i, '-');
+        }
+        
       }
     }
   }

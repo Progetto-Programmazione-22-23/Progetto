@@ -138,13 +138,6 @@ void start(){
             state = current_game.getState();
         }
         interface(yMax, xMax);
-
-<<<<<<< HEAD
-=======
-        /*CONTROLLO DEI MOB*/
-        if (cont%3 == 0) update(hd, player, pryMax-6); // ogni 3 loop muove i nemici
-        display(hd); // disegna i nemici
->>>>>>> 247d9131245cc48baaa1ccaf1e4539c96553f9bc
         
         //erase();
         box(playwin, 0, 0); // aggiorna le finestre
@@ -154,25 +147,17 @@ void start(){
 
         player.getmv(loop); // prende user input 
 
-<<<<<<< HEAD
 // PAUSE per l'inventario: subroutine
 
         player.update();
-=======
-        player.update(); // aggiorna il pg
->>>>>>> 247d9131245cc48baaa1ccaf1e4539c96553f9bc
 
         player.display(); // disegna il pg
 
-<<<<<<< HEAD
         /*CONTROLLO DEI MOB*/
         if (cont%3 == 0) update(hd, player, pryMax-6);
         display(hd);
 
         napms(35);
-=======
-        napms(35); //ferma il loop per 35ms
->>>>>>> 247d9131245cc48baaa1ccaf1e4539c96553f9bc
     } 
 }
 

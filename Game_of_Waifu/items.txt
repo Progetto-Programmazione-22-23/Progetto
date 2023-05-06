@@ -1,7 +1,7 @@
-1 3 Frammento-dell'Infinito 0 0 1 0 -a- 0 2 1 6 4 3 0
-2 6 Il-Collezionista 0 0 1 0 -a- 6 2 7 3 2 5 0
-3 12 Zampa-di-Baby-Bunny 0 0 1 0 -a- 4 9 2 3 9 10 0
-4 69 Rabadon 0 0 5 0 -miao- 0 0 0 0 0 0 0
-5 420 Faccetta-Nera 0 0 6 0 -bau- 0 0 0 0 0 0 0
-6 20 Redbull 0 0 1 0 Ti-mette-le-ali 0 0 0 0 0 0 0
-7 0 Spada-di-Legno 0 0 1 0 -boh- 0 0 0 0 0 0 0
+1 3 Frammento-dell'Infinito 0 0 1 0 0 -a- 0 2 1 6 4 3
+2 6 Il-Collezionista 0 0 1 0 0 -a- 6 2 7 3 2 5
+3 12 Zampa-di-Baby-Bunny 0 0 1 0 0 -a- 4 9 2 3 9 10
+4 69 Rabadon 0 0 5 0 0 -miao- 0 0 0 0 0 0
+5 420 Faccetta-Nera 0 0 6 0 0 -bau- 0 0 0 0 0 0
+6 20 Redbull 0 0 1 0 0 Ti-mette-le-ali 0 0 0 0 0 0
+7 1 Spada-di-Legno 0 0 1 0 2 Ogni-avventura-inizia-da-qualcosa 0 1 0 0 0 0
