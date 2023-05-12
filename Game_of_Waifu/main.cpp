@@ -141,7 +141,7 @@ void start(){
         /*CONTROLLO DEI MOB*/
         if (cont%3 == 0) update(hd, player, pryMax-6); // ogni 3 loop muove i nemici
         display(hd); // disegna i nemici
-        
+
         //erase();
         box(playwin, 0, 0); // aggiorna le finestre
         refresh();
