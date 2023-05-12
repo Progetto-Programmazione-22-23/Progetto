@@ -7,6 +7,7 @@
 // #include "player.cpp"
 #include "enemies.cpp"
 // #include "enemies.cpp"
+#include "gui.cpp"
 using namespace std;
 
 void interface(int yMax, int xMax){
@@ -137,11 +138,15 @@ void start(){
             state = current_game.getState();
         }
         interface(yMax, xMax);
+<<<<<<< HEAD
 
         /*CONTROLLO DEI MOB*/
         if (cont%3 == 0) update(hd, player, pryMax-6); // ogni 3 loop muove i nemici
         display(hd); // disegna i nemici
 
+=======
+        
+>>>>>>> 7073924e174be430fef6c7f99d72352e20fa7b18
         //erase();
         box(playwin, 0, 0); // aggiorna le finestre
         refresh();
@@ -150,11 +155,17 @@ void start(){
 
         player.getmv(loop); // prende user input 
 
-        player.update(); // aggiorna il pg
+// PAUSE per l'inventario: subroutine
+
+        player.update();
 
         player.display(); // disegna il pg
 
-        napms(35); //ferma il loop per 35ms
+        /*CONTROLLO DEI MOB*/
+        if (cont%3 == 0) update(hd, player, pryMax-6);
+        display(hd);
+
+        napms(35);
     } 
 }
 
