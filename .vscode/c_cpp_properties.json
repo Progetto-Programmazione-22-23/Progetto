@@ -10,7 +10,10 @@
                 "UNICODE",
                 "_UNICODE"
             ],
+<<<<<<< HEAD
             // "compilerPath": "/usr/bin/gcc",
+=======
+>>>>>>> 7fbef204ad05aad546bad35a88bf4adf722eb60d
             "intelliSenseMode": "windows-msvc-x64"
         }
     ],
