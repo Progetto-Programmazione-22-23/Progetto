@@ -6,6 +6,7 @@
 #include "save.cpp"
 // #include "player.cpp"
 #include "enemies.cpp"
+#include "map.cpp"
 // #include "enemies.cpp"
 // #include "gui.cpp"
 using namespace std;
@@ -70,14 +71,6 @@ void start(){
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
 
-    /*TUTTO (anche vita ed inventario rapido)*/
-    WINDOW * playwin = newwin(yMax-(yMax/10), xMax-(xMax/10), yMax/20, xMax/20);
-    // box(playwin, 0, 0);
-    keypad(playwin, true);
-    nodelay(playwin, TRUE);
-    int pyMax, pxMax;
-    getmaxyx(playwin, pyMax, pxMax); 
-
     /*FINESTRA CON PG*/
     WINDOW * playerwin = newwin(yMax-(yMax/10)-2, xMax-(xMax/10)-2, yMax/20+2, xMax/20+1);
     box(playerwin, 0, 0);
@@ -100,29 +93,16 @@ void start(){
 
 
     // disegna la mappa
-    // mvwprintw(playerwin, 1, 1, "+--------------------------------+");
-    // for (int i = 2; i < 10; i++) {
-    //     mvwprintw(playerwin, i, 1, "|                                |");
-    // }
-    // mvwprintw(playerwin, 10, 1, "|                                                                      *****               ");
-    // mvwprintw(playerwin, 11, 1, "|                                                                     ********             ");
-    // mvwprintw(playerwin, 12, 1, "|                                              ____                    *****               ");
-    // mvwprintw(playerwin, 13, 1, "|                  _______                   _/    \_                                      ");
-    // mvwprintw(playerwin, 14, 1, "|                //       \\               _/        \_              _______               ");
-    // mvwprintw(playerwin, 15, 1, "|               //         \\            _/            \            |_?_|_$_|              ");
-    // mvwprintw(playerwin, 16, 1, "|              //           \\__________/               \                           __     ");
-    // mvwprintw(playerwin, 17, 1, "|             //                                         \                        x|       ");
-    // mvwprintw(playerwin, 18, 1, "|____________//___________________________________________\_______________________x|_______");
+    
+    mapgenerator(playerwin);
 
+    // /*MOB LIST*/
+    // Mob Koopa (playerwin, 3, 1, pryMax-2, prxMax/2, 'K', false);
+    // Mob Pidgeon (playerwin, 3, 1, pryMax/2, prxMax/2+15, 'V', true);
 
-
-    /*MOB LIST*/
-    Mob Koopa (playerwin, 3, 1, pryMax-2, prxMax/2, 'K', false);
-    Mob Pidgeon (playerwin, 3, 1, pryMax/2, prxMax/2+15, 'V', true);
-
-    pnemici hd = NULL; 
-    //hd = InsMob(hd, Koopa);
-    hd = InsMob(hd, Pidgeon);
+    // pnemici hd = NULL; 
+    // //hd = InsMob(hd, Koopa);
+    // hd = InsMob(hd, Pidgeon);                                                   // tolto per prova
 
     // Loop di gioco
     int cont = 0;
@@ -140,13 +120,13 @@ void start(){
         interface(yMax, xMax);
 
         /*CONTROLLO DEI MOB*/
-        if (cont%3 == 0) update(hd, player, pryMax-6); // ogni 3 loop muove i nemici
-        display(hd); // disegna i nemici
+        // if (cont%3 == 0) update(hd, player, pryMax-6); // ogni 3 loop muove i nemici
+        // display(hd); // disegna i nemici                                                           // tolto per prova
 
         //erase();
-        box(playwin, 0, 0); // aggiorna le finestre
+        box(playerwin, 0, 0); // aggiorna le finestre
         refresh();
-        wrefresh(playwin);
+        wrefresh(playerwin);
         wrefresh(playerwin);
 
         player.getmv(loop); // prende user input 
@@ -158,8 +138,8 @@ void start(){
         player.display(); // disegna il pg
 
         /*CONTROLLO DEI MOB*/
-        if (cont%3 == 0) update(hd, player, pryMax-6);
-        display(hd);
+        // if (cont%3 == 0) update(hd, player, pryMax-6);
+        // display(hd);                                                // tolto per prova
 
         napms(35);
     } 
