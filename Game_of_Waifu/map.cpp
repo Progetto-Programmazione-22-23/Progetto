@@ -23,18 +23,27 @@ void GoDown(WINDOW * win, int h, int l){mvwaddch(win, h, l, '\\');}
 
 // qui vanno create tutte le trappole ed i blocchi di aiuto (cure, spawn armi ecc...) che vengono poi selezionati dalle funzioni sotto in modo random
 
-void SpawnTrap(WINDOW * win, int h, int l){
-    mvwaddch(win, h, l, 'T');
+void Bomb(){/*salute -1*/}
+void Robberry(){/*money -x*/}
+void SpawnTrap(){
+    int i = rand() % 2;
+    if (i == 0) Bomb();
+    else if (i == 1) Robberry();
 }
 
-void SpawnHelp(WINDOW * win, int h, int l){
-    mvwaddch(win, h, l, 'H');
+void Heal(){/*salute +1*/}
+void Money(){/*salute +x*/}
+void SpawnHelp(){
+    int i = rand() % 2;
+    if (i == 0) Heal();
+    else if (i == 1) Money();
 }
 
 void SpecialBlock(WINDOW * win, int h, int l){
+    mvwaddch(win, h, l, 'S');
     int i = rand() % 2;     // 50%
-    if (i == 0) SpawnTrap(win, h, l);
-    else SpawnHelp(win, h, l);
+    if (i == 0) SpawnTrap();
+    else SpawnHelp();
 }
 
 /// END SPECIAL BLOCK SECTION ///
@@ -61,10 +70,9 @@ void mapgenerator(WINDOW * win){
     SpawnEnd(win, H, L);           // fine mappa
 }
 
-void mapSave(){                
+void mapSave(int y, int x, char s){        // coordinate da mettere nel txt e simbolo (_, /, \ ...)  
     std::ofstream out;
     out.open("map.txt");
-
 }
 
 // vorrei fare un file in cui durante la generazione della mappa vengono salvate le coordinate (ad ogni x associo la relativa altezza del blocco nella mappa)   
