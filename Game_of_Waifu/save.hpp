@@ -33,6 +33,7 @@ class Game {
         double getRes();
         double getSpeed();
         double getLuck();
+        int getMap();
         Inventory* getInventory();
         
 };

@@ -13,11 +13,12 @@ void SpawnEnd(WINDOW * win, int h, int l){
         mvwaddch(win, h, l, '_');        // piattaforma di fine;
         l++;
     }
+    addCoord(len,h);
 }
 
-void GoStraight(WINDOW * win, int h, int l){mvwaddch(win, h, l, '_');}
-void GoUp(WINDOW * win, int h, int l){mvwaddch(win, h, l, '/');}               
-void GoDown(WINDOW * win, int h, int l){mvwaddch(win, h, l, '\\');}
+void GoStraight(WINDOW * win, int h, int l){mvwaddch(win, h, l, '_') ;}
+void GoUp(WINDOW * win, int h, int l){mvwaddch(win, h, l, '/'), addCoord(l,h);}               
+void GoDown(WINDOW * win, int h, int l){mvwaddch(win, h, l, '\\'), addCoord(l+1,h+1);}
 
 /// SPECIAL BLOCK SECTION ///
 
@@ -68,7 +69,10 @@ void mapgenerator(WINDOW * win){
     }
 
     SpawnEnd(win, H, L);           // fine mappa
+    saveActualMap();
 }
+
+
 
 void mapSave(int y, int x, char s){        // coordinate da mettere nel txt e simbolo (_, /, \ ...)  
     std::ofstream out;

@@ -111,6 +111,9 @@ double Game::getVita() {
 double Game::getMaxVita() {
     return setting.stats[0];
 }
+int Game::getMap() {
+    return setting.map;
+}
 double Game::getAtk() { return setting.stats[1];}
 double Game::getMagic(){ return setting.stats[2];}
 double Game::getRes(){ return setting.stats[3];}

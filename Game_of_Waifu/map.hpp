@@ -2,11 +2,12 @@
 #include <stdlib.h>
 #include <fstream>
 #include <time.h>
+#include "map_save.cpp"
 //#include "save.cpp"
 
 int high, len;
 int minH = 3;   // altezza minima per non sbattere sulla cornice;
-int Lstart = 10;
+
 int Lend = 10;     // lunghezze piattaforme inizio e fine;
 
 void SpawnStart(WINDOW * win, int h);          // base di inizio di ogni livello;
