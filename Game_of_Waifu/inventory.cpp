@@ -91,9 +91,8 @@ void open_inventory(){
         }
         
         if (choice == 10){ // quando premo invio
+            openchoice(select, oggetti);
             break;
         }
     }
-
-    openchoice(select, oggetti);
 }
