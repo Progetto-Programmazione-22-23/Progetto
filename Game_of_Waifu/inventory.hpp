@@ -1,7 +1,9 @@
 #include <ncurses.h>
+#include <iostream>
+#include <string>
+#include <stdio.h>
+using namespace std;
 
 
-void setupINV();
-void updateINV();
-void drawINV();
+void openchoice(int, string[]);
 void open_inventory();
