@@ -25,4 +25,3 @@ void GoStraight(WINDOW * win, int h, int l);
 void GoDown(WINDOW * win, int h, int l);
 void mapgenerator(WINDOW * win);
 
-void mapSave(int, int, char);

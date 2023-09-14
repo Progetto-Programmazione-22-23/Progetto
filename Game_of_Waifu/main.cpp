@@ -1,8 +1,8 @@
 #include <ncurses.h>
-#include <string>
 #include <ctime>
-#include <cstdlib>
 #include <cstring>
+#include <string>
+#include <cstdlib>
 #include "save.cpp"
 // #include "player.cpp"
 #include "enemies.cpp"
@@ -91,7 +91,6 @@ void start(){
     init_pair(4, COLOR_BLACK, COLOR_WHITE);
 
 
-
     // disegna la mappa
     
     mapgenerator(playerwin);
@@ -126,7 +125,6 @@ void start(){
         //erase();
         box(playerwin, 0, 0); // aggiorna le finestre
         refresh();
-        wrefresh(playerwin);
         wrefresh(playerwin);
 
         player.getmv(loop); // prende user input 

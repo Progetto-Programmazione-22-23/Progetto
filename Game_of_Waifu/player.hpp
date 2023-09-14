@@ -1,4 +1,5 @@
 #include <ncurses.h>
+#include "inventory.cpp"
 
 #define GRAVITY 0.4
 #define JUMP_VELOCITY -2
@@ -27,5 +28,4 @@ class Player {
         void getmv(bool &loop);
         void update();
         void display();
-        void open_inventory();
 };

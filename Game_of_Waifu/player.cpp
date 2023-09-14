@@ -1,6 +1,5 @@
 #include "player.hpp"
-#include <ncurses.h>
-#include "./GUI/Inventario/inventory.hpp"
+
 
 Player::Player(WINDOW * win, int y, int x, char c) {
   this->curwin = win;
@@ -143,40 +142,6 @@ void Player::getmv(bool &loop){
     default:
       break;
   }
-}
-
-void Player::open_inventory(){
-  clear();
-  bool flag = true;
-  
-  while(flag){
-    
-    int ch;
-    ch = getChar();
-    switch (ch){
-    case 'i':
-      flag = false;
-      break;
-    
-    default:
-      break;
-    }
-
-  }
-  // clear del box di gioco
-  // fermare il loop
-  // disegna un box per l'inventario
-  
-  
-  // {
-  //   inv = newwin(yMax-(yMax/12), xMax-(xMax/12), yMax/20, xMax/20);
-  //   box(inv, 0, 0);
-  //   keypad(inv, true);
-  //   nodelay(inv, TRUE);
-  // }
-  // da le opzioni per muoversi nell'inventario ed uscire
-  
-  // se esce deve ridisegnare l'inventario come quando si apre il gioco
 }
 
 void Player::display() {

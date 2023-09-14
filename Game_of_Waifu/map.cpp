@@ -72,16 +72,3 @@ void mapgenerator(WINDOW * win){
     saveActualMap();
 }
 
-
-
-void mapSave(int y, int x, char s){        // coordinate da mettere nel txt e simbolo (_, /, \ ...)  
-    std::ofstream out;
-    out.open("map.txt");
-}
-
-// vorrei fare un file in cui durante la generazione della mappa vengono salvate le coordinate (ad ogni x associo la relativa altezza del blocco nella mappa)   
-// e il simbolo corrispondente (_, L, ⅃, blocco speciale...) in modo da poter ricreare la mappa una volta usciti dal gioco se si salva.
-// una volta finito il livello, il txt viene cancellato e si ricrea una nuova mappa da zero. Il player potrebbe essere tenuto sopra la mappa 
-// controllando, in base alla sua posizione nelle x, se la sua altezza è <= della rispettiva y nel file di testo
-
-// La mappa viene generata, ora devo riuscire a mantenerla anche perchè non si capisce nulla
