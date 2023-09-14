@@ -2,7 +2,7 @@
 #include "inventory.cpp"
 
 #define GRAVITY 0.4
-#define JUMP_VELOCITY -2
+#define JUMP_VELOCITY -3
 #define HORIZONTAL_ACCELERATION 1
 #define HORIZONTAL_MAX_VELOCITY 1
 
