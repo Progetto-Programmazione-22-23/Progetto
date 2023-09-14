@@ -39,11 +39,10 @@ void openchoice(int k, string obj[]){
                 break;
         }
         if (choice == 10){ // quando premo invio
+            // a seconda di quello che ho selezionato qui ci saranno richiamate le funzioni da eseguire
             break;
         }
     }
-
-    // a seconda di quello che ho selezionato qui ci saranno richiamate le funzioni da eseguire
 
 }
 
