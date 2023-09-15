@@ -11,7 +11,7 @@ void inspect(){
 
 void sell(){
     // oggetto rimosso dall'inventario e soldi aggiunti al player
-    // prima chiedi se sei sicuro di voler vendere
+    // prima chiedi se sei sicuro di voler vendere (bisognerebbe poter vedere il valore prima)
 }
 
 void openchoice(int k, string obj[]){

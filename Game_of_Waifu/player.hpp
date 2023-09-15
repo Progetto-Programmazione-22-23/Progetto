@@ -26,6 +26,6 @@ class Player {
         char getChar();
         void takedmg(int d);
         void getmv(bool &loop);
-        void update();
+        void update(int, WINDOW *);
         void display();
 };

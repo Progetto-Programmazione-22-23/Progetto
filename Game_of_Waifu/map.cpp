@@ -16,6 +16,11 @@ void SpawnEnd(WINDOW * win, int h, int l){
     addCoord(len,h);
 }
 
+void GoNext(WINDOW * win){
+    wclear(win);
+    mapgenerator(win);
+}
+
 void GoStraight(WINDOW * win, int h, int l){mvwaddch(win, h, l, '_') ;}
 void GoUp(WINDOW * win, int h, int l){mvwaddch(win, h, l, '/'), addCoord(l,h);}               
 void GoDown(WINDOW * win, int h, int l){mvwaddch(win, h, l, '\\'), addCoord(l+1,h+1);}

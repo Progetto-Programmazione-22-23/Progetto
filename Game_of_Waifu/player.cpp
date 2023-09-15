@@ -1,4 +1,5 @@
 #include "player.hpp"
+#include "map.cpp"
 
 
 Player::Player(WINDOW * win, int y, int x, char c) {
@@ -58,7 +59,7 @@ void Player::attack() {
   }
 }
 
-void Player::update() {
+void Player::update(int end, WINDOW * win) {
   mvwaddch(curwin, y, x, ' ');
   // erase();
   if (this->is_jumping) {
@@ -80,6 +81,11 @@ void Player::update() {
   } else if (this->x > xMax - 2) {
     this->x = xMax - 2;
     this->x_velocity = 0;
+  }
+  if(getX() >= end-5){        // solo se la lista di nemici è vuota 
+    this->x = 4;
+    this->y = yMax-3;
+    GoNext(win);
   }
 }
 

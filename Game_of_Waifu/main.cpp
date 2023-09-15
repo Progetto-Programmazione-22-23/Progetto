@@ -6,7 +6,7 @@
 #include "save.cpp"
 // #include "player.cpp"
 #include "enemies.cpp"
-#include "map.cpp"
+// #include "map.cpp"
 // #include "enemies.cpp"
 // #include "gui.cpp"
 using namespace std;
@@ -131,7 +131,7 @@ void start(){
 
 // PAUSE per l'inventario: subroutine
 
-        player.update();
+        player.update(prxMax, playerwin);
 
         player.display(); // disegna il pg
 
