@@ -1,5 +1,19 @@
 #include "inventory.hpp"
 
+void equip(){
+    // SE l'oggetto non è gia equipaggiato, si seleziona con quale sostituirlo tra i 3 equipaggiati
+    // Quello rimosso torna nell'inventario
+}
+
+void inspect(){
+    // Informazioni su tipo di oggetto, effetto, danni, cure ecc...
+}
+
+void sell(){
+    // oggetto rimosso dall'inventario e soldi aggiunti al player
+    // prima chiedi se sei sicuro di voler vendere
+}
+
 void openchoice(int k, string obj[]){
     int syMax, sxMax;
     getmaxyx(stdscr, syMax, sxMax);
@@ -39,11 +53,12 @@ void openchoice(int k, string obj[]){
                 break;
         }
         if (choice == 10){ // quando premo invio
-            // a seconda di quello che ho selezionato qui ci saranno richiamate le funzioni da eseguire
+            if (select == 0) equip();
+            else if (select == 1) inspect();
+            else if (select == 2) sell();
             break;
         }
     }
-
 }
 
 void open_inventory(){
