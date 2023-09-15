@@ -80,7 +80,7 @@ void start(){
     getmaxyx(playerwin, pryMax, prxMax);
 
     if(current_game.eNuovo())
-        current_game.setPlayerPos(2,pryMax-2);
+        current_game.setPlayerPos(2,pryMax-3);
 
     Player player = Player(playerwin, current_game.getPlayerY(), current_game.getPlayerX(), '@');
     start_color();
@@ -164,6 +164,9 @@ int main(int argc, char ** argv){
     keypad(menuwin, true); // to get key input (up, down, left, right);
     nodelay(stdscr, TRUE);
 
+    int menuyMax, menuxMax;
+    getmaxyx(menuwin, menuyMax, menuxMax);
+
     string scelte[4] = {"start", "continue", "options", "info"};
     int choice;
     int highlights = 0;
@@ -172,7 +175,7 @@ int main(int argc, char ** argv){
     while (1){
         for (int i = 0; i < 4; i++){ // costruisco il menu
             if (i == highlights) wattron(menuwin, A_REVERSE);
-            mvwprintw(menuwin, i+1, 2, "%s", scelte[i].c_str());
+            mvwprintw(menuwin, i+1, menuxMax/2-10, "%s", scelte[i].c_str());
             wattroff(menuwin, A_REVERSE);
         }
         choice = wgetch(menuwin);
