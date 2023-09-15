@@ -42,6 +42,9 @@ void SpawnHelp(){
 
 void SpecialBlock(WINDOW * win, int h, int l){
     mvwaddch(win, h, l, 'S');
+
+    // se le coordinate del player sono le stesse del blocco speciale, si attiva un effetto random
+
     int i = rand() % 2;     // 50%
     if (i == 0) SpawnTrap();
     else SpawnHelp();
