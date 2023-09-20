@@ -9,6 +9,7 @@
 class Player {
     protected:
         int y, x, yMax, xMax;
+        // Object bullet;
         int bulletX, bulletY;
         int bulletDistance = 0;
         const int maxBulletDistance = 10;
@@ -19,6 +20,11 @@ class Player {
         WINDOW * curwin;
         // WINDOW * invnt;
     public:
+        /*struct Object {
+            int yO;
+            int yO;
+            int dmgO;
+        }*/
         Player(WINDOW * win = NULL, int y = 0, int x = 0, char c = ' ');
         void move_left();
         void move_right();
@@ -34,4 +40,5 @@ class Player {
         void shoot();
         void display();
         void moveBullet();
+        //void checkCollisions();
 };
