@@ -165,8 +165,8 @@ void Player::shoot(){
   if(!bulletFired){
     getX();
     getY();
-    bulletX = this->x;
-    bulletY = this->y;
+    bulletX = this->x + 8;
+    bulletY = this->y + 3;
     bulletFired = true;
     bulletDistance = 0;
   }
