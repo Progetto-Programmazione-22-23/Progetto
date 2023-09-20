@@ -9,8 +9,12 @@
 class Player {
     protected:
         int y, x, yMax, xMax;
+        int bulletX, bulletY;
+        int bulletDistance = 0;
+        const int maxBulletDistance = 10;
         float x_velocity, y_velocity;
         bool is_jumping;
+        bool bulletFired = false;
         char character;
         WINDOW * curwin;
         // WINDOW * invnt;
@@ -27,5 +31,7 @@ class Player {
         void takedmg(int d);
         void getmv(bool &loop);
         void update(int, WINDOW *);
+        void shoot();
         void display();
+        void moveBullet();
 };

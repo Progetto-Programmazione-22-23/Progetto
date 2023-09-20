@@ -1,6 +1,6 @@
 #include "player.hpp"
 #include "map.cpp"
-
+#include <unistd.h> 
 
 Player::Player(WINDOW * win, int y, int x, char c) {
   this->curwin = win;
@@ -141,6 +141,9 @@ void Player::getmv(bool &loop){
     case 'x':
       debugging();
       break;
+    case 10:  // press enter 
+      shoot();
+      break;
     case ERR:
       stop();
       break;
@@ -148,9 +151,35 @@ void Player::getmv(bool &loop){
     default:
       break;
   }
+
+  moveBullet();
+  usleep(10000);
 }
 
 void Player::display() {
   mvwaddch(curwin, y, x, character);
   current_game.setPlayerPos(x, y);
+}
+
+void Player::shoot(){
+  if(!bulletFired){
+    bulletX = this->x;
+    bulletY = this->y;
+    bulletFired = true;
+    bulletDistance = 0;
+  }
+}
+
+void Player::moveBullet(){
+  if (bulletFired && bulletDistance < maxBulletDistance) {
+        mvaddch(bulletY, bulletX, ' ');   // Cancella il proiettile dalla posizione precedente
+        bulletX++;                        // Sposta il proiettile verso destra
+        mvaddch(bulletY, bulletX, '>');   // Disegna il proiettile nella nuova posizione
+        refresh();                        // Aggiorna la finestra
+        bulletDistance++;
+    } else if (bulletDistance >= maxBulletDistance) {
+        // Il proiettile ha raggiunto la distanza massima, disattivalo
+        bulletFired = false;
+        bulletDistance = 0;
+    }
 }
