@@ -163,6 +163,8 @@ void Player::display() {
 
 void Player::shoot(){
   if(!bulletFired){
+    getX();
+    getY();
     bulletX = this->x;
     bulletY = this->y;
     bulletFired = true;
@@ -172,6 +174,8 @@ void Player::shoot(){
 
 void Player::moveBullet(){
   if (bulletFired && bulletDistance < maxBulletDistance) {
+        getX();
+        getY();
         mvaddch(bulletY, bulletX, ' ');   // Cancella il proiettile dalla posizione precedente
         bulletX++;                        // Sposta il proiettile verso destra
         mvaddch(bulletY, bulletX, '>');   // Disegna il proiettile nella nuova posizione
