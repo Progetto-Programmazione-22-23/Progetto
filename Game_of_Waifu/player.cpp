@@ -87,6 +87,11 @@ void Player::update(int end, WINDOW * win) {
     this->y = yMax-3;
     GoNext(win);
   }
+  else if(getX() <= 4 && current_game.getMap()>0) {
+    this->x = end-5;
+    this->y = yMax-3;
+    GoPrev(win);
+  } 
 }
 
 int Player::getX(){

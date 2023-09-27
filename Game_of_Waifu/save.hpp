@@ -34,6 +34,7 @@ class Game {
         double getSpeed();
         double getLuck();
         int getMap();
+        void setMap(int i);
         Inventory* getInventory();
         
 };
