@@ -25,14 +25,14 @@ void GoNext(WINDOW * win){
     sprintf(mapname, "map/%d.txt", n+1);
     ifstream f(mapname);
 
-    if(f.good()) regenOldMap(win);
+    if(f.good()) regenOldMap(win, false);
     else mapgenerator(win);
 }
 
 void GoPrev(WINDOW * win) {
     wclear(win);
     current_game.setMap(current_game.getMap()-1);
-    regenOldMap(win);
+    regenOldMap(win, false);
 }
 
 void GoStraight(WINDOW * win, int h, int l){mvwaddch(win, h, l, '_') ;}

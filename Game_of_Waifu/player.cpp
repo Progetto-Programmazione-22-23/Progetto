@@ -61,6 +61,7 @@ void Player::attack() {
 
 void Player::update(int end, WINDOW * win) {
   mvwaddch(curwin, y, x, ' ');
+  regenOldMap(win, true);
   // erase();
   if (this->is_jumping) {
     double k = 1;
@@ -201,6 +202,7 @@ void Player::getmv(bool &loop){
 
 void Player::display() {
   mvwaddch(curwin, y, x, character);
+  refresh();
   current_game.setPlayerPos(x, y);
 }
 

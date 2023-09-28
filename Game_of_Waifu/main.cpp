@@ -92,7 +92,6 @@ void start(){
 
 
     // disegna la mappa
-    
     mapgenerator(playerwin);
 
     // /*MOB LIST*/
