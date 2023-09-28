@@ -18,8 +18,15 @@ void SpawnEnd(WINDOW * win, int h, int l){
 
 void GoNext(WINDOW * win){
     wclear(win);
-    current_game.setMap(current_game.getMap()+1);
-    mapgenerator(win);
+    int n = current_game.getMap();
+    current_game.setMap(n+1);
+    
+    char mapname[20];
+    sprintf(mapname, "map/%d.txt", n+1);
+    ifstream f(mapname);
+
+    if(f.good()) regenOldMap(win);
+    else mapgenerator(win);
 }
 
 void GoPrev(WINDOW * win) {
@@ -65,6 +72,7 @@ void SpecialBlock(WINDOW * win, int h, int l){
 /// END SPECIAL BLOCK SECTION ///
 
 void mapgenerator(WINDOW * win){
+    actual_map = NULL;
     srand(time(NULL));
     getmaxyx(win, high, len);
     int i, last = 100;
