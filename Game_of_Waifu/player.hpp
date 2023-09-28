@@ -37,6 +37,7 @@ class Player {
         void takedmg(int d);
         void getmv(bool &loop);
         void update(int, WINDOW *);
+        void stayUP();
         void shoot();
         void display();
         void moveBullet();

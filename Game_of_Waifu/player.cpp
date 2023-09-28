@@ -86,6 +86,9 @@ void Player::update(int end, WINDOW * win) {
     this->y_velocity = 0;
     this->is_jumping = false;
   }
+  if (this->is_jumping==false && this->y<minY){
+    this->y = minY;
+  }
   if (this->x < 1) {
     this->x = 1;
     this->x_velocity = 0;
