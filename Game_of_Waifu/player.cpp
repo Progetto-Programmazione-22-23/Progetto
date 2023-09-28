@@ -1,6 +1,7 @@
 #include "player.hpp"
 #include "map.cpp"
 
+int Hjump = 0, Xmv = 0;
 
 Player::Player(WINDOW * win, int y, int x, char c) {
   this->curwin = win;
@@ -88,6 +89,41 @@ void Player::update(int end, WINDOW * win) {
     GoNext(win);
   }
 }
+
+// void Player::move_left(){
+//   Xmv--;
+// }
+
+// void Player::move_right(){
+//   Xmv++;
+// }
+
+// void Player::jump(){
+//   Hjump+=5;
+//   this->is_jumping = true;
+// }
+
+// void Player::update(int end, WINDOW * win){
+//   if (Xmv != 0) this->x+=Xmv, Xmv = 0;
+//   if (Hjump > 0) this->y--, Hjump--;
+//   if (Hjump == 0 && this->y < yMax-2) this->y++;
+//   if (this->y == yMax-2) this->is_jumping = false;
+
+//   if(getX() >= end-5){        // solo se la lista di nemici è vuota 
+//     this->x = 4;
+//     this->y = yMax-3;
+//     GoNext(win);
+//   }
+
+//   if (this->y >= yMax-2) {
+//     this->y = yMax-2;
+//   }
+//   if (this->x < 1) {
+//     this->x = 1;
+//   } else if (this->x > xMax - 2) {
+//     this->x = xMax - 2;
+//   }
+// }
 
 int Player::getX(){
   return x;
