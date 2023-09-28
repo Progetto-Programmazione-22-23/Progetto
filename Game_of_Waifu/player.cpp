@@ -82,13 +82,13 @@ void Player::update(int end, WINDOW * win) {
     this->x = xMax - 2;
     this->x_velocity = 0;
   }
-  if(getX() >= end-5){        // solo se la lista di nemici è vuota 
+  if(getX() >= end-2){        // solo se la lista di nemici è vuota 
     this->x = 4;
     this->y = yMax-3;
     GoNext(win);
   }
-  else if(getX() <= 4 && current_game.getMap()>0) {
-    this->x = end-5;
+  else if(getX() <= 1 && current_game.getMap()>0) {
+    this->x = end-4;
     this->y = yMax-3;
     GoPrev(win);
   } 
@@ -195,7 +195,7 @@ void Player::getmv(bool &loop){
 //  checkCollisions();
 
   moveBullet();   // Sposta il proiettile
-  usleep(10000);  // Aggiorna la posizione del proiettile ogni 10 millisecondi
+  //usleep(10000);  // Aggiorna la posizione del proiettile ogni 10 millisecondi
 
 }
 
