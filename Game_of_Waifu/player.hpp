@@ -9,12 +9,22 @@
 class Player {
     protected:
         int y, x, yMax, xMax;
+        // Object bullet;
+        int bulletX, bulletY;
+        int bulletDistance = 0;
+        const int maxBulletDistance = 10;
         float x_velocity, y_velocity;
         bool is_jumping;
+        bool bulletFired = false;
         char character;
         WINDOW * curwin;
         // WINDOW * invnt;
     public:
+        /*struct Object {
+            int yO;
+            int yO;
+            int dmgO;
+        }*/
         Player(WINDOW * win = NULL, int y = 0, int x = 0, char c = ' ');
         void move_left();
         void move_right();
@@ -27,5 +37,8 @@ class Player {
         void takedmg(int d);
         void getmv(bool &loop);
         void update(int, WINDOW *);
+        void shoot();
         void display();
+        void moveBullet();
+        //void checkCollisions();
 };

@@ -18,7 +18,14 @@ void SpawnEnd(WINDOW * win, int h, int l){
 
 void GoNext(WINDOW * win){
     wclear(win);
+    current_game.setMap(current_game.getMap()+1);
     mapgenerator(win);
+}
+
+void GoPrev(WINDOW * win) {
+    wclear(win);
+    current_game.setMap(current_game.getMap()-1);
+    regenOldMap(win);
 }
 
 void GoStraight(WINDOW * win, int h, int l){mvwaddch(win, h, l, '_') ;}

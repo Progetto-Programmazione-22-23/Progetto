@@ -1,7 +1,6 @@
 #include "player.hpp"
 #include "map.cpp"
 
-int Hjump = 0, Xmv = 0;
 
 Player::Player(WINDOW * win, int y, int x, char c) {
   this->curwin = win;
@@ -88,6 +87,11 @@ void Player::update(int end, WINDOW * win) {
     this->y = yMax-3;
     GoNext(win);
   }
+  else if(getX() <= 4 && current_game.getMap()>0) {
+    this->x = end-5;
+    this->y = yMax-3;
+    GoPrev(win);
+  } 
 }
 
 // void Player::move_left(){
@@ -177,6 +181,9 @@ void Player::getmv(bool &loop){
     case 'x':
       debugging();
       break;
+    case 10:  // press enter 
+      shoot();
+      break;
     case ERR:
       stop();
       break;
@@ -184,9 +191,77 @@ void Player::getmv(bool &loop){
     default:
       break;
   }
+  // Dopo aver gestito l'input del giocatore, verifica le collisioni
+//  checkCollisions();
+
+  moveBullet();   // Sposta il proiettile
+  usleep(10000);  // Aggiorna la posizione del proiettile ogni 10 millisecondi
+
 }
 
 void Player::display() {
   mvwaddch(curwin, y, x, character);
   current_game.setPlayerPos(x, y);
 }
+
+void Player::shoot(){
+  if(!bulletFired){
+    this->x = getX(); // NON FUNZIONA
+    this->y = getY(); // NON FUNZIONA
+    bulletX = this->x + 8;
+    bulletY = this->y + 3;
+    bulletFired = true;
+    bulletDistance = 0;
+  }
+}
+
+void Player::moveBullet(){
+  if (bulletFired && bulletDistance < maxBulletDistance) {
+        mvaddch(bulletY, bulletX, ' ');   // Cancella il proiettile dalla posizione precedente
+        bulletX++;                        // Sposta il proiettile verso destra
+        mvaddch(bulletY, bulletX, '>');   // Disegna il proiettile nella nuova posizione
+        refresh();                        // Aggiorna la finestra
+        bulletDistance++;
+    } else if (bulletDistance >= maxBulletDistance) {
+        // Il proiettile ha raggiunto la distanza massima, disattivalo
+        bulletFired = false;
+        bulletDistance = 0;
+    }
+}
+/*
+
+// Funzione per controllare la collisione orizzontale con il terreno
+bool checkHorizontalCollision(Player player, int groundY, int groundStartX, int groundEndX) {
+    // Verifica se il giocatore si sovrappone orizzontalmente al terreno
+    return (player.x >= groundStartX && player.x <= groundEndX && player.y == groundY);
+}
+
+// Funzione per controllare la collisione verticale con il terreno
+bool checkVerticalCollision(int groundY, int groundStartX, int groundEndX) {
+    // Verifica se il giocatore si sovrappone verticalmente al terreno
+    getX();
+    getY();
+    return (player.x >= groundStartX && this->x <= groundEndX && this->y >= groundY);
+}
+
+void Player::checkCollisions() {
+  // Controlla le collisioni orizzontali e verticali
+  // con il terreno o altri oggetti se necessario
+
+  // Supponiamo che 'groundY', 'groundStartX' e 'groundEndX'
+  // rappresentino le coordinate del terreno
+  bool horizontalCollision = checkHorizontalCollision(playerObject, groundY, groundStartX, groundEndX);
+  bool verticalCollision = checkVerticalCollision(playerObject, groundY, groundStartX, groundEndX);
+
+  if (horizontalCollision) {
+    // Gestisci la collisione orizzontale
+    // Ad esempio, ferma il movimento orizzontale del giocatore
+  }
+
+  if (verticalCollision) {
+    // Gestisci la collisione verticale
+    // Ad esempio, ferma il salto del giocatore se sta toccando il terreno
+  }
+}
+
+*/
