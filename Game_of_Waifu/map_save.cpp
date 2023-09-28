@@ -34,7 +34,7 @@ void regenOldMap(WINDOW * win) {
 
     int w = 0, prevy = 0;
     for(pcoords t = actual_map; t != NULL; t = t->next) {
-        if(w<t->x) mvwaddch(win, w, t->y, '_');
+        if(w<t->x) mvwaddch(win, t->y, w, '_');
         else if(w == t->x) {
             //if(prevy > t->y) mvwaddch(win, w, t->y, '/');  ! DA FINIRE !
             //else if(t->prev->y )
