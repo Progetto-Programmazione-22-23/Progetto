@@ -37,7 +37,7 @@ void GoPrev(WINDOW * win) {
 
 void GoStraight(WINDOW * win, int h, int l){mvwaddch(win, h, l, '_') ;}
 void GoUp(WINDOW * win, int h, int l){mvwaddch(win, h, l, '/'), addCoord(l,h);}               
-void GoDown(WINDOW * win, int h, int l){mvwaddch(win, h, l, '\\'), addCoord(l+1,h+1);}
+void GoDown(WINDOW * win, int h, int l){mvwaddch(win, h, l, '\\'), addCoord(l,h-1);}
 
 /// SPECIAL BLOCK SECTION ///
 
@@ -61,6 +61,7 @@ void SpawnHelp(){
 
 void SpecialBlock(WINDOW * win, int h, int l){
     mvwaddch(win, h, l, 'S');
+    //addCoord(l,h);
 
     // se le coordinate del player sono le stesse del blocco speciale, si attiva un effetto random
 

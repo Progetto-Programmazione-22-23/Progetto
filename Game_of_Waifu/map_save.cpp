@@ -32,13 +32,20 @@ void regenOldMap(WINDOW * win) {
     int x,y;
     while(in>>x>>y) addCoord(x,y);
 
-    int w = 0, prevy = 0;
-    for(pcoords t = actual_map; t != NULL; t = t->next) {
+    
+    pcoords t = actual_map;
+    int nexty = t->next->y;
+    for(int w=0; t->next != NULL; w++) {
+    
         if(w<t->x) mvwaddch(win, t->y, w, '_');
         else if(w == t->x) {
-            //if(prevy > t->y) mvwaddch(win, w, t->y, '/');  ! DA FINIRE !
-            //else if(t->prev->y )
+            if(nexty < t->y) mvwaddch(win,t->y, w, '/');
+            else if(nexty > t->y) mvwaddch(win,t->y+1, w, '\\');
+            //else mvwaddch(win,t->y, w, 'S');
+            
+            t = t->next;
+            if(t->next!=NULL) nexty = t->next->y;
+            
         }
-        w++;
     }
 }
