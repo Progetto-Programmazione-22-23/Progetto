@@ -22,16 +22,17 @@ void saveActualMap() {
     out.close();
 }
 
-void regenOldMap(WINDOW * win, bool refresh=false) {
-    actual_map = NULL;
-    std::ifstream in;
-    char filename[20];
-    sprintf(filename, "map/%d.txt", current_game.getMap());
-    in.open(filename);
-    
-    int x,y;
-    while(in>>x>>y) addCoord(x,y);
-
+void regenOldMap(WINDOW * win, bool refresh) {
+    if(!refresh) {
+        actual_map = NULL;
+        std::ifstream in;
+        char filename[20];
+        sprintf(filename, "map/%d.txt", current_game.getMap());
+        in.open(filename);
+        
+        int x,y;
+        while(in>>x>>y) addCoord(x,y);
+    }   
     
     pcoords t = actual_map;
     int nexty = t->next->y;

@@ -59,6 +59,15 @@ void Player::attack() {
   }
 }
 
+int calcYmin(int x) {
+  pcoords t = actual_map;
+  while(t != NULL) {
+    if(x<=t->x) return t->y;
+    t=t->next;
+  }
+  return 0;
+}
+
 void Player::update(int end, WINDOW * win) {
   mvwaddch(curwin, y, x, ' ');
   regenOldMap(win, true);
@@ -71,8 +80,9 @@ void Player::update(int end, WINDOW * win) {
   this->x += this->x_velocity;
   this->y += this->y_velocity;
 
-  if (this->y >= yMax-2) {
-    this->y = yMax-2;
+  int minY = calcYmin(x);
+  if (this->y >= minY) {
+    this->y = minY;
     this->y_velocity = 0;
     this->is_jumping = false;
   }
