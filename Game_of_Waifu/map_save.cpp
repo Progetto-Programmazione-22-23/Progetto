@@ -22,7 +22,7 @@ void saveActualMap() {
     out.close();
 }
 
-void regenOldMap(WINDOW * win) {
+void regenOldMap(WINDOW * win, bool refresh=false) {
     actual_map = NULL;
     std::ifstream in;
     char filename[20];
@@ -35,7 +35,8 @@ void regenOldMap(WINDOW * win) {
     
     pcoords t = actual_map;
     int nexty = t->next->y;
-    for(int w=0; t->next != NULL; w++) {
+    int w=0;
+    while(t->next != NULL) {
     
         if(w<t->x) mvwaddch(win, t->y, w, '_');
         else if(w == t->x) {
@@ -47,5 +48,10 @@ void regenOldMap(WINDOW * win) {
             if(t->next!=NULL) nexty = t->next->y;
             
         }
+        w++;
+    }
+    while(w<t->x) {
+        mvwaddch(win, t->y, w, '_');
+        w++;
     }
 }
