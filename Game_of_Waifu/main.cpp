@@ -97,10 +97,10 @@ void start(){
     // /*MOB LIST*/
     // Mob Koopa (playerwin, 3, 1, pryMax-2, prxMax/2, 'K', false);
     // Mob Pidgeon (playerwin, 3, 1, pryMax/2, prxMax/2+15, 'V', true);
+    Mob zombie(playerwin, 2, 2, 1, pryMax-2, prxMax/2, 'Z', false);
 
-    // pnemici hd = NULL; 
-    // //hd = InsMob(hd, Koopa);
-    // hd = InsMob(hd, Pidgeon);                                                   // tolto per prova
+    pnemici hd = NULL; 
+    hd = InsMob(hd, zombie);                                                   // tolto per prova
 
     // Loop di gioco
     int cont = 0;
@@ -118,8 +118,8 @@ void start(){
         interface(yMax, xMax);
 
         /*CONTROLLO DEI MOB*/
-        // if (cont%3 == 0) update(hd, player, pryMax-6); // ogni 3 loop muove i nemici
-        // display(hd); // disegna i nemici                                                           // tolto per prova
+        if (cont%5 == 0) update(hd, player, pryMax-6); // ogni 3 loop muove i nemici
+        display(hd); // disegna i nemici                                                           // tolto per prova
 
         //erase();
         box(playerwin, 0, 0); // aggiorna le finestre

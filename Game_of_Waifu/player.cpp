@@ -167,12 +167,12 @@ void Player::getmv(bool &loop){
       move_left();
       ds = -1;
       break;
-    case 'w':
+    case ' ':
       jump();
       break;
-    case ' ':
-      Player::attack();
-      break;
+    // case ' ':
+    //   Player::attack();
+    //   break;
     case '1':
       current_game.getInventory()->setSelected(0);
       current_game.UpState();
@@ -187,6 +187,9 @@ void Player::getmv(bool &loop){
       break;
     case 'i':
       open_inventory();
+      break;
+    case 'p':
+      open_shop();
       break;
     case 27:
       current_game.saveAll();

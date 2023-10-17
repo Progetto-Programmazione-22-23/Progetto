@@ -1,8 +1,9 @@
 #include "enemies.hpp"
 
-Mob::Mob (WINDOW * win, int l, int d, int y, int x, char ch, bool fl) {
+Mob::Mob (WINDOW * win, int l, int s, int d, int y, int x, char ch, bool fl) {
     this->curwin = win;
     this->life = l;
+    this->speed = s;
     this->dmg = d;
     this->x = x;
     this->y = y;
