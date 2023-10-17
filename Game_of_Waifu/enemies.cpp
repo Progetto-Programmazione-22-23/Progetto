@@ -1,7 +1,7 @@
 #include "enemies.hpp"
 
-Mob::Mob (WINDOW * win, int l, int s, int d, int y, int x, char ch, bool fl) {
-    this->curwin = win;
+Mob::Mob (int y, int x, int l, int s, int d, char ch, bool fl) {
+    // this->curwin = win;
     this->life = l;
     this->speed = s;
     this->dmg = d;
@@ -23,9 +23,9 @@ char Mob::getChar() {
     return this->character;
 }
 
-WINDOW* Mob::getwin(){
-    return this->curwin;
-}
+// WINDOW* Mob::getwin(){
+//     return this->curwin;
+// }
 
 int Mob::getlife(){
     return this->life;
@@ -33,6 +33,10 @@ int Mob::getlife(){
 
 bool Mob::getfly(){
     return this->fly;
+}
+
+int Mob::getspeed(){
+    return this->speed;
 }
 
 int Mob::getDmg() { return this->dmg;}
@@ -64,6 +68,16 @@ pnemici InsMob(pnemici hd, Mob x) {
     return nhd;
 }
 
+pnemici InsZombie(pnemici hd, int y, int x){
+    Mob Zombie(y, x, 2, 10, 1, 'Z', false);
+    InsMob(hd, Zombie);
+}
+
+pnemici InsGolem(pnemici hd, int y, int x){
+    Mob Golem(y, x, 5, 20, 3, 'G', false);
+    InsMob(hd, Golem);
+}
+
 pnemici Death(pnemici hd) {
     while (hd->nem.getlife() == 0){
          hd = hd->next;
@@ -76,18 +90,22 @@ pnemici Death(pnemici hd) {
     return nhd;
 }
 
-void update(pnemici hd, Player pl, int minY) {                                        // simil pathfinding
+void update(pnemici hd, Player pl, int minY, int tic, WINDOW * win) {                                        // simil pathfinding
     while (hd != NULL) {
-        mvwaddch(hd->nem.getwin(), hd->nem.getY(), hd->nem.getX(), ' ');
-        if (!hd->nem.getfly()){
-            if (pl.getX() < hd->nem.getX()) hd->nem.mvleft();
-            else if (pl.getX() > hd->nem.getX()) hd->nem.mvright();
-        } else if (hd->nem.getfly()){
-            if (pl.getX() < hd->nem.getX()) hd->nem.mvleft();
-            else if (pl.getX() > hd->nem.getX()) hd->nem.mvright();
-            if (pl.getY() < hd->nem.getY()) hd->nem.mvup();
-            else if (pl.getY() > hd->nem.getY() && hd->nem.getY() < minY) hd->nem.mvdown();
+        if (tic % (hd->nem.getspeed()) == 0){
+
+            mvwaddch(win, hd->nem.getY(), hd->nem.getX(), ' ');
+            if (!hd->nem.getfly()){
+                if (pl.getX() < hd->nem.getX()) hd->nem.mvleft();
+                else if (pl.getX() > hd->nem.getX()) hd->nem.mvright();
+            } else if (hd->nem.getfly()){
+                if (pl.getX() < hd->nem.getX()) hd->nem.mvleft();
+                else if (pl.getX() > hd->nem.getX()) hd->nem.mvright();
+                if (pl.getY() < hd->nem.getY()) hd->nem.mvup();
+                else if (pl.getY() > hd->nem.getY() && hd->nem.getY() < minY) hd->nem.mvdown();
+            }
         }
+        
         if (pl.getX() == hd->nem.getX() && pl.getY() == hd->nem.getY())
             takeDmg(hd->nem.getDmg()); /*takedmg(this->dmg)*/ // danni al player
         hd = hd->next;
@@ -100,9 +118,9 @@ void takeDmg(int dmg) {
     current_game.setVita(total);
 }
 
-void display(pnemici hd) {
+void display(pnemici hd, WINDOW * win) {
     while(hd != NULL){
-        mvwaddch(hd->nem.getwin(), hd->nem.getY(), hd->nem.getX(), hd->nem.getChar());
+        mvwaddch(win, hd->nem.getY(), hd->nem.getX(), hd->nem.getChar());
         hd = hd->next;
     }
 }

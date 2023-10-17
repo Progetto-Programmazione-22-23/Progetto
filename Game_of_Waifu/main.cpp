@@ -95,12 +95,14 @@ void start(){
     mapgenerator(playerwin);
 
     // /*MOB LIST*/
-    // Mob Koopa (playerwin, 3, 1, pryMax-2, prxMax/2, 'K', false);
-    // Mob Pidgeon (playerwin, 3, 1, pryMax/2, prxMax/2+15, 'V', true);
-    Mob zombie(playerwin, 2, 2, 1, pryMax-2, prxMax/2, 'Z', false);
+    // Mob Zombie(pryMax-2, prxMax/2, 2, 5, 1, 'Z', false);
+    // Mob Golem(pryMax-2, prxMax/2);
 
     pnemici hd = NULL; 
-    hd = InsMob(hd, zombie);                                                   // tolto per prova
+    hd = InsZombie(hd, pryMax-2, prxMax/2);
+    hd = InsGolem(hd, pryMax-2, prxMax/2+10);
+    // hd = InsMob(hd, Zombie);                                        // tolto per prova
+    // hd = InsMob(hd, Golem(pryMax-2, prxMax/2));
 
     // Loop di gioco
     int cont = 0;
@@ -118,8 +120,8 @@ void start(){
         interface(yMax, xMax);
 
         /*CONTROLLO DEI MOB*/
-        if (cont%5 == 0) update(hd, player, pryMax-6); // ogni 3 loop muove i nemici
-        display(hd); // disegna i nemici                                                           // tolto per prova
+        update(hd, player, pryMax-6, cont, playerwin); // ogni 3 loop muove i nemici
+        display(hd, playerwin); // disegna i nemici                                                           // tolto per prova
 
         //erase();
         box(playerwin, 0, 0); // aggiorna le finestre
