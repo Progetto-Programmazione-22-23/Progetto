@@ -143,17 +143,9 @@ void Player::update(int end, WINDOW * win) {
 //   }
 // }
 
-int Player::getX(){
-  return x;
-}
-
-int Player::getY(){
-  return y;
-}
-
-char Player::getChar(){
-  return character;
-}
+int Player::getX() {return x;}
+int Player::getY() {return y;}
+char Player::getChar() {return character;}
 
 void Player::getmv(bool &loop){
   int ch;

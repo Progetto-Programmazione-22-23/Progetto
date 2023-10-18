@@ -1,7 +1,6 @@
 #include "enemies.hpp"
 
 Mob::Mob (int y, int x, int l, int s, int d, char ch, bool fl) {
-    // this->curwin = win;
     this->life = l;
     this->speed = s;
     this->dmg = d;
@@ -11,80 +10,45 @@ Mob::Mob (int y, int x, int l, int s, int d, char ch, bool fl) {
     this->fly = fl;
 }
 
-int Mob::getX() {
-    return this->x;
-}
+/*get*/
+int Mob::getX() {return this->x;}
+int Mob::getY() {return this->y;}
+char Mob::getChar() {return this->character;}
+int Mob::getlife() {return this->life;}
+bool Mob::getfly() {return this->fly;}
+int Mob::getspeed() {return this->speed;}
+int Mob::getDmg() {return this->dmg;}
 
-int Mob::getY() {
-    return this->y;
-}
+/*generazione di numeri random*/
+int Mob::random(int max) {return rand() % max;}
 
-char Mob::getChar() {
-    return this->character;
-}
+/*movimenti*/
+void Mob::mvleft(){this->x--;}
+void Mob::mvright(){this->x++;}
+void Mob::mvup(){this->y--;}
+void Mob::mvdown(){this->y++;}
 
-// WINDOW* Mob::getwin(){
-//     return this->curwin;
-// }
-
-int Mob::getlife(){
-    return this->life;
-}
-
-bool Mob::getfly(){
-    return this->fly;
-}
-
-int Mob::getspeed(){
-    return this->speed;
-}
-
-int Mob::getDmg() { return this->dmg;}
-
-int Mob::random(int max) {
-    return rand() % max;
-}
-
-void Mob::mvleft(){
-    this->x--;
-}
-
-void Mob::mvright(){
-    this->x++;
-}
-
-void Mob::mvup(){
-    this->y--;
-}
-
-void Mob::mvdown(){
-    this->y++;
-}
-
+/*funzioni di inserimento dei diversi mob*/
 pnemici InsMob(pnemici hd, Mob x) {
     pnemici nhd = new nemico;
     nhd->nem = x;
     nhd->next = hd;
     return nhd;
 }
+pnemici InsZombie(pnemici hd, int y, int x) {Mob Zombie(y, x, 2, 10, 1, 'Z', false); InsMob(hd, Zombie);}
+pnemici InsGolem(pnemici hd, int y, int x) {Mob Golem(y, x, 5, 20, 3, 'G', false); InsMob(hd, Golem);}
 
-pnemici InsZombie(pnemici hd, int y, int x){
-    Mob Zombie(y, x, 2, 10, 1, 'Z', false);
-    InsMob(hd, Zombie);
-}
-
-pnemici InsGolem(pnemici hd, int y, int x){
-    Mob Golem(y, x, 5, 20, 3, 'G', false);
-    InsMob(hd, Golem);
-}
-
+/*funzioni di gestione della lista di mob*/
 pnemici Death(pnemici hd) {
     while (hd->nem.getlife() == 0){
-         hd = hd->next;
+        pnemici dhd = hd;
+        hd = hd->next;
+        dhd = NULL;
     }
     pnemici nhd = hd;
     while (hd->next != NULL){
-        if (hd->next->nem.getlife() == 0) hd->next = hd->next->next;
+        pnemici dhd = hd->next;
+        if (hd->next->nem.getlife() == 0){hd->next = hd->next->next; dhd = NULL;}
         hd = hd->next;
     }
     return nhd;

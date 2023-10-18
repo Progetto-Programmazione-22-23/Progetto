@@ -95,22 +95,16 @@ void start(){
     mapgenerator(playerwin);
 
     // /*MOB LIST*/
-    // Mob Zombie(pryMax-2, prxMax/2, 2, 5, 1, 'Z', false);
-    // Mob Golem(pryMax-2, prxMax/2);
-
     pnemici hd = NULL; 
     hd = InsZombie(hd, pryMax-2, prxMax/2);
     hd = InsGolem(hd, pryMax-2, prxMax/2+10);
-    // hd = InsMob(hd, Zombie);                                        // tolto per prova
-    // hd = InsMob(hd, Golem(pryMax-2, prxMax/2));
 
     // Loop di gioco
-    int cont = 0;
-    bool loop = true;
-    int state = -1;
+    int cont = 0;     /*numero di loop di gioco (Tick)*/
+    bool loop = true; 
+    int state = -1;   
     while (loop){
-        // erase();
-        cont++;
+        cont++;       //ogni volta che rinizia il loop, aumento il contatore
         // controlla l'armatura WIP
         // current_game.setMaxVita(14);
         if(state!=current_game.getState()) {
@@ -120,8 +114,9 @@ void start(){
         interface(yMax, xMax);
 
         /*CONTROLLO DEI MOB*/
-        update(hd, player, pryMax-6, cont, playerwin); // ogni 3 loop muove i nemici
-        display(hd, playerwin); // disegna i nemici                                                           // tolto per prova
+        update(hd, player, pryMax-6, cont, playerwin); // movimenti
+        hd = Death(hd);                                // elimino mob morti
+        display(hd, playerwin);                        // disegno i mob in vita
 
         //erase();
         box(playerwin, 0, 0); // aggiorna le finestre
@@ -130,20 +125,13 @@ void start(){
 
         player.getmv(loop); // prende user input 
 
-// PAUSE per l'inventario: subroutine
-
-        player.update(prxMax, playerwin);
+        player.update(prxMax, playerwin); 
 
         player.display(); // disegna il pg
 
-        /*CONTROLLO DEI MOB*/
-        // if (cont%3 == 0) update(hd, player, pryMax-6);
-        // display(hd);                                                // tolto per prova
-
-        napms(35);
+        napms(35); //35ms di pausa (circa 30fps)
     } 
 }
-
 
 
 int main(int argc, char ** argv){
@@ -181,7 +169,7 @@ int main(int argc, char ** argv){
         }
         choice = wgetch(menuwin);
 
-        switch(choice){ // mi muovo nel menu
+        switch(choice){            // mi muovo nel menu
             case KEY_UP:
                 highlights--;
                 if (highlights == -1) highlights = 0;
@@ -194,7 +182,7 @@ int main(int argc, char ** argv){
                 break;
         }
         
-        if (choice == 10){ // quando premo invio
+        if (choice == 10){         // quando premo invio
             break;
         }
     }
