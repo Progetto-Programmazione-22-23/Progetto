@@ -7,6 +7,8 @@
 #define HORIZONTAL_ACCELERATION 1
 #define HORIZONTAL_MAX_VELOCITY 1
 
+int ActualTik = 0;
+
 class Player {
     protected:
         int y, x, yMax, xMax;
@@ -30,14 +32,14 @@ class Player {
         void move_left();
         void move_right();
         void stop();
-        void jump();
+        void jump(int tik);
         void attack();
         int getX();
         int getY();
         char getChar();
         void takedmg(int d);
-        void getmv(bool &loop);
-        void update(int, WINDOW *);
+        void getmv(bool &loop, int tik);
+        void update(int, WINDOW *, int tik);
         void stayUP();
         void shoot();
         void display();

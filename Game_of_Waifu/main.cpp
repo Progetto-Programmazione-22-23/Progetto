@@ -123,9 +123,9 @@ void start(){
         refresh();
         wrefresh(playerwin);
 
-        player.getmv(loop); // prende user input 
+        player.getmv(loop, cont); // prende user input 
 
-        player.update(prxMax, playerwin); 
+        player.update(prxMax, playerwin, cont); 
 
         player.display(); // disegna il pg
 

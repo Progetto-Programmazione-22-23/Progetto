@@ -15,7 +15,6 @@ Player::Player(WINDOW * win, int y, int x, char c) {
 }
 
 void Player::move_left() {
-  //mvwaddch(curwin, y, x, ' ');
   this->x_velocity -= HORIZONTAL_ACCELERATION;
   if (this->x_velocity < -HORIZONTAL_MAX_VELOCITY) {
     this->x_velocity = -HORIZONTAL_MAX_VELOCITY;
@@ -23,7 +22,6 @@ void Player::move_left() {
 }
 
 void Player::move_right() {
-  //mvwaddch(curwin, y, x, ' ');
   this->x_velocity += HORIZONTAL_ACCELERATION;
   if (this->x_velocity > HORIZONTAL_MAX_VELOCITY) {
     this->x_velocity = HORIZONTAL_MAX_VELOCITY;
@@ -34,14 +32,10 @@ void Player::stop(){
   if (!is_jumping) this->x_velocity = 0;
 }
 
-void Player::jump() {
-  bool fast = true;
-  if (x_velocity == 0) fast = false;
-  if (!this->is_jumping) {
-    this->y_velocity = JUMP_VELOCITY ;
-    if (!fast) this->x_velocity = x_velocity*10;
-    else this->x_velocity = x_velocity*1.5;
+void Player::jump(int tik) {
+  if (this->is_jumping == false){
     this->is_jumping = true;
+    ActualTik = tik;
   }
 }
 
@@ -68,25 +62,31 @@ int calcYmin(int x) {
   return 0;
 }
 
-void Player::update(int end, WINDOW * win) {
+void Player::update(int end, WINDOW * win, int tik) {
+  int minY = calcYmin(x);
+  int h = 5;  // altezza del salto (altezza = h / jumpspeed)
+  int jumpspeed = 1;  // velocita di salto (più è bassa, più è veloce)
   mvwaddch(curwin, y, x, ' ');
   regenOldMap(win, true);
   // erase();
-  if (this->is_jumping) {
-    double k = 1;
-    //if(current_game.getInventory()->) k = 1.5;
-    this->y_velocity += GRAVITY/k ;   // dividi per aumentare, molt. per diminuire
+
+  if (this->is_jumping && (tik-ActualTik)%jumpspeed == 0 && (tik-ActualTik) <= h) {
+    // double k = 1;
+    // //if(current_game.getInventory()->) k = 1.5;
+    this->y-=1;
+  } else if (this->is_jumping && (tik-ActualTik) > h+4 && this->y < minY && (tik-ActualTik)%jumpspeed == 0){
+    this->y+=1;
+  } else if (this->y == minY){
+    this->is_jumping = false;
   }
   this->x += this->x_velocity;
-  this->y += this->y_velocity;
 
-  int minY = calcYmin(x);
   if (this->y >= minY) {
     this->y = minY;
     this->y_velocity = 0;
     this->is_jumping = false;
   }
-  if (this->is_jumping==false && this->y<minY){
+  if (!this->is_jumping && this->y<minY){
     this->y = minY;
   }
   if (this->x < 1) {
@@ -108,46 +108,11 @@ void Player::update(int end, WINDOW * win) {
   } 
 }
 
-// void Player::move_left(){
-//   Xmv--;
-// }
-
-// void Player::move_right(){
-//   Xmv++;
-// }
-
-// void Player::jump(){
-//   Hjump+=5;
-//   this->is_jumping = true;
-// }
-
-// void Player::update(int end, WINDOW * win){
-//   if (Xmv != 0) this->x+=Xmv, Xmv = 0;
-//   if (Hjump > 0) this->y--, Hjump--;
-//   if (Hjump == 0 && this->y < yMax-2) this->y++;
-//   if (this->y == yMax-2) this->is_jumping = false;
-
-//   if(getX() >= end-5){        // solo se la lista di nemici è vuota 
-//     this->x = 4;
-//     this->y = yMax-3;
-//     GoNext(win);
-//   }
-
-//   if (this->y >= yMax-2) {
-//     this->y = yMax-2;
-//   }
-//   if (this->x < 1) {
-//     this->x = 1;
-//   } else if (this->x > xMax - 2) {
-//     this->x = xMax - 2;
-//   }
-// }
-
 int Player::getX() {return x;}
 int Player::getY() {return y;}
 char Player::getChar() {return character;}
 
-void Player::getmv(bool &loop){
+void Player::getmv(bool &loop, int tik){
   int ch;
   ch = getch();
   switch(ch) {
@@ -160,7 +125,7 @@ void Player::getmv(bool &loop){
       ds = -1;
       break;
     case ' ':
-      jump();
+      jump(tik);
       break;
     // case ' ':
     //   Player::attack();
