@@ -44,7 +44,8 @@ void Player::jump(int tik) {
 int calcYmin(int x) {
   pcoords t = actual_map;
   while(t != NULL) {
-    if(x<=t->x) return t->y;
+    if(x<t->x || (x==t->x && t->y<t->next->y)) 
+      return t->y;
     t=t->next;
   }
   return 0;
@@ -117,6 +118,7 @@ void Player::getmv(bool &loop, int tik){
       ds = -1;
       break;
     case ' ':
+    if(ds>0 || current_game.getPlayerX()>1)
       Player::attack();
       break;
     case '1':
