@@ -85,7 +85,7 @@ void start(){
         current_game.setPlayerPos(2,pryMax-3);
     // disegna la mappa
         mapgenerator(playerwin);
-        MobSpawn(pryMax, hd);
+        MobSpawn(prxMax, hd);
     }
     else regenOldMap(playerwin, false);
 
@@ -97,14 +97,6 @@ void start(){
     init_pair(3, 245, COLOR_BLACK);
     init_pair(4, COLOR_BLACK, COLOR_WHITE);
 
-
-    
-    
-
-    // /*MOB LIST*/
-    // hd = InsZombie(hd, pryMax-2, prxMax/2);
-    // hd = InsGolem(hd, pryMax-2, prxMax/2+10);
-    // hd = InsBat(hd, pryMax-2, prxMax/2-10);
 
     // Loop di gioco
     int cont = 0;     /*numero di loop di gioco (Tick)*/
