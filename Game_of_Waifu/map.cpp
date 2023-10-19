@@ -39,6 +39,17 @@ void GoStraight(WINDOW * win, int h, int l){mvwaddch(win, h, l, '_') ;}
 void GoUp(WINDOW * win, int h, int l){mvwaddch(win, h, l, '/'), addCoord(l,h);}               
 void GoDown(WINDOW * win, int h, int l){mvwaddch(win, h, l, '\\'), addCoord(l,h-1);}
 
+// void MobSpawn(int len){
+//     int i = 0;
+//     while (i<5){
+//         int Xspawn = rand()%len;
+//         int MobType = rand()%3;
+//         if (MobType == 0) InsZombie(hd, calcYmin(Xspawn), Xspawn);
+//         else if (MobType == 1) InsZombie(hd, calcYmin(Xspawn), Xspawn);
+//         else if (MobType == 1) InsZombie(hd, calcYmin(Xspawn) - 5, Xspawn);
+//     }
+// }
+
 /// SPECIAL BLOCK SECTION ///
 
 // qui vanno create tutte le trappole ed i blocchi di aiuto (cure, spawn armi ecc...) che vengono poi selezionati dalle funzioni sotto in modo random
@@ -93,6 +104,7 @@ void mapgenerator(WINDOW * win){
     }
 
     SpawnEnd(win, H, L);           // fine mappa
+    // MobSpawn(len);
     saveActualMap();
 }
 

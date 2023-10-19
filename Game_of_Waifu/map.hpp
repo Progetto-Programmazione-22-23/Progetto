@@ -3,6 +3,7 @@
 #include <fstream>
 #include <time.h>
 #include "map_save.cpp"
+//#include "enemies.hpp"
 //#include "save.cpp"
 
 int high, len;
@@ -12,7 +13,8 @@ int Lend = 10;     // lunghezze piattaforme inizio e fine;
 
 void SpawnStart(WINDOW * win, int h);          // base di inizio di ogni livello;
 void SpawnEnd(WINDOW * win, int h, int l);            // base di fine di ogni livello, porta al successivo;
-void GoNext();                                 // quando arrivi alla piattaforma di fine, nuovo livello
+void GoNext(WINDOW * win);                                 // quando arrivi alla piattaforma di fine, nuovo livello
+void GoPrev(WINDOW * win);
 
 void SpecialBlock(WINDOW * win, int h, int l);        // pezzo di strada dritta con blocco speciale;
 void SpawnTrap();
@@ -24,5 +26,6 @@ void Bomb();
 void GoUp(WINDOW * win, int h, int l);
 void GoStraight(WINDOW * win, int h, int l);
 void GoDown(WINDOW * win, int h, int l);
+void MobSpawn(int len);
 void mapgenerator(WINDOW * win);
 

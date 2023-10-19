@@ -1,6 +1,7 @@
 #include <ncurses.h>
 #include "inventory.cpp"
 #include "shop.cpp"
+#include "map.cpp"
 //#include "collision.cpp"
 
 #define GRAVITY 0.6

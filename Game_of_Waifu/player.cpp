@@ -1,5 +1,5 @@
 #include "player.hpp"
-#include "map.cpp"
+
 
 
 Player::Player(WINDOW * win, int y, int x, char c) {

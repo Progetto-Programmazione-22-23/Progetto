@@ -68,6 +68,7 @@ void interface(int yMax, int xMax){
 }
 
 void start(){
+    pnemici hd = NULL;
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
 
@@ -83,6 +84,7 @@ void start(){
         current_game.setPlayerPos(2,pryMax-3);
     // disegna la mappa
         mapgenerator(playerwin);
+        // MobSpawn(pryMax, hd);
     }
     else regenOldMap(playerwin, false);
 
@@ -99,10 +101,9 @@ void start(){
     
 
     // /*MOB LIST*/
-    pnemici hd = NULL; 
     hd = InsZombie(hd, pryMax-2, prxMax/2);
-    hd = InsGolem(hd, pryMax-2, prxMax/2+10);
-    hd = InsBat(hd, pryMax-2, prxMax/2-10);
+    // hd = InsGolem(hd, pryMax-2, prxMax/2+10);
+    // hd = InsBat(hd, pryMax-2, prxMax/2-10);
 
     // Loop di gioco
     int cont = 0;     /*numero di loop di gioco (Tick)*/

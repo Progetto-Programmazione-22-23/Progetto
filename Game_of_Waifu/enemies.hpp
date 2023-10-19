@@ -60,4 +60,4 @@ void update(pnemici hd, Player pl, int tic, WINDOW * win);
 void display(pnemici hd, WINDOW * win);
 void takeDmg(int dmg);
 
-
+void MobSpawn(int len, pnemici hd);
