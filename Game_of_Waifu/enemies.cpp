@@ -36,21 +36,21 @@ pnemici InsMob(pnemici hd, Mob x) {
     nhd->next = hd;
     return nhd;
 }
-pnemici InsZombie(pnemici hd, int y, int x) {Mob Zombie(y, x, 2, 10, 1, 'Z', false); return InsMob(hd, Zombie);}
-pnemici InsGolem(pnemici hd, int y, int x) {Mob Golem(y, x, 5, 20, 3, 'G', false); return InsMob(hd, Golem);}
-pnemici InsBat(pnemici hd, int y, int x) {Mob Bat(y, x, 1, 5, 1, 'V', true); return InsMob(hd, Bat);}
+pnemici InsZombie(pnemici& hd, int y, int x) {Mob Zombie(y, x, 2, 10, 1, 'Z', false); return InsMob(hd, Zombie);}
+pnemici InsGolem(pnemici& hd, int y, int x) {Mob Golem(y, x, 5, 20, 3, 'G', false); return InsMob(hd, Golem);}
+pnemici InsBat(pnemici& hd, int y, int x) {Mob Bat(y, x, 1, 5, 1, 'V', true); return InsMob(hd, Bat);}
 
 /*funzioni di gestione della lista di mob*/
 pnemici Death(pnemici hd) {
     while (hd->nem.getlife() == 0){
         pnemici dhd = hd;
         hd = hd->next;
-        dhd = NULL;
+        delete(dhd);
     }
     pnemici nhd = hd;
     while (hd->next != NULL){
         pnemici dhd = hd->next;
-        if (hd->next->nem.getlife() == 0){hd->next = hd->next->next; dhd = NULL;}
+        if (hd->next->nem.getlife() == 0){hd->next = hd->next->next; delete(dhd);}
         hd = hd->next;
     }
     return nhd;
@@ -93,13 +93,13 @@ void display(pnemici hd, WINDOW * win) {
     }
 }
 
-void MobSpawn(int len, pnemici hd){
+void MobSpawn(int len, pnemici& hd){
     // mapgenerator(win);
     srand(time(NULL));
     int i = 0;
     while (i<5){
-        int Xspawn = 10;
-        int MobType = 1;
+        int Xspawn = rand()%len;
+        int MobType = rand()%3;
         if (MobType == 0) hd = InsZombie(hd, calcYmin(Xspawn), Xspawn);
         else if (MobType == 1) hd = InsGolem(hd, calcYmin(Xspawn), Xspawn);
         else if (MobType == 2) hd = InsBat(hd, calcYmin(Xspawn) - 5, Xspawn);
@@ -107,3 +107,4 @@ void MobSpawn(int len, pnemici hd){
         i++;
     }
 }
+

@@ -68,7 +68,8 @@ void interface(int yMax, int xMax){
 }
 
 void start(){
-    pnemici hd = NULL;
+    pnemici hd = new nemico;
+    hd = NULL;
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
 
@@ -84,7 +85,7 @@ void start(){
         current_game.setPlayerPos(2,pryMax-3);
     // disegna la mappa
         mapgenerator(playerwin);
-        // MobSpawn(pryMax, hd);
+        MobSpawn(pryMax, hd);
     }
     else regenOldMap(playerwin, false);
 
@@ -101,7 +102,7 @@ void start(){
     
 
     // /*MOB LIST*/
-    hd = InsZombie(hd, pryMax-2, prxMax/2);
+    // hd = InsZombie(hd, pryMax-2, prxMax/2);
     // hd = InsGolem(hd, pryMax-2, prxMax/2+10);
     // hd = InsBat(hd, pryMax-2, prxMax/2-10);
 
