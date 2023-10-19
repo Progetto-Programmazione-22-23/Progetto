@@ -184,6 +184,7 @@ void Player::attack() {
       attron(COLOR_PAIR(1));
       mvaddch(startY, startX+ds, '-'), mvaddch(startY, startX+2*ds, '-');
       attroff(COLOR_PAIR(1));
+      //checkHit(startX, startY);
     }
   }
 }
