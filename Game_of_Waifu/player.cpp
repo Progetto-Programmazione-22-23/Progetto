@@ -39,19 +39,7 @@ void Player::jump(int tik) {
   }
 }
 
-int ds = 1; // 0: destra, 1: sinistra
-void Player::attack() {
-  // booleano che controlla se ho un'arma selezionata
-  // true -> uso l'arma
-  // false -> attacco base corpo a corpo
-  int s = current_game.getInventory()->getSelected();
-  int id = current_game.getInventory()->getBarItem(0,s).getId();
-  if(id!=0) {
-    if(id == 1) {
-      mvwaddch(curwin, current_game.getPlayerY(), current_game.getPlayerX()+ds, '-');
-    }
-  }
-}
+
 
 int calcYmin(int x) {
   pcoords t = actual_map;
@@ -112,10 +100,14 @@ int Player::getX() {return x;}
 int Player::getY() {return y;}
 char Player::getChar() {return character;}
 
+int ds = 1;
 void Player::getmv(bool &loop, int tik){
   int ch;
   ch = getch();
   switch(ch) {
+    case 'w':
+      jump(tik);
+      break;
     case 'd':
       move_right();
       ds = 1;
@@ -125,11 +117,8 @@ void Player::getmv(bool &loop, int tik){
       ds = -1;
       break;
     case ' ':
-      jump(tik);
+      Player::attack();
       break;
-    // case ' ':
-    //   Player::attack();
-    //   break;
     case '1':
       current_game.getInventory()->setSelected(0);
       current_game.UpState();
@@ -177,6 +166,24 @@ void Player::display() {
   mvwaddch(curwin, y, x, character);
   refresh();
   current_game.setPlayerPos(x, y);
+}
+
+
+ // 0: destra, 1: sinistra
+void Player::attack() {
+  // booleano che controlla se ho un'arma selezionata
+  // true -> uso l'arma
+  // false -> attacco base corpo a corpo
+  int s = current_game.getInventory()->getSelected();
+  int id = current_game.getInventory()->getBarItem(0,s).getId();
+  int startX = current_game.getPlayerX()+7, startY = current_game.getPlayerY()+3;
+  if(id!=0) {
+    if(id<=10) {
+      attron(COLOR_PAIR(1));
+      mvaddch(startY, startX+ds, '-'), mvaddch(startY, startX+2*ds, '-');
+      attroff(COLOR_PAIR(1));
+    }
+  }
 }
 
 void Player::shoot(){

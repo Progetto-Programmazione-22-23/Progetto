@@ -10,11 +10,10 @@
 (id) (prezzo) (nome-del-item) (acquistabile?) (attivo/passivo) (rarità) (id item da cui viene upgradato) (valore generico) (desc-del-item) (bonus health) (ad) (ap) (res) (speed) (luck)
 
 id <= 10, spade meelee
-<= 20, scudi
-<= 30, archi pistole
-<= 40, bacchette
-<= 50, magie
-<= 60, consumabili pozioni potenziamenti temp
->60, armor power up permanenti
+<= 20, archi
+<= 30, bacchette
+<= 40, scudi
+<= 50, consumabili pozioni potenziamenti temp
+>50, armor power up permanenti
 
 

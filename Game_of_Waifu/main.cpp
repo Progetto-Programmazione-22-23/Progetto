@@ -79,8 +79,12 @@ void start(){
     int pryMax, prxMax;
     getmaxyx(playerwin, pryMax, prxMax);
 
-    if(current_game.eNuovo())
+    if(current_game.eNuovo()) {
         current_game.setPlayerPos(2,pryMax-3);
+    // disegna la mappa
+        mapgenerator(playerwin);
+    }
+    else regenOldMap(playerwin, false);
 
     Player player = Player(playerwin, current_game.getPlayerY(), current_game.getPlayerX(), '@');
     start_color();
@@ -91,8 +95,8 @@ void start(){
     init_pair(4, COLOR_BLACK, COLOR_WHITE);
 
 
-    // disegna la mappa
-    mapgenerator(playerwin);
+    
+    
 
     // /*MOB LIST*/
     pnemici hd = NULL; 
