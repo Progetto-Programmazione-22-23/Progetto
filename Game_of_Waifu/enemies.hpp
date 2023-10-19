@@ -27,6 +27,7 @@ class Mob{
         void mvright();
         void mvup();
         void mvdown();
+        void setmin(int ym);
 };
 
 // Mob Zombie(int y = 0, int x = 0, int l = 2, int s = 5, int d = 1, char ch = 'Z', bool f = false);
@@ -51,10 +52,11 @@ typedef nemico* pnemici;
 pnemici InsMob(pnemici hd, Mob x);
 pnemici InsZombie(pnemici hd, int y, int x);
 pnemici InsGolem(pnemici hd, int y, int x);
+pnemici InsBat(pnemici hd, int y, int x);
 
 
 pnemici Death(pnemici hd);
-void update(pnemici hd, Player pl, int minY, int tic, WINDOW * win);
+void update(pnemici hd, Player pl, int tic, WINDOW * win);
 void display(pnemici hd, WINDOW * win);
 void takeDmg(int dmg);
 

@@ -102,6 +102,7 @@ void start(){
     pnemici hd = NULL; 
     hd = InsZombie(hd, pryMax-2, prxMax/2);
     hd = InsGolem(hd, pryMax-2, prxMax/2+10);
+    hd = InsBat(hd, pryMax-2, prxMax/2-10);
 
     // Loop di gioco
     int cont = 0;     /*numero di loop di gioco (Tick)*/
@@ -118,7 +119,7 @@ void start(){
         interface(yMax, xMax);
 
         /*CONTROLLO DEI MOB*/
-        update(hd, player, pryMax-6, cont, playerwin); // movimenti
+        update(hd, player, cont, playerwin);           // movimenti
         hd = Death(hd);                                // elimino mob morti
         display(hd, playerwin);                        // disegno i mob in vita
 

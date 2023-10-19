@@ -27,6 +27,7 @@ void Mob::mvleft(){this->x--;}
 void Mob::mvright(){this->x++;}
 void Mob::mvup(){this->y--;}
 void Mob::mvdown(){this->y++;}
+void Mob::setmin(int ym) {this->y = ym;}
 
 /*funzioni di inserimento dei diversi mob*/
 pnemici InsMob(pnemici hd, Mob x) {
@@ -37,6 +38,7 @@ pnemici InsMob(pnemici hd, Mob x) {
 }
 pnemici InsZombie(pnemici hd, int y, int x) {Mob Zombie(y, x, 2, 10, 1, 'Z', false); InsMob(hd, Zombie);}
 pnemici InsGolem(pnemici hd, int y, int x) {Mob Golem(y, x, 5, 20, 3, 'G', false); InsMob(hd, Golem);}
+pnemici InsBat(pnemici hd, int y, int x) {Mob Bat(y, x, 1, 5, 1, 'V', true); InsMob(hd, Bat);}
 
 /*funzioni di gestione della lista di mob*/
 pnemici Death(pnemici hd) {
@@ -54,19 +56,21 @@ pnemici Death(pnemici hd) {
     return nhd;
 }
 
-void update(pnemici hd, Player pl, int minY, int tic, WINDOW * win) {                                        // simil pathfinding
+void update(pnemici hd, Player pl, int tic, WINDOW * win) {       // simil pathfinding
     while (hd != NULL) {
+        int minY = calcYmin(hd->nem.getX());
         if (tic % (hd->nem.getspeed()) == 0){
-
             mvwaddch(win, hd->nem.getY(), hd->nem.getX(), ' ');
             if (!hd->nem.getfly()){
+                if (hd->nem.getY() != minY) hd->nem.setmin(minY);
                 if (pl.getX() < hd->nem.getX()) hd->nem.mvleft();
                 else if (pl.getX() > hd->nem.getX()) hd->nem.mvright();
             } else if (hd->nem.getfly()){
+                if (hd->nem.getY() > minY-5) hd->nem.setmin(minY-5);
                 if (pl.getX() < hd->nem.getX()) hd->nem.mvleft();
                 else if (pl.getX() > hd->nem.getX()) hd->nem.mvright();
                 if (pl.getY() < hd->nem.getY()) hd->nem.mvup();
-                else if (pl.getY() > hd->nem.getY() && hd->nem.getY() < minY) hd->nem.mvdown();
+                else if (pl.getY() > hd->nem.getY() && hd->nem.getY() < minY-5) hd->nem.mvdown();
             }
         }
         
