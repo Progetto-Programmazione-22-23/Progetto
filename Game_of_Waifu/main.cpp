@@ -5,7 +5,7 @@
 #include <cstdlib>
 #include "save.cpp"
 // #include "player.cpp"
-#include "enemies.cpp"
+#include "map_setting.cpp"
 // #include "map.cpp"
 // #include "enemies.cpp"
 // #include "gui.cpp"
@@ -113,7 +113,7 @@ void start(){
         interface(yMax, xMax);
 
         /*CONTROLLO DEI MOB*/
-        update(hd, player, cont, playerwin);           // movimenti
+        update(hd, player, cont, playerwin, cont);           // movimenti
         hd = Death(hd);                                // elimino mob morti
         display(hd, playerwin);                        // disegno i mob in vita
 
@@ -124,7 +124,8 @@ void start(){
 
         player.getmv(loop, cont); // prende user input 
 
-        player.update(prxMax, playerwin, cont); 
+        player.update(prxMax, playerwin, cont);
+        ChangeMap(&player, playerwin, prxMax, pryMax, hd); 
 
         player.display(); // disegna il pg
 

@@ -16,24 +16,7 @@ void SpawnEnd(WINDOW * win, int h, int l){
     addCoord(len,h);
 }
 
-void GoNext(WINDOW * win){
-    wclear(win);
-    int n = current_game.getMap();
-    current_game.setMap(n+1);
-    
-    char mapname[20];
-    sprintf(mapname, "map/%d.txt", n+1);
-    ifstream f(mapname);
 
-    if(f.good()) regenOldMap(win, false);
-    else mapgenerator(win);
-}
-
-void GoPrev(WINDOW * win) {
-    wclear(win);
-    current_game.setMap(current_game.getMap()-1);
-    regenOldMap(win, false);
-}
 
 void GoStraight(WINDOW * win, int h, int l){mvwaddch(win, h, l, '_') ;}
 void GoUp(WINDOW * win, int h, int l){mvwaddch(win, h, l, '/'), addCoord(l,h);}               

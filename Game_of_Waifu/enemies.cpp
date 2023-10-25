@@ -28,6 +28,7 @@ void Mob::mvright(){this->x++;}
 void Mob::mvup(){this->y--;}
 void Mob::mvdown(){this->y++;}
 void Mob::setmin(int ym) {this->y = ym;}
+void Mob::NemDmg(int dmg){this->life -= dmg;};
 
 /*funzioni di inserimento dei diversi mob*/
 pnemici InsMob(pnemici hd, Mob x) {
@@ -41,22 +42,33 @@ pnemici InsGolem(pnemici& hd, int y, int x) {Mob Golem(y, x, 5, 20, 3, 'G', fals
 pnemici InsBat(pnemici& hd, int y, int x) {Mob Bat(y, x, 1, 5, 1, 'V', true); return InsMob(hd, Bat);}
 
 /*funzioni di gestione della lista di mob*/
-pnemici Death(pnemici hd) {
-    while (hd->nem.getlife() == 0){
+pnemici Death(pnemici& hd) {
+    if (hd == NULL) return NULL;
+    
+    while (hd != NULL && hd->nem.getlife() <= 0){
         pnemici dhd = hd;
         hd = hd->next;
         delete(dhd);
     }
+    
     pnemici nhd = hd;
-    while (hd->next != NULL){
-        pnemici dhd = hd->next;
-        if (hd->next->nem.getlife() == 0){hd->next = hd->next->next; delete(dhd);}
-        hd = hd->next;
+    
+    while (hd != NULL && hd->next != NULL){
+        if (hd->next->nem.getlife() <= 0) {
+            pnemici dhd = hd->next;
+            hd->next = hd->next->next;
+            delete(dhd);
+        } else {
+            hd = hd->next;
+        }
     }
+    
     return nhd;
 }
 
-void update(pnemici hd, Player pl, int tic, WINDOW * win) {       // simil pathfinding
+
+void update(pnemici hd, Player pl, int tic, WINDOW * win, int ActualTick) {       // simil pathfinding
+    int LastDmg = -1;
     while (hd != NULL) {
         int minY = calcYmin(hd->nem.getX());
         if (tic % (hd->nem.getspeed()) == 0){
@@ -74,8 +86,11 @@ void update(pnemici hd, Player pl, int tic, WINDOW * win) {       // simil pathf
             }
         }
         
-        if (pl.getX() == hd->nem.getX() && pl.getY() == hd->nem.getY())
+        if (pl.getX() == hd->nem.getX() && pl.getY() == hd->nem.getY() && LastDmg < ActualTick-100){
             takeDmg(hd->nem.getDmg()); /*takedmg(this->dmg)*/ // danni al player
+            hd->nem.NemDmg(1);
+            LastDmg = ActualTick;
+        }
         hd = hd->next;
     }
 }
@@ -93,18 +108,4 @@ void display(pnemici hd, WINDOW * win) {
     }
 }
 
-void MobSpawn(int len, pnemici& hd){
-    // mapgenerator(win);
-    srand(time(NULL));
-    int i = 0;
-    while (i<5){
-        int Xspawn = rand()%(len);
-        int MobType = rand()%3;
-        if (MobType == 0) hd = InsZombie(hd, calcYmin(Xspawn), Xspawn);
-        else if (MobType == 1) hd = InsGolem(hd, calcYmin(Xspawn), Xspawn);
-        else if (MobType == 2) hd = InsBat(hd, calcYmin(Xspawn) - 5, Xspawn);
-        else hd = InsZombie(hd, calcYmin(Xspawn), Xspawn); 
-        i++;
-    }
-}
 

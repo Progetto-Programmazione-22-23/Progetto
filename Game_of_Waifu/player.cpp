@@ -39,8 +39,6 @@ void Player::jump(int tik) {
   }
 }
 
-
-
 int calcYmin(int x) {
   pcoords t = actual_map;
   while(t != NULL) {
@@ -85,21 +83,12 @@ void Player::update(int end, WINDOW * win, int tik) {
     this->x = xMax - 2;
     this->x_velocity = 0;
   }
-  if(getX() >= end-2){        // solo se la lista di nemici è vuota 
-    this->x = 4;
-    this->y = yMax-3;
-    GoNext(win);
-  }
-  else if(getX() <= 1 && current_game.getMap()>0) {
-    this->x = end-4;
-    this->y = yMax-3;
-    GoPrev(win);
-  } 
 }
 
 int Player::getX() {return x;}
 int Player::getY() {return y;}
 char Player::getChar() {return character;}
+void Player::Teleport(int nx, int ny) {this->x = nx; this->y = ny;}
 
 int ds = 1;
 void Player::getmv(bool &loop, int tik){

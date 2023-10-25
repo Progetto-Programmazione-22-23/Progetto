@@ -3,6 +3,7 @@
         "chrono": "cpp",
         "*.tcc": "cpp",
         "string": "cpp",
-        "*.txt": "cpp"
+        "*.txt": "cpp",
+        "new": "cpp"
     }
 }

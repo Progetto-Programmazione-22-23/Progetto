@@ -39,9 +39,10 @@ class Player {
         int getX();
         int getY();
         char getChar();
+        void Teleport(int nx, int ny);
         void takedmg(int d);
         void getmv(bool &loop, int tik);
-        void update(int, WINDOW *, int tik);
+        void update(int end, WINDOW * win, int tik);
         void stayUP();
         void shoot();
         void display();

@@ -28,6 +28,7 @@ class Mob{
         void mvup();
         void mvdown();
         void setmin(int ym);
+        void NemDmg(int dmg);
 };
 
 // Mob Zombie(int y = 0, int x = 0, int l = 2, int s = 5, int d = 1, char ch = 'Z', bool f = false);
@@ -55,9 +56,9 @@ pnemici InsGolem(pnemici& hd, int y, int x);
 pnemici InsBat(pnemici& hd, int y, int x);
 
 
-pnemici Death(pnemici hd);
-void update(pnemici hd, Player pl, int tic, WINDOW * win);
+pnemici Death(pnemici& hd);
+void update(pnemici hd, Player pl, int tic, WINDOW * win, int ActualTick);
 void display(pnemici hd, WINDOW * win);
 void takeDmg(int dmg);
 
-void MobSpawn(int len, pnemici& hd);
+
