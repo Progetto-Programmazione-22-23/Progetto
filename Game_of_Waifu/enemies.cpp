@@ -40,6 +40,7 @@ pnemici InsMob(pnemici hd, Mob x) {
 pnemici InsZombie(pnemici& hd, int y, int x) {Mob Zombie(y, x, 2, 10, 1, 'Z', false); return InsMob(hd, Zombie);}
 pnemici InsGolem(pnemici& hd, int y, int x) {Mob Golem(y, x, 5, 20, 3, 'G', false); return InsMob(hd, Golem);}
 pnemici InsBat(pnemici& hd, int y, int x) {Mob Bat(y, x, 1, 5, 1, 'V', true); return InsMob(hd, Bat);}
+pnemici InsDemon(pnemici& hd, int y, int x) {Mob Demon(y, x, 3, 13, 2, 'D', true); return InsMob(hd, Demon);}
 
 /*funzioni di gestione della lista di mob*/
 pnemici Death(pnemici& hd) {
@@ -67,29 +68,27 @@ pnemici Death(pnemici& hd) {
 }
 
 
-void update(pnemici hd, Player pl, int tic, WINDOW * win, int ActualTick) {       // simil pathfinding
-    int LastDmg = -1;
+void update(pnemici hd, Player* pl, int ActualTick, WINDOW * win) {       // simil pathfinding
     while (hd != NULL) {
         int minY = calcYmin(hd->nem.getX());
-        if (tic % (hd->nem.getspeed()) == 0){
+        if (ActualTick % (hd->nem.getspeed()) == 0){
             mvwaddch(win, hd->nem.getY(), hd->nem.getX(), ' ');
             if (!hd->nem.getfly()){
                 if (hd->nem.getY() != minY) hd->nem.setmin(minY);
-                if (pl.getX() < hd->nem.getX()) hd->nem.mvleft();
-                else if (pl.getX() > hd->nem.getX()) hd->nem.mvright();
+                if (pl->getX() < hd->nem.getX()) hd->nem.mvleft();
+                else if (pl->getX() > hd->nem.getX()) hd->nem.mvright();
             } else if (hd->nem.getfly()){
                 if (hd->nem.getY() > minY-5) hd->nem.setmin(minY-5);
-                if (pl.getX() < hd->nem.getX()) hd->nem.mvleft();
-                else if (pl.getX() > hd->nem.getX()) hd->nem.mvright();
-                if (pl.getY() < hd->nem.getY()) hd->nem.mvup();
-                else if (pl.getY() > hd->nem.getY() && hd->nem.getY() < minY-5) hd->nem.mvdown();
+                if (pl->getX() < hd->nem.getX()) hd->nem.mvleft();
+                else if (pl->getX() > hd->nem.getX()) hd->nem.mvright();
+                if (pl->getY() < hd->nem.getY()) hd->nem.mvup();
+                else if (pl->getY() > hd->nem.getY() && hd->nem.getY() < minY-5) hd->nem.mvdown();
             }
         }
         
-        if (pl.getX() == hd->nem.getX() && pl.getY() == hd->nem.getY() && LastDmg < ActualTick-100){
-            takeDmg(hd->nem.getDmg()); /*takedmg(this->dmg)*/ // danni al player
+        if (pl->getX() == hd->nem.getX() && pl->getY() == hd->nem.getY()){
+            if (pl->getLastHit() < ActualTick-75){takeDmg(hd->nem.getDmg()); pl->UpdateLastHit(ActualTick);}; // danni al player
             hd->nem.NemDmg(1);
-            LastDmg = ActualTick;
         }
         hd = hd->next;
     }

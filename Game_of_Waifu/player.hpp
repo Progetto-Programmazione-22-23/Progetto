@@ -14,6 +14,7 @@ int ActualTik = 0;
 class Player {
     protected:
         int y, x, yMax, xMax;
+        int LastHit;
         // Object bullet;
         int bulletX, bulletY;
         int bulletDistance = 0;
@@ -38,8 +39,10 @@ class Player {
         void attack();
         int getX();
         int getY();
+        int getLastHit();
         char getChar();
         void Teleport(int nx, int ny);
+        void UpdateLastHit(int tick);
         void takedmg(int d);
         void getmv(bool &loop, int tik);
         void update(int end, WINDOW * win, int tik);

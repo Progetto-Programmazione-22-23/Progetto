@@ -113,7 +113,7 @@ void start(){
         interface(yMax, xMax);
 
         /*CONTROLLO DEI MOB*/
-        update(hd, player, cont, playerwin, cont);           // movimenti
+        update(hd, &player, cont, playerwin);           // movimenti
         hd = Death(hd);                                // elimino mob morti
         display(hd, playerwin);                        // disegno i mob in vita
 

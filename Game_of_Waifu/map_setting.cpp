@@ -6,10 +6,11 @@ void MobSpawn(int len, pnemici& hd){
     int i = 0;
     while (i<5){
         int Xspawn = rand()%(len);
-        int MobType = rand()%3;
+        int MobType = rand()%NumMob;
         if (MobType == 0) hd = InsZombie(hd, calcYmin(Xspawn), Xspawn);
         else if (MobType == 1) hd = InsGolem(hd, calcYmin(Xspawn), Xspawn);
         else if (MobType == 2) hd = InsBat(hd, calcYmin(Xspawn) - 5, Xspawn);
+        else if (MobType == 3) hd = InsDemon(hd, calcYmin(Xspawn) - 5, Xspawn);
         else hd = InsZombie(hd, calcYmin(Xspawn), Xspawn); 
         i++;
     }

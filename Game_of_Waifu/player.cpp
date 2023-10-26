@@ -7,6 +7,7 @@ Player::Player(WINDOW * win, int y, int x, char c) {
   // this->invnt = inv;
   this->x = x;
   this->y = y;
+  this->LastHit = -1000;
   this->x_velocity = 0;
   this->y_velocity = 0;
   this->is_jumping = false;
@@ -87,6 +88,8 @@ void Player::update(int end, WINDOW * win, int tik) {
 
 int Player::getX() {return x;}
 int Player::getY() {return y;}
+int Player::getLastHit() {return LastHit;}
+void Player::UpdateLastHit(int tick) {this->LastHit = tick;}
 char Player::getChar() {return character;}
 void Player::Teleport(int nx, int ny) {this->x = nx; this->y = ny;}
 

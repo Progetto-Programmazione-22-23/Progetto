@@ -72,7 +72,7 @@ void mapgenerator(WINDOW * win){
     getmaxyx(win, high, len);
     int i, last = 100;
     int H = high -3;            // altezza attuale del livello: +1 se vado up, -1 se vado down;
-    int L = Lstart;          // x attuale nella generazione;
+    int L = Lstart;             // x attuale nella generazione;
 
     SpawnStart(win, H);         // inizio mappa
     

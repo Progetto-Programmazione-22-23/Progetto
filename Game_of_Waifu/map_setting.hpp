@@ -1,5 +1,7 @@
 #include "enemies.cpp"
 
+int NumMob = 4;
+
 void MobSpawn(int len, pnemici& hd);
 
 void GoNext(WINDOW * win, int len, pnemici& hd);                                 // quando arrivi alla piattaforma di fine, nuovo livello
