@@ -55,6 +55,37 @@ void SpecialBlock(WINDOW * win, int h, int l){
 
 /// END SPECIAL BLOCK SECTION ///
 
+<<<<<<< HEAD
+=======
+void SpawnPlatform(WINDOW * win, int len){
+    int i, L = 15, h = 4;                                               // i:Possibilità di Spawn, L:No spawn prima di x = 15, h:H da terra
+    int LastX = -100;                                                   // X di fine dell'ultima piattaforma
+    while(L < len-15){
+        i = rand() % 7;                                                 // Spawn 10% delle volte          
+        int lenPlat = (rand() % 6) + 10;                                // Len Platform random
+        if (i == 1){
+            int Xspawn = L;                                             // Yspawn = Y corrispondente alla x attuale
+            if (L-LastX < 30) {h = calcYmin(LastX)-LastX-4;}                   // Se sono vicino a una piattaforma già raggiungibile, quella dopo la spawno più in alto
+            if (calcYmin(L+lenPlat)-h > 4){
+                mvwaddch(win, calcYmin(Xspawn)-h, L, '<');         
+                L++;
+                lenPlat--;
+                for (int j = 0; j<lenPlat-1; j++){
+                    mvwaddch(win, calcYmin(Xspawn)-h, L, '=');
+                    L++;
+                }
+                mvwaddch(win, calcYmin(Xspawn)-h, L, '>');
+                LastX = L;
+                L++;
+                lenPlat = 0;
+                h = 4;
+            } else {L++; h=4;}
+        }
+        L+=3;
+    }
+}
+
+>>>>>>> 3c5bdb07e24bccafdea7ed8b258238d46065a321
 void mapgenerator(WINDOW * win){
     actual_map = NULL;
     srand(time(NULL));
