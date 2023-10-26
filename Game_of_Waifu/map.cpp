@@ -65,11 +65,13 @@ void SpecialBlock(WINDOW * win, int h, int l){
 
 void SpawnPlatform(WINDOW * win, int len){
     int i, L = 15, h = 4;                                              // i:Possibilità di Spawn, L:No spawn prima di x = 15, h:H da terra
+    int LastX = -100;                                                  // X di fine dell'ultima piattaforma
     while(L < len-15){
         i = rand() % 7;                                        // Spawn 10% delle volte          
         int lenPlat = (rand() % 6) + 10;                        // Len Platform random
         if (i == 1){
             int Yspawn = L;                                     // Yspawn = Y corrispondente alla x attuale
+            if (L-LastX <= 5) h = h*2;
             mvwaddch(win, calcYmin(Yspawn)-h, L, '<');         
             L++;
             lenPlat--;
@@ -80,8 +82,10 @@ void SpawnPlatform(WINDOW * win, int len){
             mvwaddch(win, calcYmin(Yspawn)-h, L, '>');
             L++;
             lenPlat = 0;
+            h = 4;
         }
         L+=3;
+        LastX = L;
     }
 }
 

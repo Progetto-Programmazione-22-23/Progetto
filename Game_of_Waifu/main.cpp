@@ -74,7 +74,7 @@ void start(){
     getmaxyx(stdscr, yMax, xMax);
 
     /*FINESTRA CON PG*/
-    WINDOW * playerwin = newwin(yMax-(yMax/10)-2, xMax-(xMax/10)-2, yMax/20+2, xMax/20+1);
+    WINDOW * playerwin = newwin(yMax-(yMax/10)-20, xMax-(xMax/10)-2, yMax/20+20, xMax/20+1);
     box(playerwin, 0, 0);
     keypad(playerwin, true);
     nodelay(playerwin, TRUE);
