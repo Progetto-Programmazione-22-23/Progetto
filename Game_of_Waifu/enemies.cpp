@@ -107,8 +107,9 @@ void takeDmg(int dmg) {
 }
 
 void display(pnemici hd, WINDOW * win) {
-    while(hd != NULL){
-        mvwaddch(win, hd->nem.getY(), hd->nem.getX(), hd->nem.getChar());
-        hd = hd->next;
-    }
+    if(current_game.getMap() == current_game.getLevel())
+        while(hd != NULL){
+            mvwaddch(win, hd->nem.getY(), hd->nem.getX(), hd->nem.getChar());
+            hd = hd->next;
+        }
 }
