@@ -16,7 +16,7 @@ void addCoord(int x,int y) {
 void addSpecial(int x, int y) {
     pcoords c = new coords;
     c->x = x, c->y = y, c->next = NULL;
-    if(actual_map == NULL) specials = c;
+    if(specials == NULL) specials = c;
     else {
         pcoords t = specials;
         while(t->next!=NULL) t = t->next;
@@ -51,15 +51,24 @@ void regenOldMap(WINDOW * win, bool refresh) {
             q = t->next;
             t = NULL, delete(t);
         }
+        for(pcoords t = specials, q;t!=NULL;t = q) {
+            q = t->next;
+            t = NULL, delete(t);
+        }
 
         actual_map = NULL;
-        std::ifstream in;
+        std::ifstream in,ins;
         char filename[20];
         sprintf(filename, "map/%d.txt", current_game.getMap());
         in.open(filename);
-        
         int x,y;
         while(in>>x>>y) addCoord(x,y);
+
+        specials = NULL;
+        char specialname[20];
+        sprintf(specialname, "map/%ds.txt", current_game.getMap());
+        ins.open(specialname);
+        while(in>>x>>y) addSpecial(x,y);
     }   
     
     pcoords t = actual_map;
@@ -82,5 +91,9 @@ void regenOldMap(WINDOW * win, bool refresh) {
     while(w<t->x) {
         mvwaddch(win, t->y, w, '_');
         w++;
+    }
+
+    for(pcoords q = specials;q!=NULL;q = q->next) {
+        mvwaddch(win,q->y, q->x, 'S');
     }
 }

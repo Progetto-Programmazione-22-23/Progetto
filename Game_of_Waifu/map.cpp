@@ -52,6 +52,7 @@ void SpawnHelp(){
 
 void SpecialBlock(WINDOW * win, int h, int l){
     mvwaddch(win, h, l, 'S');
+    addSpecial(l,h);
     //addCoord(l,h);
 
     // se le coordinate del player sono le stesse del blocco speciale, si attiva un effetto random
