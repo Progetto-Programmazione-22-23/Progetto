@@ -69,28 +69,30 @@ pnemici Death(pnemici& hd) {
 
 
 void update(pnemici hd, Player* pl, int ActualTick, WINDOW * win) {       // simil pathfinding
-    while (hd != NULL) {
-        int minY = calcYmin(hd->nem.getX());
-        if (ActualTick % (hd->nem.getspeed()) == 0){
-            mvwaddch(win, hd->nem.getY(), hd->nem.getX(), ' ');
-            if (!hd->nem.getfly()){
-                if (hd->nem.getY() != minY) hd->nem.setmin(minY);
-                if (pl->getX() < hd->nem.getX()) hd->nem.mvleft();
-                else if (pl->getX() > hd->nem.getX()) hd->nem.mvright();
-            } else if (hd->nem.getfly()){
-                if (hd->nem.getY() > minY-5) hd->nem.setmin(minY-5);
-                if (pl->getX() < hd->nem.getX()) hd->nem.mvleft();
-                else if (pl->getX() > hd->nem.getX()) hd->nem.mvright();
-                if (pl->getY() < hd->nem.getY()) hd->nem.mvup();
-                else if (pl->getY() > hd->nem.getY() && hd->nem.getY() < minY-5) hd->nem.mvdown();
+    if(current_game.getMap() == current_game.getLevel()) {
+        while (hd != NULL) {
+            int minY = calcYmin(hd->nem.getX());
+            if (ActualTick % (hd->nem.getspeed()) == 0){
+                mvwaddch(win, hd->nem.getY(), hd->nem.getX(), ' ');
+                if (!hd->nem.getfly()){
+                    if (hd->nem.getY() != minY) hd->nem.setmin(minY);
+                    if (pl->getX() < hd->nem.getX()) hd->nem.mvleft();
+                    else if (pl->getX() > hd->nem.getX()) hd->nem.mvright();
+                } else if (hd->nem.getfly()){
+                    if (hd->nem.getY() > minY-5) hd->nem.setmin(minY-5);
+                    if (pl->getX() < hd->nem.getX()) hd->nem.mvleft();
+                    else if (pl->getX() > hd->nem.getX()) hd->nem.mvright();
+                    if (pl->getY() < hd->nem.getY()) hd->nem.mvup();
+                    else if (pl->getY() > hd->nem.getY() && hd->nem.getY() < minY-5) hd->nem.mvdown();
+                }
             }
+            
+            if (pl->getX() == hd->nem.getX() && pl->getY() == hd->nem.getY()){
+                if (pl->getLastHit() < ActualTick-75){takeDmg(hd->nem.getDmg()); pl->UpdateLastHit(ActualTick);}; // danni al player
+                hd->nem.NemDmg(1);
+            }
+            hd = hd->next;
         }
-        
-        if (pl->getX() == hd->nem.getX() && pl->getY() == hd->nem.getY()){
-            if (pl->getLastHit() < ActualTick-75){takeDmg(hd->nem.getDmg()); pl->UpdateLastHit(ActualTick);}; // danni al player
-            hd->nem.NemDmg(1);
-        }
-        hd = hd->next;
     }
 }
 

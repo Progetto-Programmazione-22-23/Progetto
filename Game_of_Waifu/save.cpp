@@ -1,6 +1,6 @@
 #include "save.hpp"
 
-igame fresh = {0,0,0,0,7,0,{0,0,0,0,0,0},Inventory(),true};//{Item(1,300,"Healthy Armor",1,4),Item(),Item()}};
+igame fresh = {0,0,0,0,7,0,0,{0,0,0,0,0,0},Inventory(),true};//{Item(1,300,"Healthy Armor",1,4),Item(),Item()}};
 Game current_game = Game(fresh);
 
 Game::Game(igame s) { this->setting = s;  this->state = 0; }
@@ -36,7 +36,8 @@ void Game::saveAll() {
     <<setting.map<<"\n"
     <<setting.money<<"\n"
     <<setting.vita<<"\n"
-    <<setting.ammo<<"\n";
+    <<setting.ammo<<"\n"
+    <<setting.level<<"\n";
     //for(int j=0;j<CATEGORIES;j++) 
     //    out<<setting.stats[j]<<"\n";
     for(int j=0;j<2;j++) for(int i=0;i<3;i++) 
@@ -62,9 +63,10 @@ void Game::continueLast() {
         else if(i==3) last.money = data;
         else if(i==4) last.vita = data;
         else if(i==5) last.ammo = data;
+        else if(i==6) last.level = data;
         //else if(i<=4+CATEGORIES) last.stats[i-5] = data; // i = 4
-        else if(i<=8) hotbar[i-6] = getItem(allItems, (int)data);
-        else if(i<=11) armor[i-9] = getItem(allItems, (int)data);
+        else if(i<=9) hotbar[i-7] = getItem(allItems, (int)data);
+        else if(i<=12) armor[i-10] = getItem(allItems, (int)data);
         else playerInv.giveItem(getItem(allItems, (int)data));
         i++;
     }
@@ -124,6 +126,12 @@ int Game::getAmmo() {
 }
 void Game::setAmmo(int i) {
     setting.ammo = i;
+}
+int Game::getLevel() {
+    return setting.level;
+}
+void Game::setLevel(int i) {
+    setting.level = i;
 }
 double Game::getAtk() { return setting.stats[1];}
 double Game::getMagic(){ return setting.stats[2];}
