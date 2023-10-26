@@ -28,6 +28,8 @@ void Mob::mvright(){this->x++;}
 void Mob::mvup(){this->y--;}
 void Mob::mvdown(){this->y++;}
 void Mob::setmin(int ym) {this->y = ym;}
+
+/*Danno al Mob*/
 void Mob::NemDmg(int dmg){this->life -= dmg;};
 
 /*funzioni di inserimento dei diversi mob*/
@@ -49,6 +51,7 @@ pnemici Death(pnemici& hd) {
     while (hd != NULL && hd->nem.getlife() <= 0){
         pnemici dhd = hd;
         hd = hd->next;
+        dhd = NULL;
         delete(dhd);
     }
     
@@ -58,6 +61,7 @@ pnemici Death(pnemici& hd) {
         if (hd->next->nem.getlife() <= 0) {
             pnemici dhd = hd->next;
             hd->next = hd->next->next;
+            dhd = NULL;
             delete(dhd);
         } else {
             hd = hd->next;
@@ -108,5 +112,3 @@ void display(pnemici hd, WINDOW * win) {
         hd = hd->next;
     }
 }
-
-

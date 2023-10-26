@@ -40,16 +40,6 @@ void Player::jump(int tik) {
   }
 }
 
-int calcYmin(int x) {
-  pcoords t = actual_map;
-  while(t != NULL) {
-    if(x<t->x || (x==t->x && t->y<t->next->y)) 
-      return t->y;
-    t=t->next;
-  }
-  return 0;
-}
-
 void Player::update(int end, WINDOW * win, int tik) {
   int minY = calcYmin(x);
   int h = 5;  // altezza del salto (altezza = h / jumpspeed)
