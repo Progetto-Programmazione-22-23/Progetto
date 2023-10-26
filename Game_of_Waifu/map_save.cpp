@@ -1,6 +1,6 @@
 #include "map_save.hpp"
 
-pcoords actual_map = NULL;
+pcoords actual_map = NULL, specials = NULL;
 
 void addCoord(int x,int y) {
     pcoords c = new coords;
@@ -29,6 +29,12 @@ void saveActualMap() {
 
 void regenOldMap(WINDOW * win, bool refresh) {
     if(!refresh) {
+        
+        for(pcoords t = actual_map, q;t!=NULL;t = q) {
+            q = t->next;
+            t = NULL, delete(t);
+        }
+
         actual_map = NULL;
         std::ifstream in;
         char filename[20];

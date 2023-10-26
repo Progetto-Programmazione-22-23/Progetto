@@ -18,15 +18,20 @@ void MobSpawn(int len, pnemici& hd){
 
 void GoNext(WINDOW * win, int len, pnemici& hd){
     wclear(win);
-    int n = current_game.getMap();
+    int n = current_game.getMap(), l = current_game.getLevel();
     current_game.setMap(n+1);
+    if(n == l) { 
+        current_game.setLevel(l+1);
+        mapgenerator(win); 
+        MobSpawn(len, hd);
+    } else 
+        regenOldMap(win, false);
     
+    /*
     char mapname[20];
     sprintf(mapname, "map/%d.txt", n+1);
     ifstream f(mapname);
-
-    if(f.good()) regenOldMap(win, false);
-    else {mapgenerator(win); MobSpawn(len, hd);}
+    */
 }
 
 void GoPrev(WINDOW * win) {
