@@ -13,6 +13,17 @@ void addCoord(int x,int y) {
     }
 }
 
+void addSpecial(int x, int y) {
+    pcoords c = new coords;
+    c->x = x, c->y = y, c->next = NULL;
+    if(actual_map == NULL) specials = c;
+    else {
+        pcoords t = specials;
+        while(t->next!=NULL) t = t->next;
+        t->next = c;
+    }
+}
+
 void deleteOldMaps() {
    std::filesystem::remove_all("map");
    std::filesystem::create_directories("map");
@@ -20,10 +31,16 @@ void deleteOldMaps() {
 
 void saveActualMap() {
     std::ofstream out;
-    char filename[20];
-    sprintf(filename, "map/%d.txt", current_game.getMap());
-    out.open(filename);
+    char mapname[20], specialname[20];
+
+    sprintf(mapname, "map/%d.txt", current_game.getMap());
+    out.open(mapname);
     for(pcoords t = actual_map; t != NULL; t = t->next) out<<t->x<<" "<<t->y<<"\n";
+    out.close();
+
+    sprintf(specialname, "map/%ds.txt", current_game.getMap());
+    out.open(specialname);
+    for(pcoords t = specials; t != NULL; t = t->next) out<<t->x<<" "<<t->y<<"\n";
     out.close();
 }
 

@@ -10,5 +10,6 @@ int Lstart = 10;
 
 void deleteOldMaps();
 void addCoord(int x,int y);
+void addSpecial(int x, int y);
 void saveActualMap();
 void regenOldMap(WINDOW * win, bool refresh);
