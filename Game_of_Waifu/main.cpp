@@ -88,7 +88,7 @@ void start(){
         deleteOldMaps();
 
         mapgenerator(playerwin);
-        MobSpawn(prxMax, hd);
+        // MobSpawn(prxMax, hd);
     }
     else regenOldMap(playerwin, false);
 

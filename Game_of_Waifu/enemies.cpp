@@ -49,7 +49,7 @@ pnemici Death(pnemici& hd) {
     if (hd == NULL) return NULL;
     
     while (hd != NULL && hd->nem.getlife() <= 0){
-        pnemici dhd = hd;
+        pnemici dhd = hd; 
         hd = hd->next;
         dhd = NULL;
         delete(dhd);
