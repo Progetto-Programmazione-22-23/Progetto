@@ -13,9 +13,18 @@ void SpawnEnd(WINDOW * win, int h, int l){
         mvwaddch(win, h, l, '_');        // piattaforma di fine;
         l++;
     }
-    addCoord(len,h);
+    addCoord(len,h); 
 }
 
+int calcYmin(int x) {
+  pcoords t = actual_map;
+  while(t != NULL) {
+    if(x<t->x || (x==t->x && t->y<t->next->y)) 
+      return t->y;
+    t=t->next;
+  }
+  return 0;
+}
 
 void GoStraight(WINDOW * win, int h, int l){mvwaddch(win, h, l, '_') ;}
 void GoUp(WINDOW * win, int h, int l){mvwaddch(win, h, l, '/'), addCoord(l,h);}               
@@ -43,7 +52,7 @@ void SpawnHelp(){
 
 void SpecialBlock(WINDOW * win, int h, int l){
     mvwaddch(win, h, l, 'S');
-    addSpecial(l,h);
+    //addCoord(l,h);
 
     // se le coordinate del player sono le stesse del blocco speciale, si attiva un effetto random
 
@@ -103,6 +112,6 @@ void mapgenerator(WINDOW * win){
     }
 
     SpawnEnd(win, H, L);           // fine mappa
-    // MobSpawn(len);
+    SpawnPlatform(win, len);
     saveActualMap();
 }
