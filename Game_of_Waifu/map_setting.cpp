@@ -41,7 +41,7 @@ void GoPrev(WINDOW * win) {
 }
 
 void ChangeMap(Player* pl, WINDOW * win, int end, int yMax, pnemici& hd){
-    if(pl->getX() >= end-2 && hd == NULL){        // solo se la lista di nemici è vuota 
+    if(pl->getX() >= end-2 && (hd == NULL || current_game.getMap()<current_game.getLevel())){        // solo se la lista di nemici è vuota 
     pl->Teleport(4, yMax-3);
     GoNext(win, end, hd);
   }
