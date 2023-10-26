@@ -16,7 +16,15 @@ void SpawnEnd(WINDOW * win, int h, int l){
     addCoord(len,h);
 }
 
-
+int calcYmin(int x) {
+  pcoords t = actual_map;
+  while(t != NULL) {
+    if(x<t->x || (x==t->x && t->y<t->next->y)) 
+      return t->y;
+    t=t->next;
+  }
+  return 0;
+}
 
 void GoStraight(WINDOW * win, int h, int l){mvwaddch(win, h, l, '_') ;}
 void GoUp(WINDOW * win, int h, int l){mvwaddch(win, h, l, '/'), addCoord(l,h);}               
@@ -55,6 +63,28 @@ void SpecialBlock(WINDOW * win, int h, int l){
 
 /// END SPECIAL BLOCK SECTION ///
 
+void SpawnPlatform(WINDOW * win, int len){
+    int i, L = 15, h = 4;                                              // i:Possibilità di Spawn, L:No spawn prima di x = 15, h:H da terra
+    while(L < len-15){
+        i = rand() % 7;                                        // Spawn 10% delle volte          
+        int lenPlat = (rand() % 6) + 10;                        // Len Platform random
+        if (i == 1){
+            int Yspawn = L;                                     // Yspawn = Y corrispondente alla x attuale
+            mvwaddch(win, calcYmin(Yspawn)-h, L, '<');         
+            L++;
+            lenPlat--;
+            for (int j = 0; j<lenPlat; j++){
+                mvwaddch(win, calcYmin(Yspawn)-h, L, '=');
+                L++;
+            }
+            mvwaddch(win, calcYmin(Yspawn)-h, L, '>');
+            L++;
+            lenPlat = 0;
+        }
+        L+=3;
+    }
+}
+
 void mapgenerator(WINDOW * win){
     actual_map = NULL;
     srand(time(NULL));
@@ -76,6 +106,6 @@ void mapgenerator(WINDOW * win){
     }
 
     SpawnEnd(win, H, L);           // fine mappa
-    // MobSpawn(len);
+    SpawnPlatform(win, len);
     saveActualMap();
 }
