@@ -13,7 +13,7 @@ void SpawnEnd(WINDOW * win, int h, int l){
         mvwaddch(win, h, l, '_');        // piattaforma di fine;
         l++;
     }
-    addCoord(len,h);
+    addCoord(len,h); 
 }
 
 int calcYmin(int x) {
