@@ -13,6 +13,19 @@ void addCoord(int x,int y) {
     }
 }
 
+void deleteOldMaps() {
+    
+    int m = 0, b;
+    char filename[20];
+    do {
+        strcpy(filename,"");
+        sprintf(filename, "map/%d.txt", m);
+        b = unlink(filename);
+    } while(b>-1);
+    
+   //unlink("map/2.txt");
+}
+
 void saveActualMap() {
     std::ofstream out;
     char filename[20];

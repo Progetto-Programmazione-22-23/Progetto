@@ -83,7 +83,10 @@ void start(){
 
     if(current_game.eNuovo()) {
         current_game.setPlayerPos(2,pryMax-3);
+        
     // disegna la mappa
+        deleteOldMaps();
+
         mapgenerator(playerwin);
         MobSpawn(prxMax, hd);
     }
