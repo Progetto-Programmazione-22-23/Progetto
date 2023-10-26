@@ -17,7 +17,6 @@ void SpawnEnd(WINDOW * win, int h, int l){
 }
 
 
-
 void GoStraight(WINDOW * win, int h, int l){mvwaddch(win, h, l, '_') ;}
 void GoUp(WINDOW * win, int h, int l){mvwaddch(win, h, l, '/'), addCoord(l,h);}               
 void GoDown(WINDOW * win, int h, int l){mvwaddch(win, h, l, '\\'), addCoord(l,h-1);}
@@ -55,8 +54,6 @@ void SpecialBlock(WINDOW * win, int h, int l){
 
 /// END SPECIAL BLOCK SECTION ///
 
-<<<<<<< HEAD
-=======
 void SpawnPlatform(WINDOW * win, int len){
     int i, L = 15, h = 4;                                               // i:Possibilità di Spawn, L:No spawn prima di x = 15, h:H da terra
     int LastX = -100;                                                   // X di fine dell'ultima piattaforma
@@ -85,7 +82,6 @@ void SpawnPlatform(WINDOW * win, int len){
     }
 }
 
->>>>>>> 3c5bdb07e24bccafdea7ed8b258238d46065a321
 void mapgenerator(WINDOW * win){
     actual_map = NULL;
     srand(time(NULL));
