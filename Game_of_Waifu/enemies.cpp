@@ -33,12 +33,7 @@ void Mob::setmin(int ym) {this->y = ym;}
 void Mob::NemDmg(int dmg){this->life -= dmg;};
 
 /*funzioni di inserimento dei diversi mob*/
-pnemici InsMob(pnemici hd, Mob x) {
-    pnemici nhd = new nemico;
-    nhd->nem = x;
-    nhd->next = hd;
-    return nhd;
-}
+pnemici InsMob(pnemici hd, Mob x) {pnemici nhd = new nemico; nhd->nem = x; nhd->next = hd; return nhd;}
 pnemici InsZombie(pnemici& hd, int y, int x) {Mob Zombie(y, x, 2, 10, 1, 'Z', false); return InsMob(hd, Zombie);}
 pnemici InsGolem(pnemici& hd, int y, int x) {Mob Golem(y, x, 5, 20, 3, 'G', false); return InsMob(hd, Golem);}
 pnemici InsBat(pnemici& hd, int y, int x) {Mob Bat(y, x, 1, 5, 1, 'V', true); return InsMob(hd, Bat);}
@@ -109,7 +104,9 @@ void takeDmg(int dmg) {
 void display(pnemici hd, WINDOW * win) {
     if(current_game.getMap() == current_game.getLevel())
         while(hd != NULL){
+            attron(COLOR_PAIR(3));
             mvwaddch(win, hd->nem.getY(), hd->nem.getX(), hd->nem.getChar());
+            attroff(COLOR_PAIR(3));
             hd = hd->next;
         }
 }

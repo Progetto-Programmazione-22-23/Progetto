@@ -88,7 +88,7 @@ void start(){
         deleteOldMaps();
 
         mapgenerator(playerwin);
-        // MobSpawn(prxMax, hd);
+        MobSpawn(prxMax, hd);
     }
     else regenOldMap(playerwin, false);
 
@@ -119,6 +119,9 @@ void start(){
         update(hd, &player, cont, playerwin);           // movimenti
         hd = Death(hd);                                // elimino mob morti
         display(hd, playerwin);                        // disegno i mob in vita
+
+        /*Mostro proiettile se sparo*/
+        player.moveBullet(playerwin);
 
         //erase();
         box(playerwin, 0, 0); // aggiorna le finestre

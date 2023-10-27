@@ -56,36 +56,49 @@ void SpecialBlock(WINDOW * win, int h, int l){
 
     // se le coordinate del player sono le stesse del blocco speciale, si attiva un effetto random
 
-    int i = rand() % 2;     // 50%
+    int i = rand() % 2;     // 50% tra blocco buono o cattivo
     if (i == 0) SpawnTrap();
     else SpawnHelp();
 }
 
 /// END SPECIAL BLOCK SECTION ///
 
-void SpawnPlatform(WINDOW * win, int len){
-    int i, L = 15, h = 4;                                               // i:Possibilità di Spawn, L:No spawn prima di x = 15, h:H da terra
-    int LastX = -100;                                                   // X di fine dell'ultima piattaforma
+void SpawnPlatform(WINDOW * win, int high, int len){
+    int i, L = 15, h = 0;                                               // i:Possibilità di Spawn, L:No spawn prima di x = 15, h:H dal cielo
+    int LastX = -100, LastYspawn = 0;                                   // X di fine e inizio dell'ultima piattaforma, Y di inizio dell'ultima piattaforma
+    int counter = 0;
+    bool buildable = true;
     while(L < len-15){
-        i = rand() % 7;                                                 // Spawn 10% delle volte          
+        i = rand() % 3;                                                 // Spawn 33% delle volte          
         int lenPlat = (rand() % 6) + 10;                                // Len Platform random
         if (i == 1){
-            int Xspawn = L;                                             // Yspawn = Y corrispondente alla x attuale
-            if (L-LastX < 30) {h = calcYmin(LastX)-LastX-4;}                   // Se sono vicino a una piattaforma già raggiungibile, quella dopo la spawno più in alto
-            if (calcYmin(L+lenPlat)-h > 4){
-                mvwaddch(win, calcYmin(Xspawn)-h, L, '<');         
+            int Xspawn = L;
+
+            /*Calcolo a quale altezza spawnare*/
+            if (Xspawn-LastX < 8 && counter < 3) {counter++; h = LastYspawn-4;}
+            else if (Xspawn-LastX < 8 && counter >= 3) {counter--; h = LastYspawn+4;}
+            else {h = calcYmin(Xspawn)-4; counter = 1;}
+
+            /*Controllo non ci siano collisioni con la mappa*/
+            for (int k = 0; k<lenPlat; k++){
+                if (calcYmin(k+L)-h < 3) buildable = false;
+                k++;
+            }
+            /*Costruisco*/
+            if (buildable){
+                mvwaddch(win, h, L, '<');
+                LastYspawn = h;         
                 L++;
                 lenPlat--;
                 for (int j = 0; j<lenPlat-1; j++){
-                    mvwaddch(win, calcYmin(Xspawn)-h, L, '=');
+                    mvwaddch(win, h, L, '=');
                     L++;
                 }
-                mvwaddch(win, calcYmin(Xspawn)-h, L, '>');
+                mvwaddch(win, h, L, '>');
                 LastX = L;
                 L++;
                 lenPlat = 0;
-                h = 4;
-            } else {L++; h=4;}
+            } else {L++; buildable = true;}
         }
         L+=3;
     }
@@ -96,7 +109,7 @@ void mapgenerator(WINDOW * win){
     srand(time(NULL));
     getmaxyx(win, high, len);
     int i, last = 100;
-    int H = high -3;            // altezza attuale del livello: +1 se vado up, -1 se vado down;
+    int H = high-3;            // altezza attuale del livello: +1 se vado up, -1 se vado down;
     int L = Lstart;             // x attuale nella generazione;
 
     SpawnStart(win, H);         // inizio mappa
@@ -104,7 +117,7 @@ void mapgenerator(WINDOW * win){
     while(L < len-10){
         i = rand() % 50;
         if ((i>0 && i<6)&&(last>6 && last<12)||(last>0 && last<6)&&(i>6 && i<12)) GoStraight(win, H, L), L++;  // se prima sono andato su, non posso andare giu (e viceversa)
-        if (i>0 && i<6 && H > high-30) GoUp(win, H, L), L++, H--;
+        if (i>0 && i<6 && H > high/2) GoUp(win, H, L), L++, H--;
         else if (i == 6) SpecialBlock(win, H, L), L++;      // trappole o strumenti;
         else if (i>6 && i<12 && H < high-3)  H++, GoDown(win, H, L), L++;
         else GoStraight(win, H, L), L++;                      // molto più frequente del resto (7 volte su 10);
@@ -112,6 +125,6 @@ void mapgenerator(WINDOW * win){
     }
 
     SpawnEnd(win, H, L);           // fine mappa
-    SpawnPlatform(win, len);
+    SpawnPlatform(win, high, len);
     saveActualMap();
 }

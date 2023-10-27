@@ -49,6 +49,6 @@ class Player {
         void stayUP();
         void shoot();
         void display();
-        void moveBullet();
+        void moveBullet(WINDOW * win);
         //void checkCollisions();
 };
