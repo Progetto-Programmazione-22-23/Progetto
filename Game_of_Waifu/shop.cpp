@@ -100,7 +100,7 @@ void open_shop(WINDOW * shopWin){
                 wclear(shopWin);
                 break;
             case 10:
-                openWeapon(n);
+                openWeapon(shopWin, n);
                 break;
             default:
                 break;
