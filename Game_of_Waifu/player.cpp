@@ -1,7 +1,5 @@
 #include "player.hpp"
 
-
-
 Player::Player(WINDOW * win, int y, int x, char c) {
   this->curwin = win;
   // this->invnt = inv;
@@ -29,9 +27,7 @@ void Player::move_right() {
   }
 }
 
-void Player::stop(){
-  if (!is_jumping) this->x_velocity = 0;
-}
+void Player::stop() {if (!is_jumping) this->x_velocity = 0;}
 
 void Player::jump(int tik) {
   if (this->is_jumping == false){
@@ -84,7 +80,8 @@ char Player::getChar() {return character;}
 void Player::Teleport(int nx, int ny) {this->x = nx; this->y = ny;}
 
 int ds = 1;
-void Player::getmv(bool &loop, int tik){
+int direction;
+void Player::getmv(bool &loop, int tik) {
   int ch;
   ch = getch();
   switch(ch) {
@@ -129,6 +126,7 @@ void Player::getmv(bool &loop, int tik){
       debugging();
       break;
     case 10:  // press enter 
+      if (!bulletFired) direction = ds;
       shoot();
       break;
     case ERR:
@@ -138,12 +136,6 @@ void Player::getmv(bool &loop, int tik){
     default:
       break;
   }
-  // Dopo aver gestito l'input del giocatore, verifica le collisioni
-//  checkCollisions();
-
-  moveBullet();   // Sposta il proiettile
-  //usleep(10000);  // Aggiorna la posizione del proiettile ogni 10 millisecondi
-
 }
 
 void Player::display() {
@@ -173,27 +165,33 @@ void Player::attack() {
 
 void Player::shoot(){
   if(!bulletFired){
-    this->x = getX(); // NON FUNZIONA
-    this->y = getY(); // NON FUNZIONA
-    bulletX = this->x + 8;
-    bulletY = this->y + 3;
-    bulletFired = true;
-    bulletDistance = 0;
+    direction = ds;
+    this->bulletX = getX()+1;
+    this->bulletY = getY();
+    this->bulletFired = true;
+    this->bulletDistance = 0;
   }
 }
 
-void Player::moveBullet(){
-  if (bulletFired && bulletDistance < maxBulletDistance) {
-        mvaddch(bulletY, bulletX, ' ');   // Cancella il proiettile dalla posizione precedente
-        bulletX++;                        // Sposta il proiettile verso destra
-        mvaddch(bulletY, bulletX, '>');   // Disegna il proiettile nella nuova posizione
-        refresh();                        // Aggiorna la finestra
-        bulletDistance++;
-    } else if (bulletDistance >= maxBulletDistance) {
-        // Il proiettile ha raggiunto la distanza massima, disattivalo
-        bulletFired = false;
-        bulletDistance = 0;
-    }
+void Player::moveBullet(WINDOW * win){
+  if (bulletFired && direction == 1 && bulletDistance < maxBulletDistance) {
+    mvwaddch(win, bulletY, bulletX, ' ');   // Cancella il proiettile dalla posizione precedente
+    this->bulletX++;                        // Sposta il proiettile verso destra
+    mvwaddch(win, bulletY, bulletX, '>');   // Disegna il proiettile nella nuova posizione
+    refresh();                              // Aggiorna la finestra
+    this->bulletDistance++;
+  } else if (bulletFired && direction == -1 && bulletDistance < maxBulletDistance) {
+    mvwaddch(win, bulletY, bulletX, ' ');   // Cancella il proiettile dalla posizione precedente
+    this->bulletX--;                        // Sposta il proiettile verso destra
+    mvwaddch(win, bulletY, bulletX, '<');   // Disegna il proiettile nella nuova posizione
+    refresh();                              // Aggiorna la finestra
+    this->bulletDistance++;
+  }else if (bulletDistance >= maxBulletDistance) {
+    // Il proiettile ha raggiunto la distanza massima, disattivalo
+    mvwaddch(win, bulletY, bulletX, ' ');
+    bulletFired = false;
+    bulletDistance = 0;
+  }
 }
 /*
 

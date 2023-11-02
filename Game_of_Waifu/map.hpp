@@ -25,6 +25,6 @@ void Bomb();
 void GoUp(WINDOW * win, int h, int l);
 void GoStraight(WINDOW * win, int h, int l);
 void GoDown(WINDOW * win, int h, int l);
-void SpawnPlatform(WINDOW * win, int len);
+void SpawnPlatform(WINDOW * win, int high, int len);
 void mapgenerator(WINDOW * win);
 
