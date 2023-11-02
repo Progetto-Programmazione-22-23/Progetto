@@ -44,7 +44,7 @@ class Player {
         void Teleport(int nx, int ny);
         void UpdateLastHit(int tick);
         void takedmg(int d);
-        void getmv(bool &loop, int tik);
+        void getmv(WINDOW * win, bool &loop, int tik);
         void update(int end, WINDOW * win, int tik);
         void stayUP();
         void shoot();

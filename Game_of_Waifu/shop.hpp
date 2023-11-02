@@ -9,10 +9,6 @@ void inspectshop();
 
 void openchoiceshop(int, string[]);
 
-void openspade();
-void openarchi();
-void openbacchette();
-void openscudi();
-void openconsumabili();
+void openWeapon(WINDOW * WeaponWin, int n);
 
-void open_shop();
+void open_shop(WINDOW * win);

@@ -9,8 +9,9 @@ class Mob{
         int x, y;
         char character;
         bool fly;
+        int color;
     public:
-        Mob(int y = 0, int x = 0, int l = 0, int s = 0, int d = 0, char ch = ' ', bool f = false, int type = 0);
+        Mob(int y = 0, int x = 0, int l = 0, int s = 0, int d = 0, char ch = ' ', bool f = false, int color = 0, int type = 0);
         int getX();
         int getY();
         int getType();
@@ -20,6 +21,7 @@ class Mob{
         int getspeed();
         WINDOW* getwin();
         int getDmg();
+        int getColor();
 
         int random(int max);
         void stop();

@@ -14,15 +14,15 @@ void sell(){
     // prima chiedi se sei sicuro di voler vendere (bisognerebbe poter vedere il valore prima)
 }
 
-void openchoice(int k, string obj[]){
+void openchoice(WINDOW * choiceWin, int k, string obj[]){
     int syMax, sxMax;
-    getmaxyx(stdscr, syMax, sxMax);
-    WINDOW *choiceWin = newwin(syMax-(syMax/10)-2, sxMax-(sxMax/10)-2, syMax/20+2, sxMax/20+1);
+    getmaxyx(choiceWin, syMax, sxMax);
+    // WINDOW *choiceWin = newwin(syMax-(syMax/10)-2, sxMax-(sxMax/10)-2, syMax/20+2, sxMax/20+1);
     box(choiceWin, 0, 0);
     keypad(choiceWin, true);
     nodelay(choiceWin, TRUE);
 
-    mvwprintw(choiceWin, 1, 2, "Hai selezionato: %s", obj[k]);
+    mvwprintw(choiceWin, 1, sxMax/2, "Hai selezionato: %s", obj[k]);
 
     int n = 4;
     string azioni[n] = {"equipaggia", "ispeziona", "vendi", "annulla"};
@@ -32,7 +32,7 @@ void openchoice(int k, string obj[]){
     while(open){
         for (int i = 0; i < n; i++){ // costruisco il menu
             if (i == highlights) wattron(choiceWin, A_REVERSE);
-            mvwprintw(choiceWin, i+3, 2, "%s", azioni[i].c_str());
+            mvwprintw(choiceWin, i+3, sxMax/2, "%s", azioni[i].c_str());
             wattroff(choiceWin, A_REVERSE);
         }
         choice = wgetch(choiceWin);
@@ -48,29 +48,27 @@ void openchoice(int k, string obj[]){
                 break;
             case 'i':
                 open = false;
+                wclear(choiceWin);
+                break;
+            case 10:
+                open = false;
+                if (select == 0) equip();
+                else if (select == 1) inspect();
+                else if (select == 2) sell();
+                else if (select == 3) {wclear(choiceWin);}
                 break;
             default:
                 break;
         }
-        if (choice == 10){ // quando premo invio
-            if (select == 0) equip();
-            else if (select == 1) inspect();
-            else if (select == 2) sell();
-            break;
-        }
     }
 }
 
-void open_inventory(){
+void open_inventory(WINDOW * invWin){
     int syMax, sxMax;
-    getmaxyx(stdscr, syMax, sxMax);
 
-    WINDOW *invWin = newwin(syMax-(syMax/10)-2, sxMax-(sxMax/10)-2, syMax/20+2, sxMax/20+1);
     box(invWin, 0, 0);
     keypad(invWin, true);
     nodelay(invWin, TRUE);
-    int inyMax, inxMax;
-    getmaxyx(invWin, inyMax, inxMax);
 
     // gli oggetti nell'inventario saranno una lista, n la lunghezza della lista
     int n = 4;
@@ -81,6 +79,7 @@ void open_inventory(){
 
     bool open = true;
     while (open){
+        box(invWin, 0, 0);
         for (int i = 0; i < n; i++){ // costruisco il menu
             if (i == highlights) wattron(invWin, A_REVERSE);
             mvwprintw(invWin, i+1, 2, "%s", oggetti[i].c_str());
@@ -99,14 +98,13 @@ void open_inventory(){
                 break;
             case 'i':
                 open = false;
+                wclear(invWin);
+                break;
+            case 10:
+                openchoice(invWin, select, oggetti);
                 break;
             default:
                 break;
-        }
-        
-        if (choice == 10){ // quando premo invio
-            openchoice(select, oggetti);
-            break;
         }
     }
 }

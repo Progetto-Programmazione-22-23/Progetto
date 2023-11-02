@@ -81,6 +81,11 @@ void start(){
     int pryMax, prxMax;
     getmaxyx(playerwin, pryMax, prxMax);
 
+
+    WINDOW * userwin = newwin(yMax-pryMax-5, xMax-(xMax/10)-40, yMax/20, xMax/20+1);
+    box(userwin, 0, 0);
+    nodelay(userwin, TRUE);
+
     if(current_game.eNuovo()) {
         current_game.setPlayerPos(2,pryMax-3);
         
@@ -118,24 +123,26 @@ void start(){
         /*CONTROLLO DEI MOB*/
         update(hd, &player, cont, playerwin);           // movimenti
         hd = Death(hd);                                // elimino mob morti
-        display(hd, playerwin);                        // disegno i mob in vita
 
         /*Mostro proiettile se sparo*/
         player.moveBullet(playerwin);
 
         //erase();
         box(playerwin, 0, 0); // aggiorna le finestre
+        box(userwin, 0, 0);
         refresh();
         wrefresh(playerwin);
+        wrefresh(userwin);
 
-        player.getmv(loop, cont); // prende user input 
+        player.getmv(userwin, loop, cont); // prende user input 
 
         player.update(prxMax, playerwin, cont);
         ChangeMap(&player, playerwin, prxMax, pryMax, hd); 
 
-        player.display(); // disegna il pg
+        player.display();           // disegna il pg
+        display(hd, playerwin);     // disegno i mob in vita
 
-        napms(35); //35ms di pausa (circa 30fps)
+        napms(35); // 35ms di pausa (circa 30fps)
     } 
 }
 
@@ -167,7 +174,8 @@ int main(int argc, char ** argv){
     int highlights = 0;
 
     loadItems();
-    while (1){
+    bool open = true;
+    while (open){
         for (int i = 0; i < 4; i++){ // costruisco il menu
             if (i == highlights) wattron(menuwin, A_REVERSE);
             mvwprintw(menuwin, i+1, menuxMax/2-10, "%s", scelte[i].c_str());
@@ -184,12 +192,11 @@ int main(int argc, char ** argv){
                 highlights++;
                 if (highlights == 4) highlights = 3;
                 break;
+            case 10: 
+                open = false;
+                break;
             default:
                 break;
-        }
-        
-        if (choice == 10){         // quando premo invio
-            break;
         }
     }
 
