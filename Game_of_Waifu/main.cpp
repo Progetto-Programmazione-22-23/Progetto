@@ -123,6 +123,7 @@ void start(){
         /*CONTROLLO DEI MOB*/
         update(hd, &player, cont, playerwin);           // movimenti
         hd = Death(hd);                                // elimino mob morti
+        display(hd, playerwin);     // disegno i mob in vita
 
         /*Mostro proiettile se sparo*/
         player.moveBullet(playerwin);
@@ -140,7 +141,6 @@ void start(){
         ChangeMap(&player, playerwin, prxMax, pryMax, hd); 
 
         player.display();           // disegna il pg
-        display(hd, playerwin);     // disegno i mob in vita
 
         napms(35); // 35ms di pausa (circa 30fps)
     } 
