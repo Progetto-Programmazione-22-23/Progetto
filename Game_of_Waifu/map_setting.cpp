@@ -16,6 +16,16 @@ void MobSpawn(int len, pnemici& hd){
     }
 }
 
+void saveMobs(pnemici hd){
+    std::ofstream out;
+    out.open("enemies.txt");
+    for(pnemici e = hd; e != NULL; e = e->next) {
+        Mob m = e->nem;
+        out<<m.getType()<<" "<<m.getlife()<<" "<<m.getX()<<" "<<m.getY()<<"\n";
+    }
+    out.close();
+}
+
 void GoNext(WINDOW * win, int len, pnemici& hd){
     wclear(win);
     int n = current_game.getMap(), l = current_game.getLevel();
@@ -34,7 +44,8 @@ void GoNext(WINDOW * win, int len, pnemici& hd){
     */
 }
 
-void GoPrev(WINDOW * win) {
+void GoPrev(WINDOW * win, pnemici hd) {
+    saveMobs(hd);
     wclear(win);
     current_game.setMap(current_game.getMap()-1);
     regenOldMap(win, false);
@@ -47,6 +58,6 @@ void ChangeMap(Player* pl, WINDOW * win, int end, int yMax, pnemici& hd){
   }
   else if(pl->getX() <= 1 && current_game.getMap()>0) {
     pl->Teleport(end-4, yMax-3);
-    GoPrev(win);
+    GoPrev(win, hd);
   } 
 }

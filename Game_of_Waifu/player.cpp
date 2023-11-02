@@ -122,9 +122,6 @@ void Player::getmv(WINDOW * userwin, bool &loop, int tik) {
       current_game.saveAll();
       loop = false;
       break;
-    case 'x':
-      debugging();
-      break;
     case 10:  // press enter 
       if (!bulletFired) direction = ds;
       shoot();

@@ -5,15 +5,16 @@
 
 class Mob{
     protected:
-        int life, speed, dmg;
+        int life, speed, dmg, type;
         int x, y;
         char character;
         bool fly;
         int color;
     public:
-        Mob(int y = 0, int x = 0, int l = 0, int s = 0, int d = 0, char ch = ' ', bool f = false, int color = 0);
+        Mob(int y = 0, int x = 0, int l = 0, int s = 0, int d = 0, char ch = ' ', bool f = false, int color = 0, int type = 0);
         int getX();
         int getY();
+        int getType();
         char getChar();
         int getlife();
         bool getfly();

@@ -90,6 +90,8 @@ void SpawnPlatform(WINDOW * win, int high, int len){
             }
             /*Costruisco*/
             if (buildable){
+                addPlatform(L,h,lenPlat);
+
                 mvwaddch(win, h, L, '<');
                 LastYspawn = h;         
                 L++;
@@ -109,8 +111,10 @@ void SpawnPlatform(WINDOW * win, int high, int len){
 }
 
 void mapgenerator(WINDOW * win){
-    actual_map = NULL; 
+    actual_map = NULL;
     specials = NULL;
+    platforms = NULL;
+
     srand(time(NULL));
     getmaxyx(win, high, len);
     int i, last = 100;

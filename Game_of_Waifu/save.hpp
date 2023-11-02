@@ -8,6 +8,7 @@ struct igame {
 
 };
 
+
 class Game {
     igame setting;
     int state;
