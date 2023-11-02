@@ -6,13 +6,6 @@ Game current_game = Game(fresh);
 Game::Game(igame s) { this->setting = s;  this->state = 0; }
 Inventory* Game::getInventory() { return &(this->setting.inventory); }
 
-void debugging() {
-    //std::cout<<"sus";
-    //current_game.setMoney(current_game.getMoney()+1);
-    //Inventory inv = current_game.getInventory();
-    //inv.setBarItem(0,1,allItems[1]);
-    //current_game.setInventory(inv);
-}
 
 void Game::updateStats() {
     double s[CATEGORIES] = {};

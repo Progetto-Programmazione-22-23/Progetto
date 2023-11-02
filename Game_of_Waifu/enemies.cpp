@@ -1,6 +1,6 @@
 #include "enemies.hpp"
 
-Mob::Mob (int y, int x, int l, int s, int d, char ch, bool fl) {
+Mob::Mob (int y, int x, int l, int s, int d, char ch, bool fl, int type) {
     this->life = l;
     this->speed = s;
     this->dmg = d;
@@ -8,11 +8,13 @@ Mob::Mob (int y, int x, int l, int s, int d, char ch, bool fl) {
     this->y = y;
     this->character = ch;
     this->fly = fl;
+    this->type = type;
 }
 
 /*get*/
 int Mob::getX() {return this->x;}
 int Mob::getY() {return this->y;}
+int Mob::getType() {return this->type;}
 char Mob::getChar() {return this->character;}
 int Mob::getlife() {return this->life;}
 bool Mob::getfly() {return this->fly;}
@@ -34,10 +36,10 @@ void Mob::NemDmg(int dmg){this->life -= dmg;};
 
 /*funzioni di inserimento dei diversi mob*/
 pnemici InsMob(pnemici hd, Mob x) {pnemici nhd = new nemico; nhd->nem = x; nhd->next = hd; return nhd;}
-pnemici InsZombie(pnemici& hd, int y, int x) {Mob Zombie(y, x, 2, 10, 1, 'Z', false); return InsMob(hd, Zombie);}
-pnemici InsGolem(pnemici& hd, int y, int x) {Mob Golem(y, x, 5, 20, 3, 'G', false); return InsMob(hd, Golem);}
-pnemici InsBat(pnemici& hd, int y, int x) {Mob Bat(y, x, 1, 5, 1, 'V', true); return InsMob(hd, Bat);}
-pnemici InsDemon(pnemici& hd, int y, int x) {Mob Demon(y, x, 3, 13, 2, 'D', true); return InsMob(hd, Demon);}
+pnemici InsZombie(pnemici& hd, int y, int x) {Mob Zombie(y, x, 2, 10, 1, 'Z', false, 0); return InsMob(hd, Zombie);}
+pnemici InsGolem(pnemici& hd, int y, int x) {Mob Golem(y, x, 5, 20, 3, 'G', false, 1); return InsMob(hd, Golem);}
+pnemici InsBat(pnemici& hd, int y, int x) {Mob Bat(y, x, 1, 5, 1, 'V', true, 2); return InsMob(hd, Bat);}
+pnemici InsDemon(pnemici& hd, int y, int x) {Mob Demon(y, x, 3, 13, 2, 'D', true, 3); return InsMob(hd, Demon);}
 
 /*funzioni di gestione della lista di mob*/
 pnemici Death(pnemici& hd) {
