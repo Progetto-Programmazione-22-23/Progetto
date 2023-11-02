@@ -81,7 +81,7 @@ void Player::Teleport(int nx, int ny) {this->x = nx; this->y = ny;}
 
 int ds = 1;
 int direction;
-void Player::getmv(bool &loop, int tik) {
+void Player::getmv(WINDOW * userwin, bool &loop, int tik) {
   int ch;
   ch = getch();
   switch(ch) {
@@ -113,10 +113,10 @@ void Player::getmv(bool &loop, int tik) {
       current_game.UpState();
       break;
     case 'i':
-      open_inventory();
+      open_inventory(userwin);
       break;
     case 'p':
-      open_shop();
+      open_shop(userwin);
       break;
     case 27:
       current_game.saveAll();

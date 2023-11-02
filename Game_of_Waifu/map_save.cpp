@@ -68,7 +68,7 @@ void regenOldMap(WINDOW * win, bool refresh) {
         char specialname[20];
         sprintf(specialname, "map/%ds.txt", current_game.getMap());
         ins.open(specialname);
-        while(in>>x>>y) addSpecial(x,y);
+        while(ins>>x>>y) addSpecial(x,y);
     }   
     
     pcoords t = actual_map;
@@ -94,6 +94,9 @@ void regenOldMap(WINDOW * win, bool refresh) {
     }
 
     for(pcoords q = specials;q!=NULL;q = q->next) {
-        mvwaddch(win,q->y, q->x, 'S');
+        init_pair(101, COLOR_BLACK, COLOR_YELLOW);
+        wattron(win, COLOR_PAIR(101));
+        mvwaddch(win, q->y, q->x, '$');
+        wattroff(win, COLOR_PAIR(101));
     }
 }

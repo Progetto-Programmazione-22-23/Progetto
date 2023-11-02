@@ -51,7 +51,10 @@ void SpawnHelp(){
 }
 
 void SpecialBlock(WINDOW * win, int h, int l){
+    init_pair(100, COLOR_BLACK, COLOR_YELLOW);
+    wattron(win, COLOR_PAIR(100));
     mvwaddch(win, h, l, 'S');
+    wattroff(win, COLOR_PAIR(100));
     addSpecial(l,h);
     //addCoord(l,h);
 
@@ -106,7 +109,8 @@ void SpawnPlatform(WINDOW * win, int high, int len){
 }
 
 void mapgenerator(WINDOW * win){
-    actual_map = NULL;
+    actual_map = NULL; 
+    specials = NULL;
     srand(time(NULL));
     getmaxyx(win, high, len);
     int i, last = 100;
@@ -119,9 +123,9 @@ void mapgenerator(WINDOW * win){
         i = rand() % 50;
         if ((i>0 && i<6)&&(last>6 && last<12)||(last>0 && last<6)&&(i>6 && i<12)) GoStraight(win, H, L), L++;  // se prima sono andato su, non posso andare giu (e viceversa)
         if (i>0 && i<6 && H > high/2) GoUp(win, H, L), L++, H--;
-        else if (i == 6) SpecialBlock(win, H, L), L++;      // trappole o strumenti;
+        else if (i == 6) SpecialBlock(win, H, L), L++;                                                         // trappole o strumenti;
         else if (i>6 && i<12 && H < high-3)  H++, GoDown(win, H, L), L++;
-        else GoStraight(win, H, L), L++;                      // molto più frequente del resto (7 volte su 10);
+        else GoStraight(win, H, L), L++;                                                                       // molto più frequente del resto (7 volte su 10);
         last = i;
     }
 

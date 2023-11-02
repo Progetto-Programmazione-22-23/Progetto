@@ -8,5 +8,5 @@ void equip();
 void inspect();
 void sell();
 
-void openchoice(int, string[]);
-void open_inventory();
+void openchoice(WINDOW * win, int, string[]);
+void open_inventory(WINDOW * win);
