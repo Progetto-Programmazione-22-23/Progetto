@@ -13,6 +13,21 @@ Player::Player(WINDOW * win, int y, int x, char c) {
   getmaxyx(curwin, yMax, xMax);
 }
 
+int Player::getX() {return x;}
+int Player::getY() {return y;}
+int Player::getLastHit() {return LastHit;}
+void Player::UpdateLastHit(int tick) {this->LastHit = tick;}
+char Player::getChar() {return character;}
+void Player::drop() {this->y+=1;}
+void Player::Teleport(int nx, int ny) {this->x = nx; this->y = ny;}
+
+bool Player::platformCheck(WINDOW * win){
+  bool OnPlat = false;
+  if (mvwinch(win, getY()+1, getX()) == '=') {OnPlat = true;}
+  else if (mvwinch(win, getY()+1, getX()) == '<') {OnPlat = true;}
+  else if (mvwinch(win, getY()+1, getX()) == '>') {OnPlat = true;}
+  return OnPlat;
+}
 void Player::move_left() {
   this->x_velocity -= HORIZONTAL_ACCELERATION;
   if (this->x_velocity < -HORIZONTAL_MAX_VELOCITY) {
@@ -27,7 +42,7 @@ void Player::move_right() {
   }
 }
 
-void Player::stop() {if (!is_jumping) this->x_velocity = 0;}
+void Player::stop() {if(!is_jumping) this->x_velocity = 0;}
 
 void Player::jump(int tik) {
   if (this->is_jumping == false){
@@ -43,13 +58,11 @@ void Player::update(int end, WINDOW * win, int tik) {
   mvwaddch(curwin, y, x, ' ');
   regenOldMap(win, true);
   // erase();
-
-  if (this->is_jumping && (tik-ActualTik)%jumpspeed == 0 && (tik-ActualTik) <= h) {
-    // double k = 1;
-    // //if(current_game.getInventory()->) k = 1.5;
-    this->y-=1;
-  } else if (this->is_jumping && (tik-ActualTik) > h+4 && this->y < minY && (tik-ActualTik)%jumpspeed == 0){
-    this->y+=1;
+  
+  if (this->is_jumping && (tik-ActualTik)%jumpspeed == 0 && (tik-ActualTik) <= h) {this->y-=1;} 
+  else if (this->is_jumping && (tik-ActualTik) > h+4 && this->y < minY && (tik-ActualTik)%jumpspeed == 0){
+    if (!platformCheck(win)) {this->y+=1; /*is_jumping = false;*/}
+    else if (platformCheck(win)) {this->is_jumping = false;}
   } else if (this->y == minY){
     this->is_jumping = false;
   }
@@ -60,8 +73,9 @@ void Player::update(int end, WINDOW * win, int tik) {
     this->y_velocity = 0;
     this->is_jumping = false;
   }
-  if (!this->is_jumping && this->y<minY){
-    this->y = minY;
+
+  if (!this->is_jumping && this->y<minY && !platformCheck(win)){
+    this->y+=1;
   }
   if (this->x < 1) {
     this->x = 1;
@@ -71,13 +85,6 @@ void Player::update(int end, WINDOW * win, int tik) {
     this->x_velocity = 0;
   }
 }
-
-int Player::getX() {return x;}
-int Player::getY() {return y;}
-int Player::getLastHit() {return LastHit;}
-void Player::UpdateLastHit(int tick) {this->LastHit = tick;}
-char Player::getChar() {return character;}
-void Player::Teleport(int nx, int ny) {this->x = nx; this->y = ny;}
 
 int ds = 1;
 int direction;

@@ -4,11 +4,16 @@
 #include <string>
 #include <cstdlib>
 #include "save.cpp"
-// #include "player.cpp"
+// #include "gui.cpp"
+// #include "collision.cpp"
+// #include "enemies.cpp"
+// #include "inventory.cpp"
+// #include "map_save.cpp"
 #include "map_setting.cpp"
 // #include "map.cpp"
-// #include "enemies.cpp"
-// #include "gui.cpp"
+// #include "oggetti.cpp"
+// #include "player.cpp"
+// #include "shop.cpp"
 using namespace std;
 
 void interface(int yMax, int xMax){
