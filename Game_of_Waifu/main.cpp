@@ -141,6 +141,7 @@ void start(){
         wrefresh(userwin);
 
         player.getmv(userwin, loop, cont); // prende user input 
+        if(!loop) saveMobs(hd);
 
         player.update(prxMax, playerwin, cont);
         ChangeMap(&player, playerwin, prxMax, pryMax, hd); 
