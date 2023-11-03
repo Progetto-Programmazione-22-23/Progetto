@@ -90,7 +90,7 @@ void update(pnemici hd, Player* pl, int ActualTick, WINDOW * win) {       // sim
                     if (pl->getX() < hd->nem.getX()) hd->nem.mvleft();
                     else if (pl->getX() > hd->nem.getX()) hd->nem.mvright();
                 } else if (hd->nem.getfly()){
-                    if (hd->nem.getY() > 3) hd->nem.setmin(3);
+                    if (hd->nem.getY() > minY-5) hd->nem.setmin(minY-5);
                     if (pl->getX() < hd->nem.getX()) hd->nem.mvleft();
                     else if (pl->getX() > hd->nem.getX()) hd->nem.mvright();
                     if (pl->getY() < hd->nem.getY()) hd->nem.mvup();

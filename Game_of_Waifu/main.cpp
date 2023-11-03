@@ -4,11 +4,16 @@
 #include <string>
 #include <cstdlib>
 #include "save.cpp"
-// #include "player.cpp"
+// #include "gui.cpp"
+// #include "collision.cpp"
+// #include "enemies.cpp"
+// #include "inventory.cpp"
+// #include "map_save.cpp"
 #include "map_setting.cpp"
 // #include "map.cpp"
-// #include "enemies.cpp"
-// #include "gui.cpp"
+// #include "oggetti.cpp"
+// #include "player.cpp"
+// #include "shop.cpp"
 using namespace std;
 
 void interface(int yMax, int xMax){
@@ -123,6 +128,7 @@ void start(){
         /*CONTROLLO DEI MOB*/
         update(hd, &player, cont, playerwin);           // movimenti
         hd = Death(hd);                                // elimino mob morti
+        display(hd, playerwin);     // disegno i mob in vita
 
         /*Mostro proiettile se sparo*/
         player.moveBullet(playerwin);
@@ -140,7 +146,6 @@ void start(){
         ChangeMap(&player, playerwin, prxMax, pryMax, hd); 
 
         player.display();           // disegna il pg
-        display(hd, playerwin);     // disegno i mob in vita
 
         napms(35); // 35ms di pausa (circa 30fps)
     } 

@@ -41,10 +41,12 @@ class Player {
         int getY();
         int getLastHit();
         char getChar();
+        void drop();
         void Teleport(int nx, int ny);
         void UpdateLastHit(int tick);
         void takedmg(int d);
         void getmv(WINDOW * win, bool &loop, int tik);
+        bool platformCheck(WINDOW * win);
         void update(int end, WINDOW * win, int tik);
         void stayUP();
         void shoot();
