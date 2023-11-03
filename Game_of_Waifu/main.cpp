@@ -100,8 +100,10 @@ void start(){
         mapgenerator(playerwin);
         MobSpawn(prxMax, hd);
     }
-    else regenOldMap(playerwin, false);
-
+    else {
+        regenOldMap(playerwin, false);
+        mobRespawn(hd);
+    }
     Player player = Player(playerwin, current_game.getPlayerY(), current_game.getPlayerX(), '@');
     start_color();
     //init_color(16,124,252,0);

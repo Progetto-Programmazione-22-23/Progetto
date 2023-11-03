@@ -17,6 +17,7 @@ class Mob{
         int getType();
         char getChar();
         int getlife();
+        void setlife(int l);
         bool getfly();
         int getspeed();
         WINDOW* getwin();
