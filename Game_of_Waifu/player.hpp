@@ -48,8 +48,8 @@ class Player {
         void getmv(WINDOW * win, bool &loop, int tik);
         bool platformCheck(WINDOW * win);
         void update(int end, WINDOW * win, int tik);
-        void stayUP();
-        void shoot();
+        void shoot(int i);
+        void upShoot();
         void display();
         void moveBullet(WINDOW * win);
         //void checkCollisions();

@@ -131,7 +131,11 @@ void Player::getmv(WINDOW * userwin, bool &loop, int tik) {
       break;
     case 10:  // press enter 
       if (!bulletFired) direction = ds;
-      shoot();
+      shoot(0);
+      break;
+    case 'q':
+      if (!bulletFired) direction = 2;
+      shoot(1);
       break;
     case ERR:
       stop();
@@ -167,11 +171,11 @@ void Player::attack() {
   }
 }
 
-void Player::shoot(){
+void Player::shoot(int i){
   if(!bulletFired){
-    direction = ds;
-    this->bulletX = getX()+1;
-    this->bulletY = getY();
+    if (i == 0 && ds == 1) {this->bulletX = getX()+1; this->bulletY = getY();}
+    else if (i == 0 && ds == -1) {this->bulletX = getX()-1; this->bulletY = getY();}
+    else if (i == 1) {this->bulletX = getX(); this->bulletY = getY()-1;}
     this->bulletFired = true;
     this->bulletDistance = 0;
   }
@@ -180,57 +184,35 @@ void Player::shoot(){
 void Player::moveBullet(WINDOW * win){
   if (bulletFired && direction == 1 && bulletDistance < maxBulletDistance) {
     mvwaddch(win, bulletY, bulletX, ' ');   // Cancella il proiettile dalla posizione precedente
-    this->bulletX++;                        // Sposta il proiettile verso destra
+    this->bulletX++;                        // Sposta il proiettile
     mvwaddch(win, bulletY, bulletX, '>');   // Disegna il proiettile nella nuova posizione
     refresh();                              // Aggiorna la finestra
     this->bulletDistance++;
+    if (mvwinch(win, bulletY, bulletX+1) == '\\' || mvwinch(win, bulletY, bulletX+1) == '/'){   // check collisione con il terreno
+      this->bulletDistance = maxBulletDistance;
+    }
   } else if (bulletFired && direction == -1 && bulletDistance < maxBulletDistance) {
-    mvwaddch(win, bulletY, bulletX, ' ');   // Cancella il proiettile dalla posizione precedente
-    this->bulletX--;                        // Sposta il proiettile verso destra
-    mvwaddch(win, bulletY, bulletX, '<');   // Disegna il proiettile nella nuova posizione
-    refresh();                              // Aggiorna la finestra
+    mvwaddch(win, bulletY, bulletX, ' ');
+    this->bulletX--;
+    mvwaddch(win, bulletY, bulletX, '<');
+    refresh();
     this->bulletDistance++;
-  }else if (bulletDistance >= maxBulletDistance) {
+    if (mvwinch(win, bulletY, bulletX-1) == '\\' || mvwinch(win, bulletY, bulletX-1) == '/'){
+      this->bulletDistance = maxBulletDistance;
+    }
+  } else if (bulletFired && direction == 2 && bulletDistance < maxBulletDistance){
+    mvwaddch(win, bulletY, bulletX, ' ');
+    this->bulletY--;
+    mvwaddch(win, bulletY, bulletX, '^');
+    refresh();
+    this->bulletDistance++;
+    if (mvwinch(win, bulletY-1, bulletX) == '=' || mvwinch(win, bulletY-1, bulletX) == '<' || mvwinch(win, bulletY-1, bulletX) == '>'){
+      this->bulletDistance = maxBulletDistance;
+    }
+  } else if (bulletDistance >= maxBulletDistance) {
     // Il proiettile ha raggiunto la distanza massima, disattivalo
     mvwaddch(win, bulletY, bulletX, ' ');
     bulletFired = false;
     bulletDistance = 0;
   }
 }
-/*
-
-// Funzione per controllare la collisione orizzontale con il terreno
-bool checkHorizontalCollision(Player player, int groundY, int groundStartX, int groundEndX) {
-    // Verifica se il giocatore si sovrappone orizzontalmente al terreno
-    return (player.x >= groundStartX && player.x <= groundEndX && player.y == groundY);
-}
-
-// Funzione per controllare la collisione verticale con il terreno
-bool checkVerticalCollision(int groundY, int groundStartX, int groundEndX) {
-    // Verifica se il giocatore si sovrappone verticalmente al terreno
-    getX();
-    getY();
-    return (player.x >= groundStartX && this->x <= groundEndX && this->y >= groundY);
-}
-
-void Player::checkCollisions() {
-  // Controlla le collisioni orizzontali e verticali
-  // con il terreno o altri oggetti se necessario
-
-  // Supponiamo che 'groundY', 'groundStartX' e 'groundEndX'
-  // rappresentino le coordinate del terreno
-  bool horizontalCollision = checkHorizontalCollision(playerObject, groundY, groundStartX, groundEndX);
-  bool verticalCollision = checkVerticalCollision(playerObject, groundY, groundStartX, groundEndX);
-
-  if (horizontalCollision) {
-    // Gestisci la collisione orizzontale
-    // Ad esempio, ferma il movimento orizzontale del giocatore
-  }
-
-  if (verticalCollision) {
-    // Gestisci la collisione verticale
-    // Ad esempio, ferma il salto del giocatore se sta toccando il terreno
-  }
-}
-
-*/

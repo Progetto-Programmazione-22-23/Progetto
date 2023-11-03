@@ -7,7 +7,7 @@ using namespace std;
 void buy();
 void inspectshop();
 
-void openchoiceshop(int, string[]);
+void OpenChoiceShop(WINDOW * win, string[]);
 
 void openWeapon(WINDOW * WeaponWin, int n);
 
