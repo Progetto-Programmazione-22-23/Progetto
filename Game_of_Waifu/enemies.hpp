@@ -45,6 +45,9 @@ pnemici InsGolem(pnemici& hd, int y, int x);
 pnemici InsBat(pnemici& hd, int y, int x);
 pnemici InsDemon(pnemici& hd, int y, int x);
 
+pcoords InsCoords(pcoords& hd, int mx, int my);
+pcoords MobClearList(pcoords& hd);
+bool InList(pcoords& hd, int mx, int my);
 
 pnemici Death(pnemici& hd);
 void update(pnemici hd, Player pl, int ActualTick, WINDOW * win);

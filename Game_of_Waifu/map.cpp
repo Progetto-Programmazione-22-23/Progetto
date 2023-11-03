@@ -53,7 +53,7 @@ void SpawnHelp(){
 void SpecialBlock(WINDOW * win, int h, int l){
     init_pair(100, COLOR_BLACK, COLOR_YELLOW);
     wattron(win, COLOR_PAIR(100));
-    mvwaddch(win, h, l, 'S');
+    mvwaddch(win, h, l, '$');
     wattroff(win, COLOR_PAIR(100));
     addSpecial(l,h);
     //addCoord(l,h);
