@@ -45,10 +45,10 @@ void takeDmg(int dmg) {
 
 /*funzioni di inserimento dei diversi mob*/
 pnemici InsMob(pnemici hd, Mob x) {pnemici nhd = new nemico; nhd->nem = x; nhd->next = hd; return nhd;}
-pnemici InsZombie(pnemici& hd, int y, int x) {Mob Zombie(y, x, 2, 10, 1, 'Z', false, 10, 0); return InsMob(hd, Zombie);}
-pnemici InsGolem(pnemici& hd, int y, int x) {Mob Golem(y, x, 5, 20, 3, 'G', false, 11, 1); return InsMob(hd, Golem);}
-pnemici InsBat(pnemici& hd, int y, int x) {Mob Bat(y, x, 1, 5, 1, 'V', true, 12, 2); return InsMob(hd, Bat);}
-pnemici InsDemon(pnemici& hd, int y, int x) {Mob Demon(y, x, 3, 13, 2, 'D', true, 13, 3); return InsMob(hd, Demon);}
+pnemici InsZombie(pnemici& hd, int y, int x, int lv) {Mob Zombie(y, x, lv+1, 10, (lv/2)+1, 'Z', false, 10, 0); return InsMob(hd, Zombie);}
+pnemici InsGolem(pnemici& hd, int y, int x, int lv) {Mob Golem(y, x, 3+lv+lv/2, 20, lv+1, 'G', false, 11, 1); return InsMob(hd, Golem);}
+pnemici InsBat(pnemici& hd, int y, int x, int lv) {Mob Bat(y, x, 1, 5, 1, 'V', true, 12, 2); return InsMob(hd, Bat);}
+pnemici InsDemon(pnemici& hd, int y, int x, int lv) {Mob Demon(y, x, 3, 13, 2, 'D', true, 13, 3); return InsMob(hd, Demon);}
 
 /*gestione coordinate*/
 pcoords InsCoords(pcoords& hd, int mx, int my) {
@@ -130,8 +130,11 @@ void update(pnemici hd, Player* pl, int ActualTick, WINDOW * win) {       // sim
             }
             
             if (pl->getX() == hd->nem.getX() && pl->getY() == hd->nem.getY()){
-                if (pl->getLastHit() < ActualTick-75){takeDmg(hd->nem.getDmg()); pl->UpdateLastHit(ActualTick);}; // danni al player
-                hd->nem.NemDmg(1);
+                if (pl->getLastHit() < ActualTick-80){takeDmg(hd->nem.getDmg()); pl->updateLastHit(ActualTick);}; // danni al player
+            }
+            if (pl->getBulletX() == hd->nem.getX() && pl->getBulletY() == hd->nem.getY()){
+                hd->nem.NemDmg(100);
+                pl->stopBullet();
             }
             hd = hd->next;
         }

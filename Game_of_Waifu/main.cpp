@@ -86,17 +86,14 @@ void start(){
     int pryMax, prxMax;
     getmaxyx(playerwin, pryMax, prxMax);
 
-
+    /*FINESTRA USER*/
     WINDOW * userwin = newwin(yMax-pryMax-5, xMax-(xMax/10)-40, yMax/20, xMax/20+1);
     box(userwin, 0, 0);
     nodelay(userwin, TRUE);
 
-    if(current_game.eNuovo()) {
+    if(current_game.eNuovo()) {                        // disegna la mappa
         current_game.setPlayerPos(2,pryMax-3);
-        
-    // disegna la mappa
         deleteOldMaps();
-
         mapgenerator(playerwin);
         MobSpawn(prxMax, hd);
     }
@@ -104,19 +101,17 @@ void start(){
 
     Player player = Player(playerwin, current_game.getPlayerY(), current_game.getPlayerX(), '@');
     start_color();
-    //init_color(16,124,252,0);
     init_pair(1, COLOR_RED, COLOR_BLACK);
     init_pair(2, COLOR_GREEN, COLOR_BLACK);
     init_pair(3, 245, COLOR_BLACK);
     init_pair(4, COLOR_BLACK, COLOR_WHITE);
-
 
     // Loop di gioco
     int cont = 0;     /*numero di loop di gioco (Tick)*/
     bool loop = true; 
     int state = -1;   
     while (loop){
-        cont++;       //ogni volta che rinizia il loop, aumento il contatore
+        cont++;
         // controlla l'armatura WIP
         // current_game.setMaxVita(14);
         if(state!=current_game.getState()) {
@@ -127,27 +122,25 @@ void start(){
 
         /*CONTROLLO DEI MOB*/
         update(hd, &player, cont, playerwin);           // movimenti
-        hd = Death(hd);                                // elimino mob morti
-        display(hd, playerwin);     // disegno i mob in vita
+        hd = Death(hd);                                 // elimino mob morti
+        display(hd, playerwin);                         // disegno i mob in vita
 
         /*Mostro proiettile se sparo*/
         player.moveBullet(playerwin);
 
-        //erase();
-        box(playerwin, 0, 0); // aggiorna le finestre
+        box(playerwin, 0, 0);     // aggiorna le finestre
         box(userwin, 0, 0);
-        refresh();
         wrefresh(playerwin);
         wrefresh(userwin);
 
-        player.getmv(userwin, loop, cont); // prende user input 
+        player.getMv(userwin, loop, cont); // prende user input 
 
         player.update(prxMax, playerwin, cont);
         ChangeMap(&player, playerwin, prxMax, pryMax, hd); 
 
-        player.display();           // disegna il pg
+        player.display();           // disegna il player
 
-        napms(35); // 35ms di pausa (circa 30fps)
+        napms(35);                  // 35ms di pausa (circa 30fps)
     } 
 }
 

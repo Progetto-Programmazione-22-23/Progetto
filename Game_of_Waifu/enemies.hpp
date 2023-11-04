@@ -40,10 +40,10 @@ struct nemico {
 typedef nemico* pnemici;
 
 pnemici InsMob(pnemici hd, Mob x);
-pnemici InsZombie(pnemici& hd, int y, int x);
-pnemici InsGolem(pnemici& hd, int y, int x);
-pnemici InsBat(pnemici& hd, int y, int x);
-pnemici InsDemon(pnemici& hd, int y, int x);
+pnemici InsZombie(pnemici& hd, int y, int x, int lv);
+pnemici InsGolem(pnemici& hd, int y, int x, int lv);
+pnemici InsBat(pnemici& hd, int y, int x, int lv);
+pnemici InsDemon(pnemici& hd, int y, int x, int lv);
 
 pcoords InsCoords(pcoords& hd, int mx, int my);
 pcoords MobClearList(pcoords& hd);
@@ -53,5 +53,3 @@ pnemici Death(pnemici& hd);
 void update(pnemici hd, Player pl, int ActualTick, WINDOW * win);
 void display(pnemici hd, WINDOW * win);
 void takeDmg(int dmg);
-
-
