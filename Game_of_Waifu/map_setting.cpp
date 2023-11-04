@@ -28,6 +28,32 @@ void saveMobs(pnemici hd){
     out.close();
 }
 
+void mobRespawn(pnemici& hd) {
+    std::ifstream in;
+    in.open("enemies.txt");
+    int type, life, x, y;
+    while(in>>type>>life>>x>>y) {
+        switch(type) {
+        case 0:
+            hd = InsZombie(hd, y, x);
+            break;
+        case 1:
+            hd = InsGolem(hd, y, x);
+            break;
+        case 2:
+            hd = InsBat(hd, y, x);
+            break;
+        case 3:
+            hd = InsDemon(hd, y, x);
+            break;
+        default:
+            break;
+        }
+
+        hd->nem.setlife(life);
+    }
+}
+
 void GoNext(WINDOW * win, int len, pnemici& hd){
     wclear(win);
     int n = current_game.getMap(), l = current_game.getLevel();

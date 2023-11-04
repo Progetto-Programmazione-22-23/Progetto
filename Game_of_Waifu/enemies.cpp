@@ -18,6 +18,7 @@ int Mob::getY() {return this->y;}
 int Mob::getType() {return this->type;}
 char Mob::getChar() {return this->character;}
 int Mob::getlife() {return this->life;}
+void Mob::setlife(int l) {this->life = l;}
 bool Mob::getfly() {return this->fly;}
 int Mob::getspeed() {return this->speed;}
 int Mob::getDmg() {return this->dmg;}

@@ -61,6 +61,7 @@ void saveActualMap() {
     out.close();
 }
 
+
 void regenOldMap(WINDOW * win, bool refresh) {
     if(!refresh) {
         
@@ -104,16 +105,13 @@ void regenOldMap(WINDOW * win, bool refresh) {
     int nexty = t->next->y;
     int w=0;
     while(t->next != NULL) {
-    
         if(w<t->x) mvwaddch(win, t->y, w, '_');
         else if(w == t->x) {
             if(nexty < t->y) mvwaddch(win,t->y, w, '/');
             else if(nexty > t->y) mvwaddch(win,t->y+1, w, '\\');
-            //else mvwaddch(win,t->y, w, 'S');
             
             t = t->next;
             if(t->next!=NULL) nexty = t->next->y;
-            
         }
         w++;
     }
@@ -123,15 +121,19 @@ void regenOldMap(WINDOW * win, bool refresh) {
     }
 
     for(pcoords q = specials;q!=NULL;q = q->next) {
-        init_pair(101, COLOR_BLACK, COLOR_YELLOW);
-        wattron(win, COLOR_PAIR(101));
+        init_pair(102, COLOR_BLACK, COLOR_YELLOW);
+        if(refresh) wattron(win, COLOR_PAIR(102));
         mvwaddch(win, q->y, q->x, '$');
-        wattroff(win, COLOR_PAIR(101));
+        //if(!refresh) mvwaddch(win, q->y, q->x, '$');
+        if(refresh) wattroff(win, COLOR_PAIR(102));
     }
+    //wrefresh(win);
 // <==>
     for(pline q = platforms;q!=NULL;q = q->next) {
         mvwaddch(win,q->y, q->x, '<');
         for(int i=1;i<q->len-1;i++) mvwaddch(win,q->y, q->x+i, '=');
         mvwaddch(win,q->y, q->x+q->len-1, '>');
     }
+
+    
 }

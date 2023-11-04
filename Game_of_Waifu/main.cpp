@@ -97,8 +97,10 @@ void start(){
         mapgenerator(playerwin);
         MobSpawn(prxMax, hd);
     }
-    else regenOldMap(playerwin, false);
-
+    else {
+        regenOldMap(playerwin, false);
+        mobRespawn(hd);
+    }
     Player player = Player(playerwin, current_game.getPlayerY(), current_game.getPlayerX(), '@');
     start_color();
     init_pair(1, COLOR_RED, COLOR_BLACK);
@@ -133,7 +135,8 @@ void start(){
         wrefresh(playerwin);
         wrefresh(userwin);
 
-        player.getMv(userwin, loop, cont); // prende user input 
+        player.getmv(userwin, loop, cont); // prende user input 
+        if(!loop) saveMobs(hd);
 
         player.update(prxMax, playerwin, cont);
         ChangeMap(&player, playerwin, prxMax, pryMax, hd); 
