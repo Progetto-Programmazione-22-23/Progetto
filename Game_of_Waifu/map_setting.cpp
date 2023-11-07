@@ -4,14 +4,16 @@ void MobSpawn(int len, pnemici& hd){
     // mapgenerator(win);
     srand(time(NULL));
     int i = 0;
-    while (i<5){
+    int max = current_game.getLevel();
+    if (max > 5) max = 4;
+    while (i<max+2){
         int Xspawn = 15 + rand()%(len-15);
         int MobType = rand()%NumMob;
-        if (MobType == 0) hd = InsZombie(hd, calcYmin(Xspawn), Xspawn);
-        else if (MobType == 1) hd = InsGolem(hd, calcYmin(Xspawn), Xspawn);
-        else if (MobType == 2) hd = InsBat(hd, calcYmin(Xspawn) - 5, Xspawn);
-        else if (MobType == 3) hd = InsDemon(hd, calcYmin(Xspawn) - 5, Xspawn);
-        else hd = InsZombie(hd, calcYmin(Xspawn), Xspawn); 
+        if (MobType == 0) hd = InsZombie(hd, calcYmin(Xspawn), Xspawn, current_game.getLevel());
+        else if (MobType == 1) hd = InsGolem(hd, calcYmin(Xspawn), Xspawn, current_game.getLevel());
+        else if (MobType == 2) hd = InsBat(hd, calcYmin(Xspawn) - 5, Xspawn, current_game.getLevel());
+        else if (MobType == 3) hd = InsDemon(hd, calcYmin(Xspawn) - 5, Xspawn, current_game.getLevel());
+        else hd = InsZombie(hd, calcYmin(Xspawn), Xspawn, current_game.getLevel()); 
         i++;
     }
 }
@@ -79,11 +81,11 @@ void GoPrev(WINDOW * win, pnemici hd) {
 
 void ChangeMap(Player* pl, WINDOW * win, int end, int yMax, pnemici& hd){
     if(pl->getX() >= end-2 && (hd == NULL || current_game.getMap()<current_game.getLevel())){        // solo se la lista di nemici è vuota 
-    pl->Teleport(4, yMax-3); 
+    pl->teleport(4, yMax-3); 
     GoNext(win, end, hd);
   }
   else if(pl->getX() <= 1 && current_game.getMap()>0) {
-    pl->Teleport(end-4, yMax-3);
+    pl->teleport(end-4, yMax-3);
     GoPrev(win, hd);
   } 
 }
