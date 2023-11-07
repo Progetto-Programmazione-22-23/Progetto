@@ -14,7 +14,7 @@ void sell(){
     // prima chiedi se sei sicuro di voler vendere (bisognerebbe poter vedere il valore prima)
 }
 
-void openchoice(WINDOW * choiceWin, int k, string obj[]){
+void openchoice(WINDOW * choiceWin, Item item){
     int syMax, sxMax;
     getmaxyx(choiceWin, syMax, sxMax);
     // WINDOW *choiceWin = newwin(syMax-(syMax/10)-2, sxMax-(sxMax/10)-2, syMax/20+2, sxMax/20+1);
@@ -22,7 +22,9 @@ void openchoice(WINDOW * choiceWin, int k, string obj[]){
     keypad(choiceWin, true);
     nodelay(choiceWin, TRUE);
 
-    mvwprintw(choiceWin, 1, sxMax/2, "Hai selezionato: %s", obj[k]);
+    char itemname[20];
+    item.getName(itemname);
+    mvwprintw(choiceWin, 1, sxMax/2, "Hai selezionato: %s", itemname);
 
     int n = 4;
     string azioni[n] = {"equipaggia", "ispeziona", "vendi", "annulla"};
@@ -65,43 +67,62 @@ void openchoice(WINDOW * choiceWin, int k, string obj[]){
 
 void open_inventory(WINDOW * invWin){
     int syMax, sxMax;
+    getmaxyx(invWin, syMax, sxMax);
 
     box(invWin, 0, 0);
     keypad(invWin, true);
     nodelay(invWin, TRUE);
 
     // gli oggetti nell'inventario saranno una lista, n la lunghezza della lista
-    int n = 4;
-    int select = 0;
-    string oggetti[n] = {"spada lunga", "scudo di doran", "palle potenti", "freccia"};
+    //int n = 4;
+    //string oggetti[n] = {"spada lunga", "scudo di doran", "palle potenti", "freccia"};
+    Inventory * inv = current_game.getInventory();
     int choice;
     int highlights = 0;
 
     bool open = true;
     while (open){
         box(invWin, 0, 0);
+
+        /*
         for (int i = 0; i < n; i++){ // costruisco il menu
             if (i == highlights) wattron(invWin, A_REVERSE);
             mvwprintw(invWin, i+1, 2, "%s", oggetti[i].c_str());
             wattroff(invWin, A_REVERSE);
         }
+        */
+
+        int i = 0, w = 2;
+        Item chosen;
+        for(pitemlist l = inv->getInventoryHead(); l != NULL; l = l->next, i++) {
+            char itemname[20];
+            l->val.getName(itemname);
+            if(i!=0 && i%(syMax-3) == 0) w+=20;
+            if (i == highlights) {
+                wattron(invWin, A_REVERSE);
+                chosen = l->val;
+            }
+            mvwprintw(invWin, (i%(syMax-3))+1, w, itemname);
+            wattroff(invWin, A_REVERSE);
+        }
+
         choice = wgetch(invWin);
 
         switch(choice){ // mi muovo nel menu
             case KEY_UP:
-                highlights--, select--;
-                if (highlights == -1) highlights = 0, select = 0;
+                highlights--;
+                if (highlights == -1) highlights = 0;
                 break;
             case KEY_DOWN:
-                highlights++, select++;
-                if (highlights == n) highlights = n-1, select = n-1;
+                highlights++;
+                if (highlights == i) highlights = i-1;
                 break;
             case 'i':
                 open = false;
                 wclear(invWin);
                 break;
             case 10:
-                openchoice(invWin, select, oggetti);
+                openchoice(invWin, chosen);
                 break;
             default:
                 break;

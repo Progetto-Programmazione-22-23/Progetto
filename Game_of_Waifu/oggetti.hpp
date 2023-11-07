@@ -51,6 +51,7 @@ class Inventory {
         Item getBarItem(bool hot_armor, int i);
         void setBarItem(bool hot_armor, int i, Item item);
         pitemlist getInventoryHead();
+        Item getInventoryItem(int index);
         void setSelected(int hot);
         int getSelected();
         bool isActive(bool hot_armor, int id);

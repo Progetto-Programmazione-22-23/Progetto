@@ -119,10 +119,24 @@ Item Inventory::remove(int index) {
 void Inventory::giveItem(Item item) {
     this->inv = addItem(this->inv, item);
 }
+
+Item Inventory::getInventoryItem(int index) {
+    pitemlist l = inv;
+    for(int i=0; i==index; l = l->next, i++);
+    return l->val;
+}
+
 void Inventory::equip(int index) {
-    Item item = Inventory::remove(index);
-    bool bar = item.getBar();
-    Inventory::setBarItem(bar, Inventory::firstSlot(bar), item);
+    Item item = Inventory::getInventoryItem(index);
+    if(item.getBar()) {
+        int slot = Inventory::firstSlot(1);
+    }
+    else {
+
+    }
+    
+    //if(slot>=0)
+    //Inventory::setBarItem(bar, , item);
 }
 void Inventory::unequip(bool hot_armor, int index) {
     //Inventory::giveItem()

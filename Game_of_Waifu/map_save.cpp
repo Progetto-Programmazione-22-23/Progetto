@@ -121,14 +121,12 @@ void regenOldMap(WINDOW * win, bool refresh) {
     }
 
     for(pcoords q = specials;q!=NULL;q = q->next) {
-        init_pair(102, COLOR_BLACK, COLOR_YELLOW);
-        if(refresh) wattron(win, COLOR_PAIR(102));
+        init_pair(104, COLOR_BLACK, COLOR_YELLOW);
+        if(refresh) wattron(win, COLOR_PAIR(104));
         mvwaddch(win, q->y, q->x, '$');
-        //if(!refresh) mvwaddch(win, q->y, q->x, '$');
-        if(refresh) wattroff(win, COLOR_PAIR(102));
+        if(refresh) wattroff(win, COLOR_PAIR(104));
     }
-    //wrefresh(win);
-// <==>
+    
     for(pline q = platforms;q!=NULL;q = q->next) {
         mvwaddch(win,q->y, q->x, '<');
         for(int i=1;i<q->len-1;i++) mvwaddch(win,q->y, q->x+i, '=');
