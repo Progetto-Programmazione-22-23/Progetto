@@ -21,6 +21,7 @@ void SpawnHelp();
 void Heal();
 void Money();
 void Bomb();
+void UseLuckyBlock(WINDOW * win, int h, int l);
 
 void GoUp(WINDOW * win, int h, int l);
 void GoStraight(WINDOW * win, int h, int l);

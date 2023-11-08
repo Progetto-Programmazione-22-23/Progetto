@@ -30,6 +30,17 @@ bool Player::onPlatform(WINDOW * win){
   else if (mvwinch(win, getY()+1, getX()) == '>') {OnPlat = true;}
   return OnPlat;
 }
+
+bool Player::onLucky(WINDOW * win){
+  bool OnLuck = false;
+  pcoords lucky = specials;
+  while (lucky != NULL){
+    if (getX() == lucky->x && getY() == lucky->y) {OnLuck = true;}
+    lucky = lucky->next;
+  }
+  return OnLuck;
+}
+
 void Player::move_left() {
   this->x_velocity -= HORIZONTAL_ACCELERATION;
   if (this->x_velocity < -HORIZONTAL_MAX_VELOCITY) {this->x_velocity = -HORIZONTAL_MAX_VELOCITY;}
@@ -55,6 +66,8 @@ void Player::update(int end, WINDOW * win, int tik) {
   int jumpspeed = 1;           // velocita di salto (più è bassa, più è veloce)
   mvwaddch(curwin, y, x, ' ');
   regenOldMap(win, true);
+
+  if (onLucky(win)) UseLuckyBlock();
   
   if (this->is_jumping && (tik-ActualTik)%jumpspeed == 0 && (tik-ActualTik) <= h) {this->y-=1;} 
   else if (this->is_jumping && (tik-ActualTik) > h+4 && this->y < minY && (tik-ActualTik)%jumpspeed == 0){

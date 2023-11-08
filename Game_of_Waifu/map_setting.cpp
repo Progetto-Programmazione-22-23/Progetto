@@ -11,8 +11,9 @@ void MobSpawn(int len, pnemici& hd){
         int MobType = rand()%NumMob;
         if (MobType == 0) hd = InsZombie(hd, calcYmin(Xspawn), Xspawn, lv);
         else if (MobType == 1) hd = InsGolem(hd, calcYmin(Xspawn), Xspawn, lv);
-        else if (MobType == 2) hd = InsBat(hd, calcYmin(Xspawn) - 5, Xspawn, lv);
-        else if (MobType == 3) hd = InsDemon(hd, calcYmin(Xspawn) - 5, Xspawn, lv);
+        else if (MobType == 2) hd = InsCerbottaniere(hd, calcYmin(Xspawn), Xspawn, lv);
+        else if (MobType == 3) hd = InsBat(hd, calcYmin(Xspawn) - 5, Xspawn, lv);
+        else if (MobType == 4) hd = InsDemon(hd, calcYmin(Xspawn) - 5, Xspawn, lv);
         else hd = InsZombie(hd, calcYmin(Xspawn), Xspawn, lv); 
         i++;
     }

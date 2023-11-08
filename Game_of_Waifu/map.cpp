@@ -34,7 +34,7 @@ void GoDown(WINDOW * win, int h, int l){mvwaddch(win, h, l, '\\'), addCoord(l,h-
 
 // qui vanno create tutte le trappole ed i blocchi di aiuto (cure, spawn armi ecc...) che vengono poi selezionati dalle funzioni sotto in modo random
 
-void Bomb(){/*takeDmg(1);*/}
+void Bomb(){current_game.setVita(current_game.getVita()-1);}
 void Robberry(){current_game.setMoney(current_game.getMoney()-1);}
 void SpawnTrap(){
     int i = rand() % 2;
@@ -42,7 +42,7 @@ void SpawnTrap(){
     else if (i == 1) Robberry();
 }
 
-void Heal(){/*takeDmg(-1);*/}
+void Heal(){current_game.setVita(current_game.getVita()+1);}
 void Money(){current_game.setMoney(current_game.getMoney()+1);}
 void SpawnHelp(){
     int i = rand() % 2;
@@ -56,19 +56,18 @@ void SpecialBlock(WINDOW * win, int h, int l){
     mvwaddch(win, h, l, '$');
     wattroff(win, COLOR_PAIR(100));
     addSpecial(l,h);
-    //addCoord(l,h);
+}
 
-    // se le coordinate del player sono le stesse del blocco speciale, si attiva un effetto random
-
+void UseLuckyBlock(){
     int i = rand() % 2;     // 50% tra blocco buono o cattivo
     if (i == 0) SpawnTrap();
     else SpawnHelp();
 }
-
 /// END SPECIAL BLOCK SECTION ///
 
 void SpawnBullet(WINDOW * win, int h, int l){
     mvwaddch(win, h, l, 'O');
+    // salvare i proiettili in memoria :P
 }
 
 void SpawnPlatform(WINDOW * win, int high, int len){
@@ -104,8 +103,9 @@ void SpawnPlatform(WINDOW * win, int high, int len){
                 L++;
                 lenPlat--;
                 for (int j = 0; j<lenPlat-1; j++){
-                    if (spawnSpecial == 1 && j == lenPlat/2){SpecialBlock(win, h, L);}
-                    else {mvwaddch(win, h, L, '='); L++;}
+                    if (spawnSpecial == 1 && j == lenPlat/2 && NumSpecialBlock < 3){SpecialBlock(win, h-1, L); NumSpecialBlock++;}
+                    mvwaddch(win, h, L, '='); 
+                    L++;
                 }
                 mvwaddch(win, h, L, '>');
                 LastX = L;

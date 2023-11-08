@@ -2,16 +2,17 @@
 #include <stdlib.h>
 #include "player.cpp"
 //#include "save.cpp"
+int NumMob = 5;
 
 class Mob{
     protected:
-        int life, speed, dmg, type;
+        int life, speed, dmg, type, atkSpeed;
         int x, y;
         char character;
-        bool fly;
+        bool fly, ranged;
         int color;
     public:
-        Mob(int y = 0, int x = 0, int l = 0, int s = 0, int d = 0, char ch = ' ', bool f = false, int color = 0, int type = 0);
+        Mob(int y = 0, int x = 0, int l = 0, int s = 0, int d = 0, int as = 0, char ch = ' ', bool f = false, bool r = false, int color = 0, int type = 0);
         int getX();
         int getY();
         int getType();
@@ -19,6 +20,7 @@ class Mob{
         int getlife();
         void setlife(int l);
         bool getfly();
+        bool getRanged();
         int getspeed();
         WINDOW* getwin();
         int getDmg();
@@ -43,6 +45,7 @@ typedef nemico* pnemici;
 pnemici InsMob(pnemici hd, Mob x);
 pnemici InsZombie(pnemici& hd, int y, int x, int lv);
 pnemici InsGolem(pnemici& hd, int y, int x, int lv);
+pnemici InsCerbottaniere(pnemici& hd, int y, int x, int lv);
 pnemici InsBat(pnemici& hd, int y, int x, int lv);
 pnemici InsDemon(pnemici& hd, int y, int x, int lv);
 
