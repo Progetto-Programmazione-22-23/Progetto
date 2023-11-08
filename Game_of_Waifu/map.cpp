@@ -67,13 +67,19 @@ void SpecialBlock(WINDOW * win, int h, int l){
 
 /// END SPECIAL BLOCK SECTION ///
 
+void SpawnBullet(WINDOW * win, int h, int l){
+    mvwaddch(win, h, l, 'O');
+}
+
 void SpawnPlatform(WINDOW * win, int high, int len){
+    int NumSpecialBlock = 0;
     int i, L = 15, h = 0;                                               // i:Possibilità di Spawn, L:No spawn prima di x = 15, h:H dal cielo
     int LastX = -100, LastYspawn = 0;                                   // X di fine e inizio dell'ultima piattaforma, Y di inizio dell'ultima piattaforma
     int counter = 0;
     bool buildable = true;
     while(L < len-15){
-        i = rand() % 3;                                                 // Spawn 33% delle volte          
+        i = rand() % 3;                                                 // Spawn 33% delle volte
+        int spawnSpecial = rand()%2;
         int lenPlat = (rand() % 6) + 10;                                // Len Platform random
         if (i == 1){
             int Xspawn = L;
@@ -88,6 +94,7 @@ void SpawnPlatform(WINDOW * win, int high, int len){
                 if (calcYmin(k+L)-h < 3) buildable = false;
                 k++;
             }
+
             /*Costruisco*/
             if (buildable){
                 addPlatform(L,h,lenPlat);
@@ -97,8 +104,8 @@ void SpawnPlatform(WINDOW * win, int high, int len){
                 L++;
                 lenPlat--;
                 for (int j = 0; j<lenPlat-1; j++){
-                    mvwaddch(win, h, L, '=');
-                    L++;
+                    if (spawnSpecial == 1 && j == lenPlat/2){SpecialBlock(win, h, L);}
+                    else {mvwaddch(win, h, L, '='); L++;}
                 }
                 mvwaddch(win, h, L, '>');
                 LastX = L;
@@ -111,6 +118,7 @@ void SpawnPlatform(WINDOW * win, int high, int len){
 }
 
 void mapgenerator(WINDOW * win){
+    int NumBullet = 0;
     actual_map = NULL;
     specials = NULL;
     platforms = NULL;
@@ -127,7 +135,7 @@ void mapgenerator(WINDOW * win){
         i = rand() % 50;
         if ((i>0 && i<6)&&(last>6 && last<12)||(last>0 && last<6)&&(i>6 && i<12)) GoStraight(win, H, L), L++;  // se prima sono andato su, non posso andare giu (e viceversa)
         if (i>0 && i<6 && H > high/2) GoUp(win, H, L), L++, H--;
-        else if (i == 6) SpecialBlock(win, H, L), L++;                                                         // trappole o strumenti;
+        else if (i == 6 && NumBullet < 4) SpawnBullet(win, H, L), L++, NumBullet++;                                                         // trappole o strumenti;
         else if (i>6 && i<12 && H < high-3)  H++, GoDown(win, H, L), L++;
         else GoStraight(win, H, L), L++;                                                                       // molto più frequente del resto (7 volte su 10);
         last = i;
