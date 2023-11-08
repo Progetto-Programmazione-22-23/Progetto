@@ -120,16 +120,25 @@ void Inventory::giveItem(Item item) {
     this->inv = addItem(this->inv, item);
 }
 
-Item Inventory::getInventoryItem(int index) {
-    pitemlist l = inv;
-    for(int i=0; i==index; l = l->next, i++);
-    return l->val;
+int Inventory::calcLen() {
+    int i=0;
+    for(pitemlist l = this->inv; l!=NULL; l=l->next) i++;
+    return i;
+}
+
+pitemlist Inventory::getInventoryItem(int index) {
+    pitemlist l = this->inv;
+    for(int i=0; i<index && l!=NULL; l = l->next) i++;
+    return l;
 }
 
 void Inventory::equip(int index) {
-    Item item = Inventory::getInventoryItem(index);
+    Item item = (Inventory::getInventoryItem(index))->val;
     if(item.getBar()) {
         int slot = Inventory::firstSlot(1);
+        if(slot>=0) {
+
+        }
     }
     else {
 

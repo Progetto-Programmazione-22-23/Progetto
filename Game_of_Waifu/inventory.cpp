@@ -77,9 +77,10 @@ void open_inventory(WINDOW * invWin){
     //int n = 4;
     //string oggetti[n] = {"spada lunga", "scudo di doran", "palle potenti", "freccia"};
     Inventory * inv = current_game.getInventory();
-    int choice;
-    int highlights = 0;
-
+    int len = inv->calcLen(), choice, highlights = 0, lastItem = 0, column = 1, page = 1;
+    int maxPage = (len/(syMax-4))+1;
+    if(len%(syMax-4)==0) maxPage--;
+    //init_pair(3, 245, COLOR_BLACK);
     bool open = true;
     while (open){
         box(invWin, 0, 0);
@@ -91,19 +92,73 @@ void open_inventory(WINDOW * invWin){
             wattroff(invWin, A_REVERSE);
         }
         */
+        if(page <= 1) wattron(invWin, COLOR_PAIR(3));
+        else if(column == 0) wattron(invWin, A_REVERSE);
+        mvwprintw(invWin, 1, 1, "[<]");
+        wattroff(invWin, COLOR_PAIR(3));
+        wattroff(invWin, A_REVERSE);
 
-        int i = 0, w = 2;
+        if(column == 1 && len == 0) wattron(invWin, A_REVERSE);
+        mvwprintw(invWin, 1, 5, "Inventory (Page %d)",page);
+        wattroff(invWin, A_REVERSE);
+
+        if(page >= maxPage) wattron(invWin, COLOR_PAIR(3));
+        else if(column == 2) wattron(invWin, A_REVERSE);
+        mvwprintw(invWin, 1, 24, "[>]");
+        wattroff(invWin, COLOR_PAIR(3));
+        wattroff(invWin, A_REVERSE);
+
+        
+
         Item chosen;
-        for(pitemlist l = inv->getInventoryHead(); l != NULL; l = l->next, i++) {
+        //int hots = inv->firstSlot(0);
+        mvwprintw(invWin, 2, 33, "HOTBAR");
+        for(int i=0;i<3;i++) {
+            char itemname[20];
+            Item item = inv->getBarItem(1,i);
+            item.getName(itemname);
+            if((i==highlights && item.getId()>0 && column == 3) || inv->getSelected() == i) {
+                wattron(invWin, A_REVERSE);
+                chosen = item;
+            }
+            mvwprintw(invWin, i+3, 32, "[%d] %s", i+1, itemname);
+            wattroff(invWin, A_REVERSE);
+        }
+    
+
+        
+        int armors = inv->firstSlot(1);
+        if(armors==0) wattron(invWin, COLOR_PAIR(3));
+        mvwprintw(invWin, 7, 33, "ARMOR");
+        for(int i=0;i<3;i++) {
+            char itemname[20];
+            Item item = inv->getBarItem(0,i);
+            item.getName(itemname);
+            if(i==highlights && item.getId()>0 && column == 4) {
+                wattron(invWin, A_REVERSE);
+                chosen = item;
+            }
+            mvwprintw(invWin, i+8, 32, "- %s", itemname);
+            wattroff(invWin, A_REVERSE);
+        }
+        wattroff(invWin, COLOR_PAIR(3));
+
+        
+        
+        pitemlist l = inv->getInventoryItem(lastItem);
+        int i = 0;
+        while(l!=NULL && i<syMax-4) {
             char itemname[20];
             l->val.getName(itemname);
-            if(i!=0 && i%(syMax-3) == 0) w+=20;
-            if (i == highlights) {
+            if (i == highlights && column == 1) {
                 wattron(invWin, A_REVERSE);
                 chosen = l->val;
             }
-            mvwprintw(invWin, (i%(syMax-3))+1, w, itemname);
+            mvwprintw(invWin, i+3, 2, itemname);
             wattroff(invWin, A_REVERSE);
+
+            i++;
+            l = l->next;
         }
 
         choice = wgetch(invWin);
@@ -116,6 +171,16 @@ void open_inventory(WINDOW * invWin){
             case KEY_DOWN:
                 highlights++;
                 if (highlights == i) highlights = i-1;
+                break;
+            case KEY_LEFT:
+                if(column>0) {
+                    column--, highlights = 0;
+                }
+                break;
+            case KEY_RIGHT:
+                if(column<4) {
+                    column++, highlights = 0;
+                }
                 break;
             case 'i':
                 open = false;
