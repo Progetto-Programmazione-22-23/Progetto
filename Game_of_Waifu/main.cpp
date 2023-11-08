@@ -150,7 +150,7 @@ void start(){
 
 int main(int argc, char ** argv){
 
-    /*START*/
+/*START*/
     initscr();
     noecho();
     cbreak();

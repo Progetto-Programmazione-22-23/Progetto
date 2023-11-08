@@ -34,7 +34,7 @@ void GoDown(WINDOW * win, int h, int l){mvwaddch(win, h, l, '\\'), addCoord(l,h-
 
 // qui vanno create tutte le trappole ed i blocchi di aiuto (cure, spawn armi ecc...) che vengono poi selezionati dalle funzioni sotto in modo random
 
-void Bomb(){/*takeDmg(1);*/}
+void Bomb(){current_game.setVita(current_game.getVita()-1);}
 void Robberry(){current_game.setMoney(current_game.getMoney()-1);}
 void SpawnTrap(){
     int i = rand() % 2;
@@ -42,7 +42,7 @@ void SpawnTrap(){
     else if (i == 1) Robberry();
 }
 
-void Heal(){/*takeDmg(-1);*/}
+void Heal(){current_game.setVita(current_game.getVita()+1);}
 void Money(){current_game.setMoney(current_game.getMoney()+1);}
 void SpawnHelp(){
     int i = rand() % 2;
@@ -56,24 +56,29 @@ void SpecialBlock(WINDOW * win, int h, int l){
     mvwaddch(win, h, l, '$');
     wattroff(win, COLOR_PAIR(100));
     addSpecial(l,h);
-    //addCoord(l,h);
+}
 
-    // se le coordinate del player sono le stesse del blocco speciale, si attiva un effetto random
-
+void UseLuckyBlock(){
     int i = rand() % 2;     // 50% tra blocco buono o cattivo
     if (i == 0) SpawnTrap();
     else SpawnHelp();
 }
-
 /// END SPECIAL BLOCK SECTION ///
 
+void SpawnBullet(WINDOW * win, int h, int l){
+    mvwaddch(win, h, l, 'O');
+    // salvare i proiettili in memoria :P
+}
+
 void SpawnPlatform(WINDOW * win, int high, int len){
+    int NumSpecialBlock = 0;
     int i, L = 15, h = 0;                                               // i:Possibilità di Spawn, L:No spawn prima di x = 15, h:H dal cielo
     int LastX = -100, LastYspawn = 0;                                   // X di fine e inizio dell'ultima piattaforma, Y di inizio dell'ultima piattaforma
     int counter = 0;
     bool buildable = true;
     while(L < len-15){
-        i = rand() % 3;                                                 // Spawn 33% delle volte          
+        i = rand() % 3;                                                 // Spawn 33% delle volte
+        int spawnSpecial = rand()%2;
         int lenPlat = (rand() % 6) + 10;                                // Len Platform random
         if (i == 1){
             int Xspawn = L;
@@ -88,6 +93,7 @@ void SpawnPlatform(WINDOW * win, int high, int len){
                 if (calcYmin(k+L)-h < 3) buildable = false;
                 k++;
             }
+
             /*Costruisco*/
             if (buildable){
                 addPlatform(L,h,lenPlat);
@@ -97,7 +103,8 @@ void SpawnPlatform(WINDOW * win, int high, int len){
                 L++;
                 lenPlat--;
                 for (int j = 0; j<lenPlat-1; j++){
-                    mvwaddch(win, h, L, '=');
+                    if (spawnSpecial == 1 && j == lenPlat/2 && NumSpecialBlock < 3){SpecialBlock(win, h-1, L); NumSpecialBlock++;}
+                    mvwaddch(win, h, L, '='); 
                     L++;
                 }
                 mvwaddch(win, h, L, '>');
@@ -111,6 +118,7 @@ void SpawnPlatform(WINDOW * win, int high, int len){
 }
 
 void mapgenerator(WINDOW * win){
+    int NumBullet = 0;
     actual_map = NULL;
     specials = NULL;
     platforms = NULL;
@@ -127,7 +135,7 @@ void mapgenerator(WINDOW * win){
         i = rand() % 50;
         if ((i>0 && i<6)&&(last>6 && last<12)||(last>0 && last<6)&&(i>6 && i<12)) GoStraight(win, H, L), L++;  // se prima sono andato su, non posso andare giu (e viceversa)
         if (i>0 && i<6 && H > high/2) GoUp(win, H, L), L++, H--;
-        else if (i == 6) SpecialBlock(win, H, L), L++;                                                         // trappole o strumenti;
+        else if (i == 6 && NumBullet < 4) SpawnBullet(win, H, L), L++, NumBullet++;                                                         // trappole o strumenti;
         else if (i>6 && i<12 && H < high-3)  H++, GoDown(win, H, L), L++;
         else GoStraight(win, H, L), L++;                                                                       // molto più frequente del resto (7 volte su 10);
         last = i;

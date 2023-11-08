@@ -1,13 +1,15 @@
 #include "enemies.hpp"
 
-Mob::Mob (int y, int x, int l, int s, int d, char ch, bool fl, int color, int type) {
+Mob::Mob (int y, int x, int l, int s, int d, int as, char ch, bool fl, bool rn, int color, int type) {
     this->life = l;
     this->speed = s;
     this->dmg = d;
     this->x = x;
     this->y = y;
+    this->atkSpeed = as;
     this->character = ch;
     this->fly = fl;
+    this->ranged = rn;
     this->type = type;
     this->color = color;
 }
@@ -20,6 +22,7 @@ char Mob::getChar() {return this->character;}
 int Mob::getlife() {return this->life;}
 void Mob::setlife(int l) {this->life = l;}
 bool Mob::getfly() {return this->fly;}
+bool Mob::getRanged() {return this->ranged;}
 int Mob::getspeed() {return this->speed;}
 int Mob::getDmg() {return this->dmg;}
 int Mob::getColor() {return this->color;}
@@ -46,10 +49,11 @@ void takeDmg(int dmg) {
 
 /*funzioni di inserimento dei diversi mob*/
 pnemici InsMob(pnemici hd, Mob x) {pnemici nhd = new nemico; nhd->nem = x; nhd->next = hd; return nhd;}
-pnemici InsZombie(pnemici& hd, int y, int x, int lv) {Mob Zombie(y, x, lv+1, 10, (lv/2)+1, 'Z', false, 10, 0); return InsMob(hd, Zombie);}
-pnemici InsGolem(pnemici& hd, int y, int x, int lv) {Mob Golem(y, x, 3+lv+lv/2, 20, lv+1, 'G', false, 11, 1); return InsMob(hd, Golem);}
-pnemici InsBat(pnemici& hd, int y, int x, int lv) {Mob Bat(y, x, 1, 5, 1, 'V', true, 12, 2); return InsMob(hd, Bat);}
-pnemici InsDemon(pnemici& hd, int y, int x, int lv) {Mob Demon(y, x, 3, 13, 2, 'D', true, 13, 3); return InsMob(hd, Demon);}
+pnemici InsZombie(pnemici& hd, int y, int x, int lv) {Mob Zombie(y, x, lv+1, 10, (lv/2)+1, 0, 'Z', false, false, 10, 0); return InsMob(hd, Zombie);}
+pnemici InsGolem(pnemici& hd, int y, int x, int lv) {Mob Golem(y, x, 3+lv+lv/2, 20, lv+1, 0, 'G', false, false, 11, 1); return InsMob(hd, Golem);}
+pnemici InsCerbottaniere(pnemici& hd, int y, int x, int lv) {Mob Cerbottaniere(y, x, lv+1, 7, (lv/2)+1, 0, 'C', false, true, 12, 2); return InsMob(hd, Cerbottaniere);}
+pnemici InsBat(pnemici& hd, int y, int x, int lv) {Mob Bat(y, x, (lv/3)+1, 5, lv+1, 0, 'V', true, true, 20, 10); return InsMob(hd, Bat);}
+pnemici InsDemon(pnemici& hd, int y, int x, int lv) {Mob Demon(y, x, (lv/2)+1, 13, (lv/3)+lv+1, 0, 'D', true, true, 21, 11); return InsMob(hd, Demon);}
 
 /*gestione coordinate*/
 pcoords InsCoords(pcoords& hd, int mx, int my) {
@@ -146,8 +150,9 @@ void update(pnemici hd, Player* pl, int ActualTick, WINDOW * win) {       // sim
 void display(pnemici hd, WINDOW * win) {
     init_pair(10, COLOR_RED, COLOR_GREEN);
     init_pair(11, COLOR_WHITE, 245);
-    init_pair(12, COLOR_WHITE, COLOR_BLACK);
-    init_pair(13, COLOR_WHITE, COLOR_BLACK);
+    init_pair(12, COLOR_BLACK, COLOR_CYAN);
+    init_pair(20, COLOR_WHITE, COLOR_BLACK);
+    init_pair(21, COLOR_WHITE, COLOR_BLACK);
     if(current_game.getMap() == current_game.getLevel())
         while(hd != NULL){
             wattron(win, COLOR_PAIR(hd->nem.getColor()));

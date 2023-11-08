@@ -1,7 +1,5 @@
 #include "enemies.cpp"
 
-int NumMob = 4;
-
 void MobSpawn(int len, pnemici& hd);
 void saveMobs(pnemici hd);
 void mobRespawn(pnemici& hd);

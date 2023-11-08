@@ -48,6 +48,7 @@ class Player {
         void updateLastHit(int tick);
         void getMv(WINDOW * win, bool &loop, int tik);
         bool onPlatform(WINDOW * win);
+        bool onLucky(WINDOW * win);
         void update(int end, WINDOW * win, int tik);
         void shoot(int i);
         void shooting(WINDOW * win, int direction);
