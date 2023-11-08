@@ -4,16 +4,16 @@ void MobSpawn(int len, pnemici& hd){
     // mapgenerator(win);
     srand(time(NULL));
     int i = 0;
-    int max = current_game.getLevel();
-    if (max > 5) max = 4;
-    while (i<max+2){
+    int lv = current_game.getLevel();
+    if (lv > 4) lv = 4;
+    while (i<lv+2){
         int Xspawn = 15 + rand()%(len-15);
         int MobType = rand()%NumMob;
-        if (MobType == 0) hd = InsZombie(hd, calcYmin(Xspawn), Xspawn, current_game.getLevel());
-        else if (MobType == 1) hd = InsGolem(hd, calcYmin(Xspawn), Xspawn, current_game.getLevel());
-        else if (MobType == 2) hd = InsBat(hd, calcYmin(Xspawn) - 5, Xspawn, current_game.getLevel());
-        else if (MobType == 3) hd = InsDemon(hd, calcYmin(Xspawn) - 5, Xspawn, current_game.getLevel());
-        else hd = InsZombie(hd, calcYmin(Xspawn), Xspawn, current_game.getLevel()); 
+        if (MobType == 0) hd = InsZombie(hd, calcYmin(Xspawn), Xspawn, lv);
+        else if (MobType == 1) hd = InsGolem(hd, calcYmin(Xspawn), Xspawn, lv);
+        else if (MobType == 2) hd = InsBat(hd, calcYmin(Xspawn) - 5, Xspawn, lv);
+        else if (MobType == 3) hd = InsDemon(hd, calcYmin(Xspawn) - 5, Xspawn, lv);
+        else hd = InsZombie(hd, calcYmin(Xspawn), Xspawn, lv); 
         i++;
     }
 }
@@ -29,22 +29,23 @@ void saveMobs(pnemici hd){
 }
 
 void mobRespawn(pnemici& hd) {
+    int lv = current_game.getLevel();
     std::ifstream in;
     in.open("enemies.txt");
     int type, life, x, y;
     while(in>>type>>life>>x>>y) {
         switch(type) {
         case 0:
-            hd = InsZombie(hd, y, x);
+            hd = InsZombie(hd, y, x, lv);
             break;
         case 1:
-            hd = InsGolem(hd, y, x);
+            hd = InsGolem(hd, y, x, lv);
             break;
         case 2:
-            hd = InsBat(hd, y, x);
+            hd = InsBat(hd, y, x, lv);
             break;
         case 3:
-            hd = InsDemon(hd, y, x);
+            hd = InsDemon(hd, y, x, lv);
             break;
         default:
             break;

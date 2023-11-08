@@ -163,9 +163,11 @@ void Player::attack() {
 
 void Player::shoot(int i){
   if(!bulletFired){
-    if (i == 0 && ds == 1) {this->bulletX = getX()+1; this->bulletY = getY();}
-    else if (i == 0 && ds == -1) {this->bulletX = getX()-1; this->bulletY = getY();}
-    else if (i == 1) {this->bulletX = getX(); this->bulletY = getY()-1;}
+    // if (i == 0 && ds == 1) {this->bulletX = getX()+1; this->bulletY = getY();}
+    // else if (i == 0 && ds == -1) {this->bulletX = getX()-1; this->bulletY = getY();}
+    // else if (i == 1) {this->bulletX = getX(); this->bulletY = getY()-1;}
+    this->bulletX = getX();
+    this->bulletY = getY();
     this->bulletFired = true;
     this->bulletDistance = 0;
   }
@@ -180,27 +182,19 @@ void Player::shooting(WINDOW * win, int direction){
   refresh();                              // Aggiorna la finestra
 }
 
-void Player::stopBullet(){
-  this->bulletDistance = maxBulletDistance;
-}
+void Player::stopBullet() {this->bulletDistance = maxBulletDistance;}
 
 void Player::moveBullet(WINDOW * win){
   if (bulletFired && direction == 1 && bulletDistance < maxBulletDistance) {
+    if (mvwinch(win, bulletY, bulletX) == '\\' || mvwinch(win, bulletY, bulletX+1) == '/') {stopBullet();}
     shooting (win, 0);
-    if (mvwinch(win, bulletY, bulletX+1) == '\\' || mvwinch(win, bulletY, bulletX+1) == '/'){   // check collisione con il terreno
-      stopBullet();
-    }
   } else if (bulletFired && direction == -1 && bulletDistance < maxBulletDistance) {
+    if (mvwinch(win, bulletY, bulletX) == '\\' || mvwinch(win, bulletY, bulletX-1) == '/') {stopBullet();}
     shooting (win, 1);
-    if (mvwinch(win, bulletY, bulletX-1) == '\\' || mvwinch(win, bulletY, bulletX-1) == '/'){
-      stopBullet();
-    }
   } else if (bulletFired && direction == 2 && bulletDistance < maxBulletDistance){
+    if (mvwinch(win, bulletY-1, bulletX) == '=' || mvwinch(win, bulletY-1, bulletX) == '<' || mvwinch(win, bulletY-1, bulletX) == '>') {stopBullet();}
     shooting (win, 2);
-    if (mvwinch(win, bulletY-1, bulletX) == '=' || mvwinch(win, bulletY-1, bulletX) == '<' || mvwinch(win, bulletY-1, bulletX) == '>'){
-      stopBullet();
-    }
-  } else if (bulletDistance >= maxBulletDistance) { // Il proiettile ha raggiunto la distanza massima, disattivalo
+  } else if (bulletDistance >= maxBulletDistance) {           // Il proiettile ha raggiunto la distanza massima, disattivalo
     mvwaddch(win, bulletY, bulletX, ' ');
     bulletFired = false;
     bulletDistance = 0;

@@ -135,7 +135,7 @@ void start(){
         wrefresh(playerwin);
         wrefresh(userwin);
 
-        player.getmv(userwin, loop, cont); // prende user input 
+        player.getMv(userwin, loop, cont); // prende user input 
         if(!loop) saveMobs(hd);
 
         player.update(prxMax, playerwin, cont);
@@ -150,7 +150,7 @@ void start(){
 
 int main(int argc, char ** argv){
 
-    /*START*/
+/*START*/
     initscr();
     noecho();
     cbreak();
