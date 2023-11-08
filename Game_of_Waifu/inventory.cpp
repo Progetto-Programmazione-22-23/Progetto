@@ -217,7 +217,19 @@ void open_inventory(WINDOW * invWin){
                 wclear(invWin);
                 break;
             case 10:
-                openchoice(invWin, chosen);
+                if(column==0) {
+                    lastItem -= syMax-4;
+                    page--;
+                    if(page==1) column = 1;
+                    wclear(invWin);
+                } else if(column==2) {
+                    lastItem += syMax-4;
+                    page++;
+                    if(page==maxPage) column = 1;
+                    wclear(invWin);
+                }
+                else openchoice(invWin, chosen);
+
                 break;
             default:
                 int digit = choice-'0';
