@@ -29,23 +29,23 @@ void saveMobs(pnemici hd){
 }
 
 void mobRespawn(pnemici& hd) {
-    int lv = current_game.getLevel();
+    int lvl = current_game.getLevel();
     std::ifstream in;
     in.open("enemies.txt");
     int type, life, x, y;
     while(in>>type>>life>>x>>y) {
         switch(type) {
         case 0:
-            hd = InsZombie(hd, y, x, lv);
+            hd = InsZombie(hd, y, x, lvl);
             break;
         case 1:
-            hd = InsGolem(hd, y, x, lv);
+            hd = InsGolem(hd, y, x, lvl);
             break;
         case 2:
-            hd = InsBat(hd, y, x, lv);
+            hd = InsBat(hd, y, x, lvl);
             break;
         case 3:
-            hd = InsDemon(hd, y, x, lv);
+            hd = InsDemon(hd, y, x, lvl);
             break;
         default:
             break;
