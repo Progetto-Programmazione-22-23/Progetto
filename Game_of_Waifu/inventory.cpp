@@ -79,26 +79,19 @@ void open_inventory(WINDOW * invWin){
     Inventory * inv = current_game.getInventory();
     int len = inv->calcLen(), choice, highlights = 0, lastItem = 0, column = 1, page = 1;
     int maxPage = (len/(syMax-4))+1;
-    if(len%(syMax-4)==0) maxPage--;
+    //if(len%(syMax-4)==0) maxPage--;
     //init_pair(3, 245, COLOR_BLACK);
     bool open = true;
     while (open){
         box(invWin, 0, 0);
 
-        /*
-        for (int i = 0; i < n; i++){ // costruisco il menu
-            if (i == highlights) wattron(invWin, A_REVERSE);
-            mvwprintw(invWin, i+1, 2, "%s", oggetti[i].c_str());
-            wattroff(invWin, A_REVERSE);
-        }
-        */
         if(page <= 1) wattron(invWin, COLOR_PAIR(3));
         else if(column == 0) wattron(invWin, A_REVERSE);
         mvwprintw(invWin, 1, 1, "[<]");
         wattroff(invWin, COLOR_PAIR(3));
         wattroff(invWin, A_REVERSE);
 
-        if(column == 1 && len == 0) wattron(invWin, A_REVERSE);
+        if(column == 1) wattron(invWin, A_REVERSE);
         mvwprintw(invWin, 1, 5, "Inventory (Page %d)",page);
         wattroff(invWin, A_REVERSE);
 
@@ -112,12 +105,14 @@ void open_inventory(WINDOW * invWin){
 
         Item chosen;
         //int hots = inv->firstSlot(0);
+        if(column == 3) wattron(invWin, A_REVERSE);
         mvwprintw(invWin, 2, 33, "HOTBAR");
+        wattroff(invWin, A_REVERSE);
         for(int i=0;i<3;i++) {
             char itemname[20];
             Item item = inv->getBarItem(1,i);
             item.getName(itemname);
-            if((i==highlights && item.getId()>0 && column == 3) || inv->getSelected() == i) {
+            if(inv->getSelected() == i) {
                 wattron(invWin, A_REVERSE);
                 chosen = item;
             }
@@ -129,12 +124,16 @@ void open_inventory(WINDOW * invWin){
         
         int armors = inv->firstSlot(1);
         if(armors==0) wattron(invWin, COLOR_PAIR(3));
+        else if(column == 4) wattron(invWin, A_REVERSE);
         mvwprintw(invWin, 7, 33, "ARMOR");
+        wattroff(invWin, A_REVERSE);
+
         for(int i=0;i<3;i++) {
             char itemname[20];
             Item item = inv->getBarItem(0,i);
             item.getName(itemname);
-            if(i==highlights && item.getId()>0 && column == 4) {
+            if(item.getId()==0) wattron(invWin, COLOR_PAIR(3));
+            else if(i==highlights && item.getId()>0 && column == 4) {
                 wattron(invWin, A_REVERSE);
                 chosen = item;
             }
@@ -162,26 +161,57 @@ void open_inventory(WINDOW * invWin){
         }
 
         choice = wgetch(invWin);
-
+        bool doit = true, skip = false;
         switch(choice){ // mi muovo nel menu
             case KEY_UP:
-                highlights--;
-                if (highlights == -1) highlights = 0;
+                if(column == 3) {
+                    int s = inv->getSelected();
+                    if(s>0) inv->setSelected(s-1);
+                } else {
+                    highlights--;
+                    if (highlights == -1) highlights = 0;
+                }
                 break;
             case KEY_DOWN:
-                highlights++;
-                if (highlights == i) highlights = i-1;
-                break;
-            case KEY_LEFT:
-                if(column>0) {
-                    column--, highlights = 0;
+                if(column == 3) {
+                    int s = inv->getSelected();
+                    if(s<2) inv->setSelected(s+1);
+                } else {
+                    highlights++;
+                    if (highlights == i) highlights = i-1;
                 }
                 break;
+
+            case KEY_LEFT:
+                
+                if(column>0) {
+                    if(column==1 && page == 1)
+                        doit = false;
+                    else if(column==3 && page==maxPage)
+                        skip = true;
+                } else doit = false;
+
+                if(doit) {
+                    column -= 1+skip;
+                    highlights = 0;
+                }
+                break;
+
             case KEY_RIGHT:
                 if(column<4) {
-                    column++, highlights = 0;
+                    if(column==1 && page==maxPage)
+                        skip = true;
+                    else if(column==3 && armors==0)
+                        doit = false;
+                } 
+                else doit = false;
+
+                if(doit) { 
+                    column += 1+skip;
+                    highlights = 0;
                 }
                 break;
+            
             case 'i':
                 open = false;
                 wclear(invWin);
@@ -190,6 +220,9 @@ void open_inventory(WINDOW * invWin){
                 openchoice(invWin, chosen);
                 break;
             default:
+                int digit = choice-'0';
+                if(digit >= 1 && digit <= 3)
+                    inv->setSelected(digit-1);
                 break;
         }
     }

@@ -117,18 +117,6 @@ void Player::getMv(WINDOW * userwin, bool &loop, int tik) {
     if(ds>0 || current_game.getPlayerX()>1)
       Player::attack();
       break;
-    case '1':
-      current_game.getInventory()->setSelected(0);
-      current_game.UpState();
-      break;
-    case '2':
-      current_game.getInventory()->setSelected(1);
-      current_game.UpState();
-      break;
-    case '3':
-      current_game.getInventory()->setSelected(2);
-      current_game.UpState();
-      break;
     case 'i':
       open_inventory(userwin);
       break;
@@ -152,6 +140,11 @@ void Player::getMv(WINDOW * userwin, bool &loop, int tik) {
       break;
 
     default:
+      int digit = ch-'0';
+      if(digit >= 1 && digit <= 3) {
+        current_game.getInventory()->setSelected(digit-1);
+        current_game.UpState();
+      }
       break;
   }
 }
