@@ -160,7 +160,7 @@ int main(int argc, char ** argv){
     getmaxyx(stdscr, yMax, xMax);
 
 /*Come creare il menu: */
-    WINDOW * menuwin = newwin(6, xMax-12, yMax/2+4, 5);
+    WINDOW * menuwin = newwin(5, xMax-12, yMax/2+4, 5);
     wborder(menuwin, 0, 0, (int)'=', (int)'=', (int)'<', (int)'>', (int)'<', (int)'>');
     refresh();
     wrefresh(menuwin);
@@ -170,14 +170,14 @@ int main(int argc, char ** argv){
     int menuyMax, menuxMax;
     getmaxyx(menuwin, menuyMax, menuxMax);
 
-    string scelte[4] = {"start", "continue", "options", "info"};
+    string scelte[3] = {"start", "continue", "info"};
     int choice;
     int highlights = 0;
 
     loadItems();
     bool open = true;
     while (open){
-        for (int i = 0; i < 4; i++){ // costruisco il menu
+        for (int i = 0; i < 3; i++){ // costruisco il menu
             if (i == highlights) wattron(menuwin, A_REVERSE);
             mvwprintw(menuwin, i+1, menuxMax/2-10, "%s", scelte[i].c_str());
             wattroff(menuwin, A_REVERSE);
@@ -191,7 +191,7 @@ int main(int argc, char ** argv){
                 break;
             case KEY_DOWN:
                 highlights++;
-                if (highlights == 4) highlights = 3;
+                if (highlights == 3) highlights = 2;
                 break;
             case 10: 
                 open = false;
