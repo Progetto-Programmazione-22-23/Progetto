@@ -1,12 +1,21 @@
 #include <ncurses.h>
 #include <stdlib.h>
 #include "player.cpp"
+#include "enemies_bullet.cpp"
 //#include "save.cpp"
 int NumMob = 5;
 
+struct statistics {
+    int life;
+    int speed;
+    int dmg;
+    int atkSpeed;
+};
+
 class Mob{
     protected:
-        int life, speed, dmg, type, atkSpeed;
+        statistics stats;
+        int type;
         int x, y;
         char character;
         bool fly, ranged;
@@ -22,9 +31,11 @@ class Mob{
         bool getfly();
         bool getRanged();
         int getspeed();
-        WINDOW* getwin();
+        int getAtkSpeed();
         int getDmg();
         int getColor();
+        int getBulletX();
+        int getBulletY();
 
         int random(int max);
         void stop();
@@ -34,6 +45,9 @@ class Mob{
         void mvdown();
         void setY(int y);
         void NemDmg(int dmg);
+        void chargeShoot(WINDOW * win, int x, int y, int direction);
+        void enShoot(WINDOW * win, int x, int y, int direction);
+        void flyEnShoot(WINDOW * win, int x, int y);
 };
 
 struct nemico {
@@ -54,6 +68,6 @@ pcoords MobClearList(pcoords& hd);
 bool InList(pcoords& hd, int mx, int my);
 
 pnemici Death(pnemici& hd);
-void update(pnemici hd, Player pl, int ActualTick, WINDOW * win);
+void update(pnemici hd, Player pl, int ActualTick, WINDOW * win, pbullets& bullHd);
 void display(pnemici hd, WINDOW * win);
 void takeDmg(int dmg);

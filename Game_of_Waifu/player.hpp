@@ -46,8 +46,9 @@ class Player {
         void drop();
         void teleport(int nx, int ny);
         void updateLastHit(int tick);
-        void getMv(WINDOW * win, bool &loop, int tik);
+        void getMv(WINDOW * pwin, WINDOW * uwin, bool &loop, int tik);
         bool onPlatform(WINDOW * win);
+        void dropFromPlatfrorm(WINDOW * win);
         bool onLucky(WINDOW * win);
         void update(int end, WINDOW * win, int tik);
         void shoot(int i);
@@ -55,5 +56,4 @@ class Player {
         void stopBullet();
         void moveBullet(WINDOW * win);
         void display();
-        //void bulletCollision();
 };
