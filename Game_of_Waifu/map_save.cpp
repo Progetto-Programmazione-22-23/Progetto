@@ -121,7 +121,7 @@ void regenOldMap(WINDOW * win, bool refresh) {
     }
 
     for(pcoords q = specials;q!=NULL;q = q->next) {
-        init_pair(104, COLOR_BLACK, COLOR_YELLOW);
+        
         if(refresh) wattron(win, COLOR_PAIR(104));
         mvwaddch(win, q->y, q->x, '$');
         if(refresh) wattroff(win, COLOR_PAIR(104));

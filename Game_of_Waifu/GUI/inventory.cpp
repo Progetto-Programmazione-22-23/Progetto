@@ -70,6 +70,7 @@ void showHotbar() {
 }
 
 void open_inventory(WINDOW * invWin){
+    wclear(invWin);
     int syMax, sxMax;
     getmaxyx(invWin, syMax, sxMax);
 
@@ -114,7 +115,7 @@ void open_inventory(WINDOW * invWin){
         wattroff(invWin, A_REVERSE);
         for(int i=0;i<3;i++) {
             char itemname[20];
-            Item item = inv->getBarItem(1,i);
+            Item item = inv->getBarItem(0,i);
             item.getName(itemname);
             if(inv->getSelected() == i) {
                 wattron(invWin, A_REVERSE);
@@ -134,7 +135,7 @@ void open_inventory(WINDOW * invWin){
 
         for(int i=0;i<3;i++) {
             char itemname[20];
-            Item item = inv->getBarItem(0,i);
+            Item item = inv->getBarItem(1,i);
             item.getName(itemname);
             if(item.getId()==0) wattron(invWin, COLOR_PAIR(3));
             else if(i==highlights && item.getId()>0 && column == 4) {

@@ -63,18 +63,19 @@ void GoNext(WINDOW * win, int len, pnemici& hd){
     wclear(win);
     int n = current_game.getMap(), l = current_game.getLevel();
     current_game.setMap(n+1);
-    if(n == l) { 
+
+    
+    char mapname[20];
+    sprintf(mapname, "map/%d.txt", n+1);
+    ifstream f(mapname);
+
+    if(n == l || !f.good()) { 
         current_game.setLevel(l+1);
         mapgenerator(win); 
         MobSpawn(len, hd);
     } else 
         regenOldMap(win, false);
-    
-    /*
-    char mapname[20];
-    sprintf(mapname, "map/%d.txt", n+1);
-    ifstream f(mapname);
-    */
+
 }
 
 void GoPrev(WINDOW * win, pnemici hd) {
