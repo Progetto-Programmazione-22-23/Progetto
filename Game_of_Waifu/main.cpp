@@ -44,14 +44,14 @@ void interface(int yMax, int xMax){
     mvwprintw(stdscr, (yMax/20)-1 , 19+current_game.getMaxVita(), removeExtra);
 
     char money[18];
-    sprintf(money, "Money: %d$", current_game.getMoney());
+    sprintf(money, "Money: %d$  ", current_game.getMoney());
     attron(COLOR_PAIR(2));
     mvwprintw(stdscr, (yMax/20)-1 , 30, money);
     attroff(COLOR_PAIR(2));
 
     char values[80];
-    sprintf(values, "Forza %.1f | Magia %.1f | Resis. %.1f | Veloc. %.1f | Fortuna %.1f", 
-    current_game.getAtk(), current_game.getMagic(), current_game.getRes(), current_game.getSpeed(), current_game.getLuck());
+    sprintf(values, "Forza %.1f | Magia %.1f | Resis. %.1f | Veloc. %.1f", 
+    current_game.getAtk(), current_game.getMagic(), current_game.getRes(), current_game.getSpeed());
     mvwprintw(stdscr, (yMax/20)-1 , 45, values);
 
 

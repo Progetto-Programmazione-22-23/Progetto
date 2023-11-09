@@ -33,7 +33,6 @@ class Game {
         double getMagic();
         double getRes();
         double getSpeed();
-        double getLuck();
         int getMap();
         void setMap(int i);
         int getAmmo();

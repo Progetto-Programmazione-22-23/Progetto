@@ -1,6 +1,6 @@
 #include "save.hpp"
 
-igame fresh = {0,0,0,0,7,0,0,{0,0,0,0,0,0},Inventory(),true};//{Item(1,300,"Healthy Armor",1,4),Item(),Item()}};
+igame fresh = {0,0,0,0,7,0,0,{0,0,0,0,0},Inventory(),true};//{Item(1,300,"Healthy Armor",1,4),Item(),Item()}};
 Game current_game = Game(fresh);
 
 Game::Game(igame s) { this->setting = s;  this->state = 0; }
@@ -130,4 +130,3 @@ double Game::getAtk() { return setting.stats[1];}
 double Game::getMagic(){ return setting.stats[2];}
 double Game::getRes(){ return setting.stats[3];}
 double Game::getSpeed(){ return setting.stats[4];}
-double Game::getLuck(){ return setting.stats[5];}

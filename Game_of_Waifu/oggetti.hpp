@@ -1,6 +1,6 @@
 #include <string.h>
 #include <fstream>
-#define CATEGORIES 6
+#define CATEGORIES 5
 
 class Item {
     protected:
