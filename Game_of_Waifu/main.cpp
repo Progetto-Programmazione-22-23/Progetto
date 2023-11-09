@@ -59,7 +59,9 @@ void start(){
     init_pair(2, COLOR_GREEN, COLOR_BLACK);
     init_pair(3, 245, COLOR_BLACK);
     init_pair(4, COLOR_BLACK, COLOR_WHITE);
-
+    init_pair(104, COLOR_BLACK, COLOR_YELLOW);
+    init_pair(5, COLOR_YELLOW, COLOR_BLACK);
+    init_pair(6, COLOR_CYAN, COLOR_BLACK);
     // Loop di gioco
     int cont = 0;     /*numero di loop di gioco (Tick)*/
     bool loop = true; 
@@ -73,7 +75,7 @@ void start(){
             state = current_game.getState();
         }
         //interface(yMax, xMax);
-        //showStats(userwin);
+        showStats(userwin);
 
         /*CONTROLLO DEI MOB*/
         update(hd, &player, cont, playerwin);           // movimenti

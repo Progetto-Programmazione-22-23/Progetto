@@ -1,6 +1,6 @@
 #include "save.hpp"
 
-igame fresh = {0,0,0,0,7,0,0,{0,0,0,0,0},Inventory(),true};//{Item(1,300,"Healthy Armor",1,4),Item(),Item()}};
+igame fresh = {0,0,0,0,7,0,0,3,{0,0,0,0,0},Inventory(),true};
 Game current_game = Game(fresh);
 
 Game::Game(igame s) { this->setting = s;  this->state = 0; }
@@ -30,7 +30,8 @@ void Game::saveAll() {
     <<setting.money<<"\n"
     <<setting.vita<<"\n"
     <<setting.ammo<<"\n"
-    <<setting.level<<"\n";
+    <<setting.level<<"\n"
+    <<setting.lives<<"\n";
     //for(int j=0;j<CATEGORIES;j++) 
     //    out<<setting.stats[j]<<"\n";
     for(int j=0;j<2;j++) for(int i=0;i<3;i++) 
@@ -57,9 +58,10 @@ void Game::continueLast() {
         else if(i==4) last.vita = data;
         else if(i==5) last.ammo = data;
         else if(i==6) last.level = data;
+        else if(i==7) last.lives = data;
         //else if(i<=4+CATEGORIES) last.stats[i-5] = data; // i = 4
-        else if(i<=9) hotbar[i-7] = getItem(allItems, (int)data);
-        else if(i<=12) armor[i-10] = getItem(allItems, (int)data);
+        else if(i<=10) hotbar[i-8] = getItem(allItems, (int)data);
+        else if(i<=13) armor[i-11] = getItem(allItems, (int)data);
         else playerInv.giveItem(getItem(allItems, (int)data));
         i++;
     }
@@ -76,57 +78,29 @@ void Game::continueLast() {
 int Game::getState() { return this->state; }
 void Game::UpState() { this->state++;}
 
-bool Game::eNuovo() {
-    return this->setting.nuovo2;
-}
+bool Game::eNuovo() { return this->setting.nuovo2;}
 
 void Game::setPlayerPos(int x, int y) {
     setting.xplayer = x;
     setting.yplayer = y;
 }
 
-int Game::getPlayerX() {
-    return setting.xplayer;
-}
-int Game::getPlayerY() {
-    return setting.yplayer;
-}
-
-void Game::setMoney(int x) {
-    setting.money = x;
-}
-int Game::getMoney() {
-    return setting.money;
-}
-
-void Game::setVita(double x) {
-    setting.vita = x;
-}
-double Game::getVita() {
-    return setting.vita;
-}
-double Game::getMaxVita() {
-    return setting.stats[0];
-}
-int Game::getMap() {
-    return setting.map;
-}
-void Game::setMap(int i) {
-    setting.map = i;
-}
-int Game::getAmmo() {
-    return setting.ammo;
-}
-void Game::setAmmo(int i) {
-    setting.ammo = i;
-}
-int Game::getLevel() {
-    return setting.level;
-}
-void Game::setLevel(int i) {
-    setting.level = i;
-}
-double Game::getAtk() { return setting.stats[1];}
-double Game::getMagic(){ return setting.stats[2];}
-double Game::getRes(){ return setting.stats[3];}
-double Game::getSpeed(){ return setting.stats[4];}
+int Game::getPlayerX() {return setting.xplayer;}
+int Game::getPlayerY() {return setting.yplayer;}
+void Game::setMoney(int x) {setting.money = x;}
+int Game::getMoney() {return setting.money;}
+void Game::setVita(double x) {setting.vita = x;}
+double Game::getVita() {return setting.vita;}
+double Game::getMaxVita() {return setting.stats[0];}
+int Game::getMap() {return setting.map;}
+void Game::setMap(int i) {setting.map = i;}
+int Game::getAmmo() {return setting.ammo;}
+void Game::setAmmo(int i) {setting.ammo = i;}
+int Game::getLevel() {return setting.level;}
+void Game::setLevel(int i) {setting.level = i;}
+int Game::getLives() {return setting.lives;}
+void Game::setLives(int i) {setting.lives = i;}
+double Game::getAtk() {return setting.stats[1];}
+double Game::getMagic() {return setting.stats[2];}
+double Game::getRes() {return setting.stats[3];}
+double Game::getSpeed() {return setting.stats[4];}
