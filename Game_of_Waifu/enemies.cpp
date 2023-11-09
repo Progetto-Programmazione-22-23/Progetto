@@ -35,7 +35,7 @@ void Mob::mvleft(){this->x--;}
 void Mob::mvright(){this->x++;}
 void Mob::mvup(){this->y--;}
 void Mob::mvdown(){this->y++;}
-void Mob::setmin(int ym) {this->y = ym;}
+void Mob::setY(int yx) {this->y = yx;}
 
 /*Danno al Mob*/
 void Mob::NemDmg(int dmg){this->life -= dmg;};
@@ -117,15 +117,17 @@ void update(pnemici hd, Player* pl, int ActualTick, WINDOW * win) {       // sim
     if(current_game.getMap() == current_game.getLevel()) {
         while (hd != NULL) {
             int minY = calcYmin(hd->nem.getX());
+            /*controllo sempre che non siano sotto il blocco minimo*/
+            if (!hd->nem.getfly() && hd->nem.getY() != minY) {mvwaddch(win, hd->nem.getY(), hd->nem.getX(), ' ');hd->nem.setY(minY);}
+            if (hd->nem.getfly() && hd->nem.getY() > minY-5) {mvwaddch(win, hd->nem.getY(), hd->nem.getX(), ' ');hd->nem.setY(minY-5);}
+            /*se è il loro turno, si muovono a dx o sx*/
             if (ActualTick % (hd->nem.getspeed()) == 0){
                 mvwaddch(win, hd->nem.getY(), hd->nem.getX(), ' ');
                 if (!hd->nem.getfly()){
-                    if (hd->nem.getY() != minY) hd->nem.setmin(minY);
                     if (pl->getX() < hd->nem.getX() && !InList(Chd, hd->nem.getX()-1, hd->nem.getY())) hd->nem.mvleft();
                     else if (pl->getX() > hd->nem.getX() && !InList(Chd, hd->nem.getX()+1, hd->nem.getY())) hd->nem.mvright();
                     Chd = InsCoords(Chd, hd->nem.getX(), hd->nem.getY());
                 } else if (hd->nem.getfly()){
-                    if (hd->nem.getY() > minY-5) hd->nem.setmin(minY-5);
                     if (pl->getX() < hd->nem.getX() && !InList(Chd, hd->nem.getX()-1, hd->nem.getY())) hd->nem.mvleft();
                     else if (pl->getX() > hd->nem.getX() && !InList(Chd, hd->nem.getX()+1, hd->nem.getY())) hd->nem.mvright();
                     if (pl->getY() < hd->nem.getY() && !InList(Chd, hd->nem.getX(), hd->nem.getY()-1)) hd->nem.mvup();
