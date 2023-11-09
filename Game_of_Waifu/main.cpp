@@ -73,7 +73,7 @@ void start(){
             state = current_game.getState();
         }
         //interface(yMax, xMax);
-        showStats(userwin);
+        //showStats(userwin);
 
         /*CONTROLLO DEI MOB*/
         update(hd, &player, cont, playerwin);           // movimenti
