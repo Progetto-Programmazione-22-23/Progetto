@@ -1,12 +1,12 @@
 #include "enemies.hpp"
 
 Mob::Mob (int y, int x, int l, int s, int d, int as, char ch, bool fl, bool rn, int color, int type) {
-    this->life = l;
-    this->speed = s;
-    this->dmg = d;
+    this->stats.life = l;
+    this->stats.speed = s;
+    this->stats.dmg = d;
+    this->stats.atkSpeed = as;
     this->x = x;
     this->y = y;
-    this->atkSpeed = as;
     this->character = ch;
     this->fly = fl;
     this->ranged = rn;
@@ -19,13 +19,15 @@ int Mob::getX() {return this->x;}
 int Mob::getY() {return this->y;}
 int Mob::getType() {return this->type;}
 char Mob::getChar() {return this->character;}
-int Mob::getlife() {return this->life;}
-void Mob::setlife(int l) {this->life = l;}
+int Mob::getlife() {return this->stats.life;}
+void Mob::setlife(int l) {this->stats.life = l;}
 bool Mob::getfly() {return this->fly;}
 bool Mob::getRanged() {return this->ranged;}
-int Mob::getspeed() {return this->speed;}
-int Mob::getDmg() {return this->dmg;}
+int Mob::getspeed() {return this->stats.speed;}
+int Mob::getAtkSpeed() {return this->stats.atkSpeed;}
+int Mob::getDmg() {return this->stats.dmg;}
 int Mob::getColor() {return this->color;}
+
 
 /*generazione di numeri random*/
 int Mob::random(int max) {return rand() % max;}
@@ -37,8 +39,10 @@ void Mob::mvup(){this->y--;}
 void Mob::mvdown(){this->y++;}
 void Mob::setY(int yx) {this->y = yx;}
 
+
+
 /*Danno al Mob*/
-void Mob::NemDmg(int dmg){this->life -= dmg;};
+void Mob::NemDmg(int dmg){this->stats.life -= dmg;};
 
 /*Danno al Player*/
 void takeDmg(int dmg) {
@@ -51,9 +55,9 @@ void takeDmg(int dmg) {
 pnemici InsMob(pnemici hd, Mob x) {pnemici nhd = new nemico; nhd->nem = x; nhd->next = hd; return nhd;}
 pnemici InsZombie(pnemici& hd, int y, int x, int lv) {Mob Zombie(y, x, lv+1, 10, (lv/2)+1, 0, 'Z', false, false, 10, 0); return InsMob(hd, Zombie);}
 pnemici InsGolem(pnemici& hd, int y, int x, int lv) {Mob Golem(y, x, 3+lv+lv/2, 20, lv+1, 0, 'G', false, false, 11, 1); return InsMob(hd, Golem);}
-pnemici InsCerbottaniere(pnemici& hd, int y, int x, int lv) {Mob Cerbottaniere(y, x, lv+1, 7, (lv/2)+1, 0, 'C', false, true, 12, 2); return InsMob(hd, Cerbottaniere);}
-pnemici InsBat(pnemici& hd, int y, int x, int lv) {Mob Bat(y, x, (lv/3)+1, 5, lv+1, 0, 'V', true, true, 20, 10); return InsMob(hd, Bat);}
-pnemici InsDemon(pnemici& hd, int y, int x, int lv) {Mob Demon(y, x, (lv/2)+1, 13, (lv/3)+lv+1, 0, 'D', true, true, 21, 11); return InsMob(hd, Demon);}
+pnemici InsCerbottaniere(pnemici& hd, int y, int x, int lv) {Mob Cerbottaniere(y, x, lv+1, 7, (lv/2)+1, 65, 'C', false, true, 12, 2); return InsMob(hd, Cerbottaniere);}
+pnemici InsBat(pnemici& hd, int y, int x, int lv) {Mob Bat(y, x, (lv/3)+1, 5, lv+1, 50, 'V', true, true, 20, 10); return InsMob(hd, Bat);}
+pnemici InsDemon(pnemici& hd, int y, int x, int lv) {Mob Demon(y, x, (lv/2)+1, 13, (lv/3)+lv+1, 80, 'D', true, true, 21, 11); return InsMob(hd, Demon);}
 
 /*gestione coordinate*/
 pcoords InsCoords(pcoords& hd, int mx, int my) {
@@ -109,7 +113,7 @@ pnemici Death(pnemici& hd) {
     return nhd;
 }
 
-void update(pnemici hd, Player* pl, int ActualTick, WINDOW * win) {       // simil pathfinding
+void update(pnemici hd, Player* pl, int ActualTick, WINDOW * win, pbullets& bullHd) {       // simil pathfinding
     int yMax, xMax;
     getmaxyx(win, yMax, xMax);   
     pcoords Chd = NULL;
@@ -117,10 +121,10 @@ void update(pnemici hd, Player* pl, int ActualTick, WINDOW * win) {       // sim
     if(current_game.getMap() == current_game.getLevel()) {
         while (hd != NULL) {
             int minY = calcYmin(hd->nem.getX());
-            /*controllo sempre che non siano sotto il blocco minimo*/
+        /*controllo sempre che non siano sotto il blocco minimo*/
             if (!hd->nem.getfly() && hd->nem.getY() != minY) {mvwaddch(win, hd->nem.getY(), hd->nem.getX(), ' ');hd->nem.setY(minY);}
             if (hd->nem.getfly() && hd->nem.getY() > minY-5) {mvwaddch(win, hd->nem.getY(), hd->nem.getX(), ' ');hd->nem.setY(minY-5);}
-            /*se è il loro turno, si muovono a dx o sx*/
+        /*se è il loro turno, si muovono a dx o sx*/
             if (ActualTick % (hd->nem.getspeed()) == 0){
                 mvwaddch(win, hd->nem.getY(), hd->nem.getX(), ' ');
                 if (!hd->nem.getfly()){
@@ -135,9 +139,17 @@ void update(pnemici hd, Player* pl, int ActualTick, WINDOW * win) {       // sim
                     Chd = InsCoords(Chd, hd->nem.getX(), hd->nem.getY());
                 }
             }
-            
+
+        /*gestione spari*/
+            int ds = 0;
+            if (hd->nem.getX() < pl->getX()) ds = 1;
+            else if(hd->nem.getX() >= pl->getX()) ds = -1;
+            if (hd->nem.getfly()) ds = 0;
+            if (hd->nem.getRanged() && (ActualTick % (hd->nem.getAtkSpeed()) == 0)) bullHd = addBullet(bullHd, hd->nem.getX(), hd->nem.getY(), ds);
+        
+        /*danni*/
             if (pl->getX() == hd->nem.getX() && pl->getY() == hd->nem.getY()){
-                if (pl->getLastHit() < ActualTick-80){takeDmg(hd->nem.getDmg()); pl->updateLastHit(ActualTick);}; // danni al player
+                if (pl->getLastHit() < ActualTick-80){takeDmg(hd->nem.getDmg()); pl->updateLastHit(ActualTick);};
             }
             if (pl->getBulletX() == hd->nem.getX() && pl->getBulletY() == hd->nem.getY()){
                 hd->nem.NemDmg(100);

@@ -31,6 +31,8 @@ bool Player::onPlatform(WINDOW * win){
   return OnPlat;
 }
 
+void Player::dropFromPlatfrorm(WINDOW * win){if(onPlatform(win)) {mvwaddch(curwin, y, x, ' ');this->y+=1;}}
+
 bool Player::onLucky(WINDOW * win){
   bool OnLuck = false;
   pcoords lucky = specials;
@@ -98,7 +100,7 @@ void Player::update(int end, WINDOW * win, int tik) {
 
 int ds = 1;
 int direction;
-void Player::getMv(WINDOW * userwin, bool &loop, int tik) {
+void Player::getMv(WINDOW * playerwin, WINDOW * userwin, bool &loop, int tik) {
   int ch;
   ch = getch();
   switch(ch) {
@@ -112,6 +114,9 @@ void Player::getMv(WINDOW * userwin, bool &loop, int tik) {
     case 'a':
       move_left();
       ds = -1;
+      break;
+    case 's':
+      dropFromPlatfrorm(playerwin);
       break;
     case ' ':
     if(ds>0 || current_game.getPlayerX()>1)
