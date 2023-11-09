@@ -183,7 +183,7 @@ void open_inventory(WINDOW * invWin){
                     if(s<2) inv->setSelected(s+1);
                 } else {
                     highlights++;
-                    if (highlights == i) highlights = i-1;
+                    if (highlights == i || (column==4 && highlights==armors)) highlights--;
                 }
                 break;
 

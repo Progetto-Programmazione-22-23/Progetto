@@ -7,7 +7,7 @@
 - una volta fatto partire il programma, ovunque ti trovi, se hai bisogno di chiudere il gioco ti basterà premere ESC (per salvare) o ctrl+C (utile in fase di test nel caso si bloccasse qualcosa).
 
 #items.txt
-(id) (prezzo) (nome-del-item) (acquistabile?) (attivo/passivo) (rarità) (id item da cui viene upgradato) (valore generico) (desc-del-item) (bonus health) (ad) (ap) (res) (speed)
+(id) (prezzo) (nome-del-item) (acquistabile?) (!attivo/passivo) (rarità) (id item da cui viene upgradato) (valore generico) (desc-del-item) (bonus health) (ad) (ap) (res) (speed)
 
 id <= 10, spade meelee
 <= 20, archi
