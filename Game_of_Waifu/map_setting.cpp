@@ -43,9 +43,12 @@ void mobRespawn(pnemici& hd) {
             hd = InsGolem(hd, y, x, lvl);
             break;
         case 2:
+            hd = InsCerbottaniere(hd, y, x, lvl);
+            break;
+        case 10:
             hd = InsBat(hd, y, x, lvl);
             break;
-        case 3:
+        case 11:
             hd = InsDemon(hd, y, x, lvl);
             break;
         default:
