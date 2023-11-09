@@ -1,6 +1,6 @@
 #include <ncurses.h>
-#include "inventory.cpp"
-#include "shop.cpp"
+#include "GUI/inventory.cpp"
+#include "GUI/shop.cpp"
 #include "map.cpp"
 // #include "collision.cpp"
 
