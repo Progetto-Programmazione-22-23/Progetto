@@ -65,6 +65,10 @@ void openchoice(WINDOW * choiceWin, Item item){
     }
 }
 
+void showHotbar() {
+    
+}
+
 void open_inventory(WINDOW * invWin){
     int syMax, sxMax;
     getmaxyx(invWin, syMax, sxMax);

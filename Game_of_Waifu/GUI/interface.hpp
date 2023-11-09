@@ -1,0 +1,1 @@
+void showStats(WINDOW * win);
