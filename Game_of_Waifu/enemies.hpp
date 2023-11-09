@@ -32,7 +32,7 @@ class Mob{
         void mvright();
         void mvup();
         void mvdown();
-        void setmin(int ym);
+        void setY(int y);
         void NemDmg(int dmg);
 };
 
