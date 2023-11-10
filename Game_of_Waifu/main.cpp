@@ -88,7 +88,7 @@ void start(){
         player.moveBullet(playerwin);
 
         /*Proiettili Nemici*/
-        moveShoot(bullHd, playerwin);
+        bullHd = moveShoot(bullHd, playerwin);
         bullHd = removeShoot(bullHd);
 
         box(playerwin, 0, 0);     // aggiorna le finestre

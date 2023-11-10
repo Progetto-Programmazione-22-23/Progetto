@@ -197,13 +197,13 @@ void Player::stopBullet() {this->bulletDistance = maxBulletDistance;}
 
 void Player::moveBullet(WINDOW * win){
   if (bulletFired && direction == 1 && bulletDistance < maxBulletDistance) {
-    if (mvwinch(win, bulletY, bulletX) == '\\' || mvwinch(win, bulletY, bulletX+1) == '/') {stopBullet();}
+    if (mvwinch(win, bulletY, bulletX) == '\\' || mvwinch(win, bulletY, bulletX+1) == '/') stopBullet();
     shooting (win, 0);
   } else if (bulletFired && direction == -1 && bulletDistance < maxBulletDistance) {
-    if (mvwinch(win, bulletY, bulletX) == '\\' || mvwinch(win, bulletY, bulletX-1) == '/') {stopBullet();}
+    if (mvwinch(win, bulletY, bulletX) == '\\' || mvwinch(win, bulletY, bulletX-1) == '/') stopBullet();
     shooting (win, 1);
   } else if (bulletFired && direction == 2 && bulletDistance < maxBulletDistance){
-    if (mvwinch(win, bulletY-1, bulletX) == '=' || mvwinch(win, bulletY-1, bulletX) == '<' || mvwinch(win, bulletY-1, bulletX) == '>') {stopBullet();}
+    if (mvwinch(win, bulletY-1, bulletX) == '=' || mvwinch(win, bulletY-1, bulletX) == '<' || mvwinch(win, bulletY-1, bulletX) == '>') stopBullet();
     shooting (win, 2);
   } else if (bulletDistance >= maxBulletDistance) {           // Il proiettile ha raggiunto la distanza massima, disattivalo
     mvwaddch(win, bulletY, bulletX, ' ');

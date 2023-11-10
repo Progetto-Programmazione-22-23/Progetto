@@ -34,7 +34,10 @@ void GoDown(WINDOW * win, int h, int l){mvwaddch(win, h, l, '\\'), addCoord(l,h-
 
 // qui vanno create tutte le trappole ed i blocchi di aiuto (cure, spawn armi ecc...) che vengono poi selezionati dalle funzioni sotto in modo random
 
-void Bomb(){current_game.setVita(current_game.getVita()-1);}
+void Bomb(){
+    if (current_game.getVita()>1)
+        current_game.setVita(current_game.getVita()-1);
+}
 void Robberry(){current_game.setMoney(current_game.getMoney()-1);}
 void SpawnTrap(){
     int i = rand() % 2;
@@ -42,7 +45,10 @@ void SpawnTrap(){
     else if (i == 1) Robberry();
 }
 
-void Heal(){current_game.setVita(current_game.getVita()+1);}
+void Heal(){
+    if (current_game.getVita() < 10+current_game.getMaxVita())
+        current_game.setVita(current_game.getVita()+1);
+}
 void Money(){current_game.setMoney(current_game.getMoney()+1);}
 void SpawnHelp(){
     int i = rand() % 2;

@@ -28,10 +28,6 @@ int Mob::getAtkSpeed() {return this->stats.atkSpeed;}
 int Mob::getDmg() {return this->stats.dmg;}
 int Mob::getColor() {return this->color;}
 
-
-/*generazione di numeri random*/
-int Mob::random(int max) {return rand() % max;}
-
 /*movimenti*/
 void Mob::mvleft(){this->x--;}
 void Mob::mvright(){this->x++;}
@@ -53,11 +49,11 @@ void takeDmg(int dmg) {
 
 /*funzioni di inserimento dei diversi mob*/
 pnemici InsMob(pnemici hd, Mob x) {pnemici nhd = new nemico; nhd->nem = x; nhd->next = hd; return nhd;}
-pnemici InsZombie(pnemici& hd, int y, int x, int lv) {Mob Zombie(y, x, lv+1, 10, (lv/2)+1, 0, 'Z', false, false, 10, 0); return InsMob(hd, Zombie);}
-pnemici InsGolem(pnemici& hd, int y, int x, int lv) {Mob Golem(y, x, 3+lv+lv/2, 20, lv+1, 0, 'G', false, false, 11, 1); return InsMob(hd, Golem);}
-pnemici InsCerbottaniere(pnemici& hd, int y, int x, int lv) {Mob Cerbottaniere(y, x, lv+1, 7, (lv/2)+1, 65, 'C', false, true, 12, 2); return InsMob(hd, Cerbottaniere);}
-pnemici InsBat(pnemici& hd, int y, int x, int lv) {Mob Bat(y, x, (lv/3)+1, 5, lv+1, 50, 'V', true, true, 20, 10); return InsMob(hd, Bat);}
-pnemici InsDemon(pnemici& hd, int y, int x, int lv) {Mob Demon(y, x, (lv/2)+1, 13, (lv/3)+lv+1, 80, 'D', true, true, 21, 11); return InsMob(hd, Demon);}
+pnemici InsZombie(pnemici& hd, int y, int x, int lv) {return InsMob(hd, Mob (y, x, lv+1, 10, (lv/2)+1, 0, 'Z', false, false, 10, 0));}
+pnemici InsGolem(pnemici& hd, int y, int x, int lv) {return InsMob(hd, Mob (y, x, 3+lv+lv/2, 20, lv+1, 0, 'G', false, false, 11, 1));}
+pnemici InsCerbottaniere(pnemici& hd, int y, int x, int lv) {return InsMob(hd, Mob (y, x, lv+1, 7, (lv/2)+1, 65, 'C', false, true, 12, 2));}
+pnemici InsBat(pnemici& hd, int y, int x, int lv) {return InsMob(hd, Mob (y, x, (lv/3)+1, 5, lv+1, 50, 'V', true, true, 20, 10));}
+pnemici InsDemon(pnemici& hd, int y, int x, int lv) {return InsMob(hd, Mob (y, x, (lv/2)+1, 13, (lv/3)+lv+1, 80, 'D', true, true, 21, 11));}
 
 /*gestione coordinate*/
 pcoords InsCoords(pcoords& hd, int mx, int my) {
@@ -113,6 +109,17 @@ pnemici Death(pnemici& hd) {
     return nhd;
 }
 
+void checkMin(WINDOW * win, pnemici hd, int minY){
+    if (!hd->nem.getfly() && hd->nem.getY() != minY) {
+        mvwaddch(win, hd->nem.getY(), hd->nem.getX(), ' ');
+        hd->nem.setY(minY);
+    }
+    if (hd->nem.getfly() && hd->nem.getY() > minY-5) {
+        mvwaddch(win, hd->nem.getY(), hd->nem.getX(), ' ');
+        hd->nem.setY(minY-5);
+    }
+}
+
 void update(pnemici hd, Player* pl, int ActualTick, WINDOW * win, pbullets& bullHd) {       // simil pathfinding
     int yMax, xMax;
     getmaxyx(win, yMax, xMax);   
@@ -122,20 +129,25 @@ void update(pnemici hd, Player* pl, int ActualTick, WINDOW * win, pbullets& bull
         while (hd != NULL) {
             int minY = calcYmin(hd->nem.getX());
         /*controllo sempre che non siano sotto il blocco minimo*/
-            if (!hd->nem.getfly() && hd->nem.getY() != minY) {mvwaddch(win, hd->nem.getY(), hd->nem.getX(), ' ');hd->nem.setY(minY);}
-            if (hd->nem.getfly() && hd->nem.getY() > minY-5) {mvwaddch(win, hd->nem.getY(), hd->nem.getX(), ' ');hd->nem.setY(minY-5);}
+            checkMin(win, hd, minY);
         /*se è il loro turno, si muovono a dx o sx*/
             if (ActualTick % (hd->nem.getspeed()) == 0){
                 mvwaddch(win, hd->nem.getY(), hd->nem.getX(), ' ');
                 if (!hd->nem.getfly()){
-                    if (pl->getX() < hd->nem.getX() && !InList(Chd, hd->nem.getX()-1, hd->nem.getY())) hd->nem.mvleft();
-                    else if (pl->getX() > hd->nem.getX() && !InList(Chd, hd->nem.getX()+1, hd->nem.getY())) hd->nem.mvright();
+                    if (pl->getX() < hd->nem.getX() && !InList(Chd, hd->nem.getX()-1, hd->nem.getY())) 
+                        hd->nem.mvleft();
+                    else if (pl->getX() > hd->nem.getX() && !InList(Chd, hd->nem.getX()+1, hd->nem.getY())) 
+                        hd->nem.mvright();
                     Chd = InsCoords(Chd, hd->nem.getX(), hd->nem.getY());
                 } else if (hd->nem.getfly()){
-                    if (pl->getX() < hd->nem.getX() && !InList(Chd, hd->nem.getX()-1, hd->nem.getY())) hd->nem.mvleft();
-                    else if (pl->getX() > hd->nem.getX() && !InList(Chd, hd->nem.getX()+1, hd->nem.getY())) hd->nem.mvright();
-                    if (pl->getY() < hd->nem.getY() && !InList(Chd, hd->nem.getX(), hd->nem.getY()-1)) hd->nem.mvup();
-                    else if (pl->getY() > hd->nem.getY() && hd->nem.getY() < minY-5 && !InList(Chd, hd->nem.getX(), hd->nem.getY()+1)) hd->nem.mvdown();
+                    if (pl->getX() < hd->nem.getX() && !InList(Chd, hd->nem.getX()-1, hd->nem.getY())) 
+                        hd->nem.mvleft();
+                    else if (pl->getX() > hd->nem.getX() && !InList(Chd, hd->nem.getX()+1, hd->nem.getY())) 
+                        hd->nem.mvright();
+                    if (pl->getY() < hd->nem.getY() && !InList(Chd, hd->nem.getX(), hd->nem.getY()-1)) 
+                        hd->nem.mvup();
+                    else if (pl->getY() > hd->nem.getY() && hd->nem.getY() < minY-5 && !InList(Chd, hd->nem.getX(), hd->nem.getY()+1)) 
+                        hd->nem.mvdown();
                     Chd = InsCoords(Chd, hd->nem.getX(), hd->nem.getY());
                 }
             }
@@ -145,16 +157,21 @@ void update(pnemici hd, Player* pl, int ActualTick, WINDOW * win, pbullets& bull
             if (hd->nem.getX() < pl->getX()) ds = 1;
             else if(hd->nem.getX() >= pl->getX()) ds = -1;
             if (hd->nem.getfly()) ds = 0;
-            if (hd->nem.getRanged() && (ActualTick % (hd->nem.getAtkSpeed()) == 0)) bullHd = addBullet(bullHd, hd->nem.getX(), hd->nem.getY(), ds);
+            if (hd->nem.getRanged() && (ActualTick % (hd->nem.getAtkSpeed()) == 0)) 
+                bullHd = addBullet(bullHd, hd->nem.getX(), hd->nem.getY(), ds, hd->nem.getDmg());
         
         /*danni*/
             if (pl->getX() == hd->nem.getX() && pl->getY() == hd->nem.getY()){
-                if (pl->getLastHit() < ActualTick-80){takeDmg(hd->nem.getDmg()); pl->updateLastHit(ActualTick);};
+                if (pl->getLastHit() < ActualTick-80) {
+                    takeDmg(hd->nem.getDmg()); 
+                    pl->updateLastHit(ActualTick);
+                }
             }
             if (pl->getBulletX() == hd->nem.getX() && pl->getBulletY() == hd->nem.getY()){
                 hd->nem.NemDmg(100);
                 pl->stopBullet();
             }
+
             hd = hd->next;
         }
         Chd = MobClearList(Chd);

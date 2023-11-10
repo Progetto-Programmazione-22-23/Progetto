@@ -37,7 +37,6 @@ class Mob{
         int getBulletX();
         int getBulletY();
 
-        int random(int max);
         void stop();
         void mvleft();
         void mvright();
@@ -68,6 +67,7 @@ pcoords MobClearList(pcoords& hd);
 bool InList(pcoords& hd, int mx, int my);
 
 pnemici Death(pnemici& hd);
+void checkMin(WINDOW * win, pnemici hd, int minY);
 void update(pnemici hd, Player pl, int ActualTick, WINDOW * win, pbullets& bullHd);
 void display(pnemici hd, WINDOW * win);
 void takeDmg(int dmg);

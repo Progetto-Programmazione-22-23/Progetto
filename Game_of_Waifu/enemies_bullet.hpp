@@ -16,6 +16,9 @@ struct bullet {
 };
 typedef bullet* pbullets;
 
-pbullets addBullet(pbullets& hd, int x, int y, int ds);
+pbullets addBullet(pbullets& hd, int x, int y, int ds, int bD);
 pbullets removeShoot(pbullets& hd);
-void moveShoot(pbullets hd, WINDOW * win);
+pbullets moveShoot(pbullets& hd, WINDOW * win);
+void dmgPlayer(shoot sh);
+bool checkBulletCollision(shoot x, WINDOW * win);
+bool checkBullPlayerColl(shoot x, WINDOW * win);
