@@ -9,10 +9,34 @@ void SpawnStart(WINDOW * win, int h){
 }
 
 void SpawnEnd(WINDOW * win, int h, int l){
+    
+    //if (level%5 == 0) {
+    while (l < len){
+        if (l == (len-2)){
+            mvwaddch(win, h, l, '|');
+        }else{
+            mvwaddch(win, h, l, '_');        // piattaforma di fine;
+        }
+        l++;
+    }
+    
+    /*
+        I
+       /*\
+      I###I
+     /=====\
+    _|__O__|_
+    
+    */
+    
+    /*}else{
+
+    }
+    
     while (l < len){
         mvwaddch(win, h, l, '_');        // piattaforma di fine;
         l++;
-    }
+    }*/
     addCoord(len,h); 
 }
 

@@ -158,17 +158,11 @@ void regenOldMap(WINDOW * win, bool refresh) {
     }
     
     for(pline q = platforms; q != NULL; q = q->next) {
-        if(hasShop){
-            mvwaddch(win, q->y-2,   q->x, '  /***\\');
-            mvwaddch(win, q->y-1,   q->x, '  | 0 |  ');
-            mvwaddch(win, q->y,     q->x, '<=======>');
-        }else{
-            mvwaddch(win,q->y, q->x, '<');
-            for(int i=1;i<q->len-1;i++){
-                mvwaddch(win,q->y, q->x+i, '=');
-            }
-            mvwaddch(win,q->y, q->x+q->len-1, '>');
+        mvwaddch(win,q->y, q->x, '<');
+        for(int i=1;i<q->len-1;i++){
+            mvwaddch(win,q->y, q->x+i, '=');
         }
+        mvwaddch(win,q->y, q->x+q->len-1, '>');
     }
 
     
