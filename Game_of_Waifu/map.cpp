@@ -1,42 +1,20 @@
 #include "map.hpp"
 
+
+
 void SpawnStart(WINDOW * win, int h){
     int l = 0;
     while (l < Lstart){
-        mvwaddch(win, h, l, '_');        // piattaforma di spawn;
+            mvwaddch(win, h, l, '_');        // piattaforma di spawn;
         l++;
     }
 }
 
 void SpawnEnd(WINDOW * win, int h, int l){
-    
-    //if (level%5 == 0) {
-    while (l < len){
-        if (l == (len-2)){
-            mvwaddch(win, h, l, '|');
-        }else{
-            mvwaddch(win, h, l, '_');        // piattaforma di fine;
-        }
-        l++;
-    }
-    
-    /*
-        I
-       /*\
-      I###I
-     /=====\
-    _|__O__|_
-    
-    */
-    
-    /*}else{
-
-    }
-    
     while (l < len){
         mvwaddch(win, h, l, '_');        // piattaforma di fine;
         l++;
-    }*/
+    }
     addCoord(len,h); 
 }
 
@@ -188,7 +166,7 @@ void mapgenerator(WINDOW * win){
 
     SpawnStart(win, H);         // inizio mappa
     
-    while(L < len-10){
+    while(L < len-15){
         i = rand() % 50;
         if ((i>0 && i<6)&&(last>6 && last<12)||(last>0 && last<6)&&(i>6 && i<12)){
             GoStraight(win, H, L), L++;  // se prima sono andato su, non posso andare giu (e viceversa)

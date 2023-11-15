@@ -80,15 +80,15 @@ void saveActualMap() {
 void regenOldMap(WINDOW * win, bool refresh) {
     if(!refresh) {
         
-        for(pcoords t = actual_map, q;t!=NULL;t = q) {
+        for(pcoords t = actual_map, q;t!=NULL;t = q) {  // Elimina la lista di coordinate actual_map
             q = t->next;
             t = NULL, delete(t);
         }
-        for(pcoords t = specials, q;t!=NULL;t = q) {
+        for(pcoords t = specials, q;t!=NULL;t = q) {    // Elimina la lista di coordinate speciale
             q = t->next;
             t = NULL, delete(t);
         }
-        for(pline t = platforms, q;t!=NULL;t = q) {
+        for(pline t = platforms, q;t!=NULL;t = q) {     // Elimina la lista di coordinate platforms
             q = t->next;
             t = NULL, delete(t);
         }
@@ -127,7 +127,12 @@ void regenOldMap(WINDOW * win, bool refresh) {
     pcoords t = actual_map;
     int nexty = t->next->y;
     int w=0;
-    while(t->next != NULL) {
+    bool hasShop = false;
+    if (current_game.getLevel()%5 == 0 || current_game.getLevel() == 1 || current_game.getLevel() == 0){
+        hasShop = true;
+    }
+
+    while(t->next != NULL) {    
         if(w<t->x) mvwaddch(win, t->y, w, '_');
         else if(w == t->x) {
             if(nexty < t->y){
@@ -142,10 +147,54 @@ void regenOldMap(WINDOW * win, bool refresh) {
         }
         w++;
     }
-    while(w<t->x) {
+
+    /*
+         _
+        /*\
+       |===|
+      /=====\
+    __|__O__|____
+    
+    */
+    
+    if(hasShop){
+        while(w < t->x) {
+            if (w == (t->x - 11)){
+                mvwaddch(win, t->y, w, '|');
+                mvwaddch(win, t->y- 1, w, '/');
+            }else if (w == (t->x - 10) || w == (t->x - 6)){
+                mvwaddch(win, t->y, w, '_');
+                mvwaddch(win, t->y-1, w, '=');
+                mvwaddch(win, t->y-2, w, '|');
+            }else if (w == (t->x - 9)){
+                mvwaddch(win, t->y, w, '_');
+                mvwaddch(win, t->y-1, w, '=');
+                mvwaddch(win, t->y-2, w, '=');
+                mvwaddch(win, t->y-3, w, '/');
+            }else if (w == (t->x - 8)){
+                mvwaddch(win, t->y, w, 'O');
+                mvwaddch(win, t->y-1, w, '=');
+                mvwaddch(win, t->y-2, w, '=');
+                mvwaddch(win, t->y-3, w, '*');
+                mvwaddch(win, t->y-4, w, '_');
+            }else if (w == (t->x - 7)){
+                mvwaddch(win, t->y, w, '_');
+                mvwaddch(win, t->y-1, w, '=');
+                mvwaddch(win, t->y-2, w, '=');
+                mvwaddch(win, t->y-3, w, '\\');
+            }else if (w == (t->x - 5)){
+                mvwaddch(win, t->y, w, '|');
+                mvwaddch(win, t->y- 1, w, '\\');
+            }
+            w++;
+        }
+    }else{
+        while(w<t->x) {
         mvwaddch(win, t->y, w, '_');
         w++;
     }
+    }
+    
 
     for(pcoords q = specials;q!=NULL;q = q->next) {
         if(refresh){
