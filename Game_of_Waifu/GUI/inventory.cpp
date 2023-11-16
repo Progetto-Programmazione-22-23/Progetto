@@ -44,6 +44,7 @@ void openchoice(WINDOW * choiceWin, int pos){
 
     char itemname[20];
     item.getName(itemname);
+    //char idk[10]; sprintf(idk, " %d",pos); strcat(itemname, idk);
     mvwprintw(choiceWin, 1, sxMax/2, "Hai selezionato: %s", itemname);
 
     bool open = true;
@@ -73,12 +74,13 @@ void openchoice(WINDOW * choiceWin, int pos){
                 if (select == 0) {
                     if(pos>=0) inv->equip(pos);
                     else inv->unequip(b,pos+3*(b+1));
-                    wclear(choiceWin);
                 }
                 else if (select == 1) {
-
+                    current_game.setMoney(current_game.getMoney()+item.getPrice()/2);
+                    if(pos>=0) inv->remove(pos);
+                    else inv->setBarItem(b, pos+3*(b+1), Item());
                 }
-                else if (select == 2) {wclear(choiceWin);}
+                wclear(choiceWin);
                 break;
             default:
                 break;
@@ -142,7 +144,7 @@ void open_inventory(WINDOW * invWin){
         }
     
 
-        int armors = inv->firstSlot(1);
+        //int armors = inv->firstSlot(1);
         //if(armors<0) wattron(invWin, COLOR_PAIR(3));
         if(column == 4) wattron(invWin, A_REVERSE);
         mvwprintw(invWin, 7, 33, "ARMOR");
@@ -188,21 +190,20 @@ void open_inventory(WINDOW * invWin){
                 if(column == 3) {
                     int s = inv->getSelected();
                     if(s>0) inv->setSelected(s-1);
-                } else {
+                }
                     highlights--;
                     if (highlights == -1) highlights = 0;
-                }
+                
                 break;
             case KEY_DOWN:
                 if(column == 3) {
                     int s = inv->getSelected();
                     if(s<2) inv->setSelected(s+1);
-                } else {
+                }
                     highlights++;
                     if ((highlights == i && column == 1) || 
-                    (highlights==3 && column == 4)) 
+                    (highlights==3 && column >= 3)) 
                         highlights--;
-                }
                 break;
 
             case KEY_LEFT:
