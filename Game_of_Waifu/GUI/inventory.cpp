@@ -102,12 +102,15 @@ void open_inventory(WINDOW * invWin){
     //int n = 4;
     //string oggetti[n] = {"spada lunga", "scudo di doran", "palle potenti", "freccia"};
     inv = current_game.getInventory();
-    int len = inv->calcLen(), choice, highlights = 0, lastItem = 0, column = 1, page = 1;
-    int maxPage = (len/(syMax-4))+1;
+    int len, choice, highlights = 0, lastItem = 0, column = 1, page = 1;
+    int maxPage;
     //if(len%(syMax-4)==0) maxPage--;
     //init_pair(3, 245, COLOR_BLACK);
     bool open = true;
     while (open){
+        len = inv->calcLen();
+        maxPage = (len/(syMax-4))+1;
+
         box(invWin, 0, 0);
 
         if(page <= 1) wattron(invWin, COLOR_PAIR(3));
@@ -249,19 +252,27 @@ void open_inventory(WINDOW * invWin){
                     wclear(invWin);
                 }
                 // SE NON STAI SELEZIONANDO NELL'HOTBAR IL VUOTO ->
-                else if(chosen.getId()>0){
+                else if(chosen.getId()>0 && (column != 1 || len>0)){
                     int pos;
                     if(column==1) pos = lastItem+highlights;
                     else pos = highlights-3*(column-2);
                     openchoice(invWin, pos);
+                    highlights=0;
+                    //if(highlights>=i) highlights--;
+                    //chosen = Item();
                 } 
 
                 break;
             default:
                 int digit = choice-'0';
-                if(digit >= 1 && digit <= 3)
+                if(digit >= 1 && digit <= 3) {
                     inv->setSelected(digit-1);
+                    if(column == 3) highlights = digit-1;
+                }
+                    
                 break;
         }
+        if(column == 3)
+            highlights = inv->getSelected();
     }
 }
