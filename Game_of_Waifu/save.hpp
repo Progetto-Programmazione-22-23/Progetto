@@ -30,7 +30,6 @@ class Game {
         void updateStats();
         double getMaxVita();
         double getAtk();
-        double getMagic();
         double getRes();
         double getSpeed();
         int getMap();

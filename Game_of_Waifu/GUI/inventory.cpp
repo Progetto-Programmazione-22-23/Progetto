@@ -45,13 +45,28 @@ void openchoice(WINDOW * choiceWin, int pos){
     char itemname[20];
     item.getName(itemname);
     //char idk[10]; sprintf(idk, " %d",pos); strcat(itemname, idk);
-    mvwprintw(choiceWin, 1, sxMax/2, "Hai selezionato: %s", itemname);
+    mvwprintw(choiceWin, 1, 57, "Hai selezionato: %s", itemname);
+
+    char stats[CATEGORIES][20] = {"Bonus Health", "Atk. Damage", "Resistence", "Speed"};
+    int mod = 0, row = 0;
+    while(mod<CATEGORIES) {
+        double val = item.getModifier(mod);
+        if(val!=0) {
+            mvwprintw(choiceWin, 3+row, 57, " * %.1f %s", val, stats[mod]);
+            row++;
+        }
+        mod++;
+    }
+
+    char desc[60];
+    item.getDesc(desc);
+    mvwprintw(choiceWin, 13, 56, "\"%s\"", desc);
 
     bool open = true;
     while(open){
         for (int i = 0; i < n; i++){ // costruisco il menu
             if (i == highlights) wattron(choiceWin, A_REVERSE);
-            mvwprintw(choiceWin, i+3, sxMax/2, "%s", actions[i]);
+            mvwprintw(choiceWin, i+4+row, 57, "%s", actions[i]);
             wattroff(choiceWin, A_REVERSE);
         }
         choice = wgetch(choiceWin);
@@ -74,11 +89,16 @@ void openchoice(WINDOW * choiceWin, int pos){
                 if (select == 0) {
                     if(pos>=0) inv->equip(pos);
                     else inv->unequip(b,pos+3*(b+1));
+                    current_game.UpState();
                 }
                 else if (select == 1) {
                     current_game.setMoney(current_game.getMoney()+item.getPrice()/2);
                     if(pos>=0) inv->remove(pos);
-                    else inv->setBarItem(b, pos+3*(b+1), Item());
+                    else {
+                        inv->setBarItem(b, pos+3*(b+1), Item());
+                        current_game.UpState();
+                    }
+                    
                 }
                 wclear(choiceWin);
                 break;
@@ -167,9 +187,6 @@ void open_inventory(WINDOW * invWin){
             wattroff(invWin, COLOR_PAIR(3));
         }
         
-
-        
-        
         pitemlist l = inv->getInventoryItem(lastItem);
         int i = 0;
         while(l!=NULL && i<syMax-4) {
@@ -190,6 +207,7 @@ void open_inventory(WINDOW * invWin){
         bool doit = true, skip = false;
         switch(choice){ // mi muovo nel menu
             case KEY_UP:
+            //SCORRE IN VERTICALE INVENTARIO/BARS
                 if(column == 3) {
                     int s = inv->getSelected();
                     if(s>0) inv->setSelected(s-1);
@@ -209,8 +227,8 @@ void open_inventory(WINDOW * invWin){
                         highlights--;
                 break;
 
+            //SKIPPANO LA COLONNA DELLE FRECCETTE SE NON POSSONO ESSERE USATE
             case KEY_LEFT:
-                
                 if(column>0) {
                     if(column==1 && page == 1)
                         doit = false;
@@ -223,7 +241,6 @@ void open_inventory(WINDOW * invWin){
                     highlights = 0;
                 }
                 break;
-
             case KEY_RIGHT:
                 if(column<4) {
                     if(column==1 && page==maxPage)
@@ -240,6 +257,7 @@ void open_inventory(WINDOW * invWin){
                 wclear(invWin);
                 break;
             case 10:
+                //SCROLLANDO LE PAGINE DELL'IVENTARIO
                 if(column==0) {
                     lastItem -= syMax-4;
                     page--;
@@ -258,8 +276,6 @@ void open_inventory(WINDOW * invWin){
                     else pos = highlights-3*(column-2);
                     openchoice(invWin, pos);
                     highlights=0;
-                    //if(highlights>=i) highlights--;
-                    //chosen = Item();
                 } 
 
                 break;
