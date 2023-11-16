@@ -2,3 +2,4 @@
 2 1 Spada-di-Pietra 0 1 1 Dura-come-la-roccia 0 2 0 0 0
 3 4 Spada-di-Ferro 0 2 1 Come-nel-Medioevo 0 4 0 0 0
 3 10 Spada-di-Diamante 0 3 1 Creeper..-Aww-Man 0 8 0 0 0
+4 0 Armatura 1 0 0 meow 0 0 0 0 0

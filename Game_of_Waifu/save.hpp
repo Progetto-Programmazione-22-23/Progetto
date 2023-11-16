@@ -1,4 +1,4 @@
-#include "oggetti.cpp"
+#include "inventario.cpp"
 
 struct igame {
     double xplayer, yplayer, map, money, vita, ammo, level, lives, stats[CATEGORIES];
