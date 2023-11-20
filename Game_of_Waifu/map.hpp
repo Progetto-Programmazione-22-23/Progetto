@@ -20,6 +20,7 @@ void SpawnTrap();
 void SpawnHelp();
 void Heal();
 void Money();
+void Ammos();
 void Bomb();
 void UseLuckyBlock(WINDOW * win, int h, int l);
 
@@ -27,5 +28,5 @@ void GoUp(WINDOW * win, int h, int l);
 void GoStraight(WINDOW * win, int h, int l);
 void GoDown(WINDOW * win, int h, int l);
 void SpawnPlatform(WINDOW * win, int high, int len);
-void SpawnBullet(WINDOW * win, int h, int l);
+//void SpawnBullet(WINDOW * win, int h, int l);
 void mapgenerator(WINDOW * win);

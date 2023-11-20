@@ -66,10 +66,11 @@ void showStats(WINDOW * win) {
     mvwprintw(win, 4 , 3, "Ammo: %d^  ", current_game.getAmmo());
     wattroff(win,COLOR_PAIR(6));
 
+    mvwprintw(win, 6 , 3, "Map: %d  ", current_game.getMap());
+
     showBars(win);
 
-    char values[80];
-    sprintf(values, "Forza %.1f | Resis. %.1f | Veloc. %.1f", 
-    current_game.getAtk(), current_game.getRes(), current_game.getSpeed());
-    mvwprintw(stdscr, (yMax/20)-1 , 45, values);
+    mvwprintw(win, 3, 57, " * %.1f Atk. Damage", current_game.getAtk());
+    mvwprintw(win, 4, 57, " * %.1f Resistence", current_game.getRes());
+    mvwprintw(win, 5, 57, " * %.1f Speed", current_game.getSpeed());
 }

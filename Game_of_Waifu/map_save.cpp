@@ -31,6 +31,37 @@ void addSpecial(int x, int y) {
     }
 }
 
+void saveSpecials() {
+    std::ofstream out;
+    char specialname[20];
+    sprintf(specialname, "map/%ds.txt", current_game.getMap());
+    out.open(specialname);
+    for(pcoords t = specials; t != NULL; t = t->next){
+        out<<t->x<<" "<<t->y<<"\n";
+    }
+    out.close();   
+}
+
+void removeSpecial(int i) {
+    pcoords q;
+    if(i==0) {
+        q = specials;
+        specials = specials->next;
+    }
+    else {
+        pcoords t = specials;
+        for(int i=0;i<i-1 && t->next!=NULL;i++) t = t->next;
+        
+        if(t->next!=NULL) {
+            q = t->next;
+            t->next = t->next->next;
+        }
+    }
+    q = NULL, delete(q);
+
+    saveSpecials();
+}
+
 void addPlatform(int x, int y, int len) {
     pline c = new line;
     c->x = x, c->y = y, c->len = len, c->next = NULL;
@@ -50,20 +81,15 @@ void deleteOldMaps() {
    std::filesystem::create_directories("map");
 }
 
+
+
 void saveActualMap() {
     std::ofstream out;
-    char mapname[20], specialname[20], platname[20];
+    char mapname[20], platname[20];
 
     sprintf(mapname, "map/%d.txt", current_game.getMap());
     out.open(mapname);
     for(pcoords t = actual_map; t != NULL; t = t->next){
-        out<<t->x<<" "<<t->y<<"\n";
-    }
-    out.close();
-
-    sprintf(specialname, "map/%ds.txt", current_game.getMap());
-    out.open(specialname);
-    for(pcoords t = specials; t != NULL; t = t->next){
         out<<t->x<<" "<<t->y<<"\n";
     }
     out.close();
@@ -74,8 +100,56 @@ void saveActualMap() {
         out<<t->x<<" "<<t->y<<" "<<t->len<<"\n";
     }
     out.close();
+
+    saveSpecials();
 }
 
+int lastHouseX = 0;
+void spawnHouse(WINDOW * win, int y, int w) {
+        lastHouseX = w+4;
+        mvwprintw(win, y, w, "____|_");
+        wattron(win,COLOR_PAIR(5));
+        mvwprintw(win, y, w+6, "[O]");
+        wattroff(win,COLOR_PAIR(5));
+        mvwprintw(win, y, w+9, "_|___");
+
+        mvwprintw(win, y-1, w, "    /=====\\");
+        mvwprintw(win, y-2, w, "     |===|");
+        mvwprintw(win, y-3, w, "      /*\\");
+        mvwprintw(win, y-4, w, "       _");
+        /*
+        while(w < t->x) {
+            if (w == (t->x - 11)){
+                mvwaddch(win, t->y, w, '|');
+                mvwaddch(win, t->y- 1, w, '/');
+            }else if (w == (t->x - 10) || w == (t->x - 6)){
+                mvwaddch(win, t->y, w, '_');
+                mvwaddch(win, t->y-1, w, '=');
+                mvwaddch(win, t->y-2, w, '|');
+            }else if (w == (t->x - 9)){
+                mvwaddch(win, t->y, w, '_');
+                mvwaddch(win, t->y-1, w, '=');
+                mvwaddch(win, t->y-2, w, '=');
+                mvwaddch(win, t->y-3, w, '/');
+            }else if (w == (t->x - 8)){
+                mvwaddch(win, t->y, w, 'O');
+                mvwaddch(win, t->y-1, w, '=');
+                mvwaddch(win, t->y-2, w, '=');
+                mvwaddch(win, t->y-3, w, '*');
+                mvwaddch(win, t->y-4, w, '_');
+            }else if (w == (t->x - 7)){
+                mvwaddch(win, t->y, w, '_');
+                mvwaddch(win, t->y-1, w, '=');
+                mvwaddch(win, t->y-2, w, '=');
+                mvwaddch(win, t->y-3, w, '\\');
+            }else if (w == (t->x - 5)){
+                mvwaddch(win, t->y, w, '|');
+                mvwaddch(win, t->y- 1, w, '\\');
+            }
+            w++;
+        }
+        */
+}   
 
 void regenOldMap(WINDOW * win, bool refresh) {
     if(!refresh) {
@@ -127,10 +201,6 @@ void regenOldMap(WINDOW * win, bool refresh) {
     pcoords t = actual_map;
     int nexty = t->next->y;
     int w=0;
-    bool hasShop = false;
-    if (current_game.getLevel()%5 == 0 || current_game.getLevel() == 1 || current_game.getLevel() == 0){
-        hasShop = true;
-    }
 
     while(t->next != NULL) {    
         if(w<t->x) mvwaddch(win, t->y, w, '_');
@@ -153,47 +223,22 @@ void regenOldMap(WINDOW * win, bool refresh) {
         /*\
        |===|
       /=====\
-    __|__O__|____
+    __|_[O]_|____
     
     */
     
-    if(hasShop){
-        while(w < t->x) {
-            if (w == (t->x - 11)){
-                mvwaddch(win, t->y, w, '|');
-                mvwaddch(win, t->y- 1, w, '/');
-            }else if (w == (t->x - 10) || w == (t->x - 6)){
-                mvwaddch(win, t->y, w, '_');
-                mvwaddch(win, t->y-1, w, '=');
-                mvwaddch(win, t->y-2, w, '|');
-            }else if (w == (t->x - 9)){
-                mvwaddch(win, t->y, w, '_');
-                mvwaddch(win, t->y-1, w, '=');
-                mvwaddch(win, t->y-2, w, '=');
-                mvwaddch(win, t->y-3, w, '/');
-            }else if (w == (t->x - 8)){
-                mvwaddch(win, t->y, w, 'O');
-                mvwaddch(win, t->y-1, w, '=');
-                mvwaddch(win, t->y-2, w, '=');
-                mvwaddch(win, t->y-3, w, '*');
-                mvwaddch(win, t->y-4, w, '_');
-            }else if (w == (t->x - 7)){
-                mvwaddch(win, t->y, w, '_');
-                mvwaddch(win, t->y-1, w, '=');
-                mvwaddch(win, t->y-2, w, '=');
-                mvwaddch(win, t->y-3, w, '\\');
-            }else if (w == (t->x - 5)){
-                mvwaddch(win, t->y, w, '|');
-                mvwaddch(win, t->y- 1, w, '\\');
-            }
-            w++;
-        }
-    }else{
-        while(w<t->x) {
+    if(current_game.getMap()%5 == 0) {
+        spawnHouse(win, t->y, w); 
+        w+=13;
+    }
+
+    while(w<t->x) {
         mvwaddch(win, t->y, w, '_');
         w++;
     }
-    }
+
+        
+    
     
 
     for(pcoords q = specials;q!=NULL;q = q->next) {

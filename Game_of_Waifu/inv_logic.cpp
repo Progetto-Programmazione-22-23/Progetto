@@ -1,4 +1,4 @@
-#include "inventario.hpp"
+#include "inv_logic.hpp"
 
 Inventory::Inventory(pitemlist inv) {
     this->inv = inv;

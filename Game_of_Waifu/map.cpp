@@ -66,13 +66,18 @@ void Heal(){
 }
 
 void Money(){
-    current_game.setMoney(current_game.getMoney()+1);
+    current_game.setMoney(current_game.getMoney()+2);
+}
+
+void Ammos() {
+    current_game.setAmmo(current_game.getAmmo()+10);
 }
 
 void SpawnHelp(){
-    int i = rand() % 2;
+    int i = rand() % 3;
     if (i == 0) Heal();
     else if (i == 1) Money();
+    else if(i == 2) Ammos();
 }
 
 void SpecialBlock(WINDOW * win, int h, int l){
@@ -84,6 +89,7 @@ void SpecialBlock(WINDOW * win, int h, int l){
 }
 
 void UseLuckyBlock(){
+    
     int i = rand() % 2;     // 50% tra blocco buono o cattivo
     if (i == 0){
         SpawnTrap();
@@ -93,10 +99,12 @@ void UseLuckyBlock(){
 }
 /// END SPECIAL BLOCK SECTION ///
 
+/*
 void SpawnBullet(WINDOW * win, int h, int l){
     mvwaddch(win, h, l, 'O');
     // salvare i proiettili in memoria :P
 }
+*/
 
 void SpawnPlatform(WINDOW * win, int high, int len){
     int NumSpecialBlock = 0;
@@ -171,11 +179,11 @@ void mapgenerator(WINDOW * win){
         if ((i>0 && i<6)&&(last>6 && last<12)||(last>0 && last<6)&&(i>6 && i<12)){
             GoStraight(win, H, L), L++;  // se prima sono andato su, non posso andare giu (e viceversa)
         }
-        if (i>0 && i<6 && H > high/2){
+        if (i>0 && i<=6 && H > high/2){
             GoUp(win, H, L), L++, H--;
-        }else if (i == 6 && NumBullet < 4){
-            SpawnBullet(win, H, L), L++, NumBullet++;   // trappole o strumenti;
-        }else if (i>6 && i<12 && H < high-3){
+        }
+        //else if (i == 6 && NumBullet < 4){ SpawnBullet(win, H, L), L++, NumBullet++;}   // trappole o strumenti;
+        else if (i>6 && i<12 && H < high-3){
             H++, GoDown(win, H, L), L++;
         }else{
             GoStraight(win, H, L), L++;     // molto più frequente del resto (7 volte su 10);
