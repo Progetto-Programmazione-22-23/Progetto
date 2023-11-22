@@ -1,9 +1,11 @@
 #include "map.hpp"
 
+
+
 void SpawnStart(WINDOW * win, int h){
     int l = 0;
     while (l < Lstart){
-        mvwaddch(win, h, l, '_');        // piattaforma di spawn;
+            mvwaddch(win, h, l, '_');        // piattaforma di spawn;
         l++;
     }
 }
@@ -26,34 +28,56 @@ int calcYmin(int x) {
   return 0;
 }
 
-void GoStraight(WINDOW * win, int h, int l){mvwaddch(win, h, l, '_') ;}
-void GoUp(WINDOW * win, int h, int l){mvwaddch(win, h, l, '/'), addCoord(l,h);}               
-void GoDown(WINDOW * win, int h, int l){mvwaddch(win, h, l, '\\'), addCoord(l,h-1);}
+void GoStraight(WINDOW * win, int h, int l){
+    mvwaddch(win, h, l, '_') ;
+}
+
+void GoUp(WINDOW * win, int h, int l){
+    mvwaddch(win, h, l, '/'), addCoord(l,h);
+}
+
+void GoDown(WINDOW * win, int h, int l){
+    mvwaddch(win, h, l, '\\'), addCoord(l,h-1);
+}
 
 /// SPECIAL BLOCK SECTION ///
 
 // qui vanno create tutte le trappole ed i blocchi di aiuto (cure, spawn armi ecc...) che vengono poi selezionati dalle funzioni sotto in modo random
 
 void Bomb(){
-    if (current_game.getVita()>1)
-        current_game.setVita(current_game.getVita()-1);
+    current_game.setVita(current_game.getVita()-1);
 }
-void Robberry(){current_game.setMoney(current_game.getMoney()-1);}
+
+void Robberry(){
+    current_game.setMoney(current_game.getMoney()-1);
+}
+
 void SpawnTrap(){
     int i = rand() % 2;
-    if (i == 0) Bomb();
-    else if (i == 1) Robberry();
+    if (i == 0){
+        Bomb();
+    }else if (i == 1){
+        Robberry();
+    }
 }
 
 void Heal(){
-    if (current_game.getVita() < 10+current_game.getMaxVita())
-        current_game.setVita(current_game.getVita()+1);
+    current_game.setVita(current_game.getVita()+1);
 }
-void Money(){current_game.setMoney(current_game.getMoney()+1);}
+
+void Money(){
+    current_game.setMoney(current_game.getMoney()+2);
+}
+
+void Ammos() {
+    current_game.setAmmo(current_game.getAmmo()+10);
+}
+
 void SpawnHelp(){
-    int i = rand() % 2;
+    int i = rand() % 3;
     if (i == 0) Heal();
     else if (i == 1) Money();
+    else if(i == 2) Ammos();
 }
 
 void SpecialBlock(WINDOW * win, int h, int l){
@@ -65,16 +89,22 @@ void SpecialBlock(WINDOW * win, int h, int l){
 }
 
 void UseLuckyBlock(){
+    
     int i = rand() % 2;     // 50% tra blocco buono o cattivo
-    if (i == 0) SpawnTrap();
-    else SpawnHelp();
+    if (i == 0){
+        SpawnTrap();
+    }else{
+        SpawnHelp();
+    }
 }
 /// END SPECIAL BLOCK SECTION ///
 
+/*
 void SpawnBullet(WINDOW * win, int h, int l){
     mvwaddch(win, h, l, 'O');
     // salvare i proiettili in memoria :P
 }
+*/
 
 void SpawnPlatform(WINDOW * win, int high, int len){
     int NumSpecialBlock = 0;
@@ -90,9 +120,16 @@ void SpawnPlatform(WINDOW * win, int high, int len){
             int Xspawn = L;
 
             /*Calcolo a quale altezza spawnare*/
-            if (Xspawn-LastX < 8 && counter < 3) {counter++; h = LastYspawn-4;}
-            else if (Xspawn-LastX < 8 && counter >= 3) {counter--; h = LastYspawn+4;}
-            else {h = calcYmin(Xspawn)-4; counter = 1;}
+            if (Xspawn-LastX < 8 && counter < 3){
+                counter++; 
+                h = LastYspawn-4;
+            }else if (Xspawn-LastX < 8 && counter >= 3){
+                counter--;
+                h = LastYspawn+4;
+            }else{
+                h = calcYmin(Xspawn)-4;
+                counter = 1;
+            }
 
             /*Controllo non ci siano collisioni con la mappa*/
             for (int k = 0; k<lenPlat; k++){
@@ -137,13 +174,20 @@ void mapgenerator(WINDOW * win){
 
     SpawnStart(win, H);         // inizio mappa
     
-    while(L < len-10){
+    while(L < len-15){
         i = rand() % 50;
-        if ((i>0 && i<6)&&(last>6 && last<12)||(last>0 && last<6)&&(i>6 && i<12)) GoStraight(win, H, L), L++;  // se prima sono andato su, non posso andare giu (e viceversa)
-        if (i>0 && i<6 && H > high/2) GoUp(win, H, L), L++, H--;
-        else if (i == 6 && NumBullet < 4) SpawnBullet(win, H, L), L++, NumBullet++;                                                         // trappole o strumenti;
-        else if (i>6 && i<12 && H < high-3)  H++, GoDown(win, H, L), L++;
-        else GoStraight(win, H, L), L++;                                                                       // molto più frequente del resto (7 volte su 10);
+        if ((i>0 && i<6)&&(last>6 && last<12)||(last>0 && last<6)&&(i>6 && i<12)){
+            GoStraight(win, H, L), L++;  // se prima sono andato su, non posso andare giu (e viceversa)
+        }
+        if (i>0 && i<=6 && H > high/2){
+            GoUp(win, H, L), L++, H--;
+        }
+        //else if (i == 6 && NumBullet < 4){ SpawnBullet(win, H, L), L++, NumBullet++;}   // trappole o strumenti;
+        else if (i>6 && i<12 && H < high-3){
+            H++, GoDown(win, H, L), L++;
+        }else{
+            GoStraight(win, H, L), L++;     // molto più frequente del resto (7 volte su 10);
+        }
         last = i;
     }
 

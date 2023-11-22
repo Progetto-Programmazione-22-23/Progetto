@@ -1,6 +1,6 @@
 #include "save.hpp"
 
-igame fresh = {0,0,0,0,7,0,0,3,{0,0,0,0,0},Inventory(),true};
+igame fresh = {0,0,0,0,7,0,0,3,{0,0,0,0},Inventory(),true};
 Game current_game = Game(fresh);
 
 Game::Game(igame s) { this->setting = s;  this->state = 0; }
@@ -101,6 +101,5 @@ void Game::setLevel(int i) {setting.level = i;}
 int Game::getLives() {return setting.lives;}
 void Game::setLives(int i) {setting.lives = i;}
 double Game::getAtk() {return setting.stats[1];}
-double Game::getMagic() {return setting.stats[2];}
-double Game::getRes() {return setting.stats[3];}
-double Game::getSpeed() {return setting.stats[4];}
+double Game::getRes() {return setting.stats[2];}
+double Game::getSpeed() {return setting.stats[3];}

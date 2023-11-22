@@ -90,7 +90,7 @@ void openWeapon(WINDOW * WeaponWin, int sel){
                 highlights++, select++;
                 if (highlights == n) highlights = n-1, select = n-1;
                 break;
-            case 'p':
+            case 'o':
                 open = false;
                 wclear(WeaponWin);
                 break;
@@ -106,7 +106,7 @@ void openWeapon(WINDOW * WeaponWin, int sel){
 }
 
 void open_shop(WINDOW * shopWin){
-
+    wclear(shopWin);
     box(shopWin, 0, 0);
     keypad(shopWin, true);
     nodelay(shopWin, TRUE);
@@ -137,7 +137,7 @@ void open_shop(WINDOW * shopWin){
                 highlights++, select++;
                 if (highlights == n) highlights = n-1, select = n-1;
                 break;
-            case 'p':
+            case 'o':
                 open = false;
                 wclear(shopWin);
                 break;

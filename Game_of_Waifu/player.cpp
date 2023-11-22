@@ -36,9 +36,14 @@ void Player::dropFromPlatfrorm(WINDOW * win){if(onPlatform(win)) {mvwaddch(curwi
 bool Player::onLucky(WINDOW * win){
   bool OnLuck = false;
   pcoords lucky = specials;
+  int index = 0;
   while (lucky != NULL){
-    if (getX() == lucky->x && getY() == lucky->y) {OnLuck = true;}
+    if (getX() == lucky->x && getY() == lucky->y) {
+      OnLuck = true;
+      removeSpecial(index);
+    }
     lucky = lucky->next;
+    index++;
   }
   return OnLuck;
 }
@@ -125,8 +130,9 @@ void Player::getMv(WINDOW * playerwin, WINDOW * userwin, bool &loop, int tik) {
     case 'i':
       open_inventory(userwin);
       break;
-    case 'p':
-      open_shop(userwin);
+    case 'o':
+      if(current_game.getMap()%5==0 && Player::getX()>=lastHouseX && Player::getX()<=lastHouseX+7)
+        open_shop(userwin);
       break;
     case 27:
       current_game.saveAll();

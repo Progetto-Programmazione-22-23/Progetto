@@ -1,5 +1,33 @@
 #include "interface.hpp"
 
+void showBars(WINDOW * invWin) {
+    Inventory * inv = current_game.getInventory();
+
+    mvwprintw(invWin, 2, 33, "HOTBAR");
+    for(int i=0;i<3;i++) {
+            char itemname[20];
+            Item item = inv->getBarItem(0,i);
+            item.getName(itemname);
+            if(inv->getSelected() == i) {
+                wattron(invWin, A_REVERSE);
+            }
+            mvwprintw(invWin, i+3, 32, "[%d] %s", i+1, itemname);
+            wattroff(invWin, A_REVERSE);
+        }
+    
+
+        mvwprintw(invWin, 7, 33, "ARMOR");
+
+        for(int i=0;i<3;i++) {
+            char itemname[20];
+            Item item = inv->getBarItem(1,i);
+            item.getName(itemname);
+            if(item.getId()==0) wattron(invWin, COLOR_PAIR(3));
+            mvwprintw(invWin, i+8, 32, "- %s", itemname);
+            wattroff(invWin, COLOR_PAIR(3));
+        }
+}
+
 void showStats(WINDOW * win) {
     
     int yMax, xMax;
@@ -38,26 +66,11 @@ void showStats(WINDOW * win) {
     mvwprintw(win, 4 , 3, "Ammo: %d^  ", current_game.getAmmo());
     wattroff(win,COLOR_PAIR(6));
 
+    mvwprintw(win, 6 , 3, "Map: %d  ", current_game.getMap());
 
-    char values[80];
-    sprintf(values, "Forza %.1f | Magia %.1f | Resis. %.1f | Veloc. %.1f", 
-    current_game.getAtk(), current_game.getMagic(), current_game.getRes(), current_game.getSpeed());
-    mvwprintw(stdscr, (yMax/20)-1 , 45, values);
+    showBars(win);
 
-
-    Inventory* playerInv = current_game.getInventory();
-    int spacing = 20;
-    for(int i=0;i<3;i++) {
-        char hotbar_item[29], item_name[25];
-        playerInv->getBarItem(0,i).getName(item_name);
-        sprintf(hotbar_item, "[%d] %s", i+1, item_name);
-        if(i==playerInv->getSelected()) attron(COLOR_PAIR(4));
-        mvwprintw(stdscr, yMax-2, spacing, hotbar_item);
-        if(i==playerInv->getSelected()) attroff(COLOR_PAIR(4));
-        spacing += strlen(hotbar_item) + 3;
-    }
-    
-    char testin[4];
-    sprintf(testin, "[%d] ", playerInv->getBarItem(0,1).getPrice());
-    //mvwprintw(stdscr, yMax-2, 70, testin);
+    mvwprintw(win, 3, 57, " * %.1f Atk. Damage", current_game.getAtk());
+    mvwprintw(win, 4, 57, " * %.1f Resistence", current_game.getRes());
+    mvwprintw(win, 5, 57, " * %.1f Speed", current_game.getSpeed());
 }

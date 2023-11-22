@@ -1,4 +1,4 @@
-#include "oggetti.cpp"
+#include "inv_logic.cpp"
 
 struct igame {
     double xplayer, yplayer, map, money, vita, ammo, level, lives, stats[CATEGORIES];
@@ -30,7 +30,6 @@ class Game {
         void updateStats();
         double getMaxVita();
         double getAtk();
-        double getMagic();
         double getRes();
         double getSpeed();
         int getMap();
