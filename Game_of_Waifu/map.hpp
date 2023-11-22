@@ -1,4 +1,4 @@
-#include <ncurses.h>
+
 #include <stdlib.h>
 #include <fstream>
 #include <time.h>

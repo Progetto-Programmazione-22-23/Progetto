@@ -35,8 +35,6 @@ void Mob::mvup(){this->y--;}
 void Mob::mvdown(){this->y++;}
 void Mob::setY(int yx) {this->y = yx;}
 
-
-
 /*Danno al Mob*/
 void Mob::NemDmg(int dmg){this->stats.life -= dmg;};
 
@@ -160,13 +158,15 @@ void update(pnemici hd, Player* pl, int ActualTick, WINDOW * win, pbullets& bull
             if (hd->nem.getRanged() && (ActualTick % (hd->nem.getAtkSpeed()) == 0)) 
                 bullHd = addBullet(bullHd, hd->nem.getX(), hd->nem.getY(), ds, hd->nem.getDmg());
         
-        /*danni*/
+        /*danni da contatto al player*/
             if (pl->getX() == hd->nem.getX() && pl->getY() == hd->nem.getY()){
                 if (pl->getLastHit() < ActualTick-80) {
-                    takeDmg(hd->nem.getDmg()); 
+                    if (hd->nem.getRanged()) takeDmg(1);
+                    else takeDmg(hd->nem.getDmg()); 
                     pl->updateLastHit(ActualTick);
                 }
             }
+        /*danni da sparo al mob*/
             if (pl->getBulletX() == hd->nem.getX() && pl->getBulletY() == hd->nem.getY()){
                 hd->nem.NemDmg(100);
                 pl->stopBullet();

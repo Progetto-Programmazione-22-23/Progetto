@@ -11,18 +11,12 @@
 // #include "map_save.cpp"
 #include "map_setting.cpp"
 #include "GUI/interface.cpp"
+#include "game_text.cpp"
 // #include "map.cpp"
 // #include "oggetti.cpp"
 // #include "player.cpp"
 // #include "shop.cpp"
 using namespace std;
-
-void interface(int yMax, int xMax){
-
-/*ok*/
-
-    
-}
 
 void start(){
     pnemici hd = new nemico;
@@ -81,8 +75,8 @@ void start(){
 
         /*CONTROLLO DEI MOB*/
         update(hd, &player, cont, playerwin, bullHd);           // movimenti
-        hd = Death(hd);                                 // elimino mob morti
-        display(hd, playerwin);                         // disegno i mob in vita
+        hd = Death(hd);                                         // elimino mob morti
+        display(hd, playerwin);                                 // disegno i mob in vita
 
         /*Proiettile Player*/
         player.moveBullet(playerwin);
@@ -104,10 +98,13 @@ void start(){
 
         player.display();           // disegna il player
 
+        // current_game.setLives(0);
+
+        if (current_game.getLives() <= 0) gameOver();
+
         napms(35);                  // 35ms di pausa (circa 30fps)
     } 
 }
-
 
 int main(int argc, char ** argv){
 
@@ -120,22 +117,7 @@ int main(int argc, char ** argv){
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
 
-    const char* myString;
-
-    myString = R"(  _______    __   __     _____    ______      _____    __    __    _____ )";
-    mvprintw(yMax/2-10, xMax/2-40, myString);
-    myString = R"(/\_______)\ /\_\ /_/\  /\_____\  /_/\___\    /\___/\  /_/\  /\_\ /\_____\)";
-    mvprintw(yMax/2-9, xMax/2-40, myString);
-    myString = R"(\(___  __\/( ( (_) ) )( (_____/  ) ) ___/   / / _ \ \ ) ) \/ ( (( (_____/)";
-    mvprintw(yMax/2-8, xMax/2-40, myString);
-    myString = R"(  / / /     \ \___/ /  \ \__\   /_/ /  ___  \ \(_)/ //_/ \  / \_\\ \__\  )";
-    mvprintw(yMax/2-7, xMax/2-40, myString);
-    myString = R"( ( ( (      / / _ \ \  / /__/_  \ \ \_/\__\ / / _ \ \\ \ \\// / // /__/_ )";
-    mvprintw(yMax/2-6, xMax/2-40, myString);
-    myString = R"(  \ \ \    ( (_( )_) )( (_____\  )_)  \/ _/( (_( )_) ))_) )( (_(( (_____\)";
-    mvprintw(yMax/2-5, xMax/2-40, myString);
-    myString = R"(  /_/_/     \/_/ \_\/  \/_____/  \_\____/   \/_/ \_\/ \_\/  \/_/ \/_____/)";
-    mvprintw(yMax/2-4, xMax/2-40, myString);
+    gameTitle(xMax, yMax);
 
 /*Come creare il menu: */
     WINDOW * menuwin = newwin(5, xMax-12, yMax/2+4, 5);
