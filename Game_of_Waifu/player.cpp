@@ -131,7 +131,7 @@ void Player::getMv(WINDOW * playerwin, WINDOW * userwin, bool &loop, int tik) {
       open_inventory(userwin);
       break;
     case 'o':
-      if(current_game.getMap()%5==0 && Player::getX()>=lastHouseX && Player::getX()<=lastHouseX+7)
+      if(current_game.getMap()%5==0) //&& Player::getX()>=lastHouseX && Player::getX()<=lastHouseX+7)
         open_shop(userwin);
       break;
     case 27:

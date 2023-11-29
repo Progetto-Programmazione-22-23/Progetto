@@ -107,16 +107,22 @@ void saveActualMap() {
 int lastHouseX = 0;
 void spawnHouse(WINDOW * win, int y, int w) {
         lastHouseX = w+4;
-        mvwprintw(win, y, w, "____|_");
-        wattron(win,COLOR_PAIR(5));
-        mvwprintw(win, y, w+6, "[O]");
-        wattroff(win,COLOR_PAIR(5));
-        mvwprintw(win, y, w+9, "_|___");
-
+        
+        mvwprintw(win, y, w, "____");
+        mvwprintw(win, y, w+5, "_");
+        mvwprintw(win, y, w+11, "___");
+        mvwprintw(win, y, w+9, "_");
+        wattron(win,COLOR_PAIR(3));
+        mvwprintw(win, y, w+4, "|");
+        mvwprintw(win, y, w+10, "|");
         mvwprintw(win, y-1, w, "    /=====\\");
         mvwprintw(win, y-2, w, "     |===|");
         mvwprintw(win, y-3, w, "      /*\\");
         mvwprintw(win, y-4, w, "       _");
+        wattroff(win,COLOR_PAIR(3));
+        wattron(win,COLOR_PAIR(5));
+        mvwprintw(win, y, w+6, "[O]");
+        wattroff(win,COLOR_PAIR(5));
         /*
         while(w < t->x) {
             if (w == (t->x - 11)){

@@ -102,4 +102,4 @@ int Game::getLives() {return setting.lives;}
 void Game::setLives(int i) {setting.lives = i;}
 double Game::getAtk() {return setting.stats[1];}
 double Game::getRes() {return setting.stats[2];}
-double Game::getSpeed() {return setting.stats[3];}
+double Game::getLuck() {return setting.stats[3];}

@@ -18,9 +18,9 @@ int calcYmin(int x);
 void SpecialBlock(WINDOW * win, int h, int l);        // pezzo di strada dritta con blocco speciale;
 void SpawnTrap();
 void SpawnHelp();
-void Heal();
-void Money();
-void Ammos();
+void Heal(int amount);
+void Money(int amount);
+void Ammos(int amount);
 void Bomb();
 void UseLuckyBlock(WINDOW * win, int h, int l);
 

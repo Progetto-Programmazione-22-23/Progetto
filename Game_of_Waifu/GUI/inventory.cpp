@@ -47,7 +47,7 @@ void openchoice(WINDOW * choiceWin, int pos){
     //char idk[10]; sprintf(idk, " %d",pos); strcat(itemname, idk);
     mvwprintw(choiceWin, 1, 57, "Hai selezionato: %s", itemname);
 
-    char stats[CATEGORIES][20] = {"Bonus Health", "Atk. Damage", "Resistence", "Speed"};
+    char stats[CATEGORIES][20] = {"Bonus Health", "Atk. Damage", "Resistence", "Luck"};
     int mod = 0, row = 0;
     while(mod<CATEGORIES) {
         double val = item.getModifier(mod);

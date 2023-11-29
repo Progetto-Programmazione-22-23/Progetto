@@ -72,5 +72,5 @@ void showStats(WINDOW * win) {
 
     mvwprintw(win, 3, 57, " * %.1f Atk. Damage", current_game.getAtk());
     mvwprintw(win, 4, 57, " * %.1f Resistence", current_game.getRes());
-    mvwprintw(win, 5, 57, " * %.1f Speed", current_game.getSpeed());
+    mvwprintw(win, 5, 57, " * %.1f Luck", current_game.getLuck());
 }
