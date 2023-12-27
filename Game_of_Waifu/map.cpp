@@ -109,7 +109,7 @@ void UseLuckyBlock(){
     
     int i = rand() % 2;     // 50% tra blocco buono o cattivo
     if (i == 0){
-        SpawnTrap();
+        SpawnHelp();
     }else{
         SpawnHelp();
     }
@@ -178,10 +178,12 @@ void SpawnPlatform(WINDOW * win, int high, int len){
 }
 
 void mapgenerator(WINDOW * win){
-    int NumBullet = 0;
+    clearMaps();
     actual_map = NULL;
     specials = NULL;
     platforms = NULL;
+
+    int NumBullet = 0;
 
     srand(time(NULL));
     getmaxyx(win, high, len);

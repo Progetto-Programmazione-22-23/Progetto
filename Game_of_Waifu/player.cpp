@@ -74,7 +74,7 @@ void Player::update(int end, WINDOW * win, int tik) {
   mvwaddch(curwin, y, x, ' ');
   regenOldMap(win, true);
 
-  if (onLucky(win)) UseLuckyBlock();
+  if (onLucky(win)) SpawnHelp();
   
   if (this->is_jumping && (tik-ActualTik)%jumpspeed == 0 && (tik-ActualTik) <= h) {this->y-=1;} 
   else if (this->is_jumping && (tik-ActualTik) > h+4 && this->y < minY && (tik-ActualTik)%jumpspeed == 0){

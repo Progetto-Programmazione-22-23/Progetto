@@ -2,7 +2,7 @@
 #define MAX_AMMO 24
 
 struct igame {
-    double xplayer, yplayer, map, money, vita, ammo, level, lives, stats[CATEGORIES];
+    double xplayer, yplayer, map, money, vita, ammo, level, lives, bestlvl, stats[CATEGORIES];
     Inventory inventory;
     bool nuovo2;
     //Inventory inventory;
@@ -41,6 +41,8 @@ class Game {
         void setLevel(int i);
         int getLives();
         void setLives(int i);
+        int getBestLvl();
+        void setBestLvl(int i);
         Inventory* getInventory();
         
 };

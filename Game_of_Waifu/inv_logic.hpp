@@ -16,12 +16,13 @@ class Inventory {
         void setBarItem(bool hot_armor, int i, Item item);
         pitemlist getInventoryHead();
         pitemlist getInventoryItem(int index);
+        bool isPossessed(int id);
         int calcLen();
         void setSelected(int hot);
         int getSelected();
-        bool isActive(bool hot_armor, int id);
+        //bool isActive(bool hot_armor, int id);
         void giveItem(Item item);
-        void insItem(Item item, int pos);
+        //void insItem(Item item, int pos);
         void equip(int index);
         void unequip(bool hot_armor, int index);
         

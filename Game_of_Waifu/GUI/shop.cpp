@@ -1,13 +1,5 @@
 #include "shop.hpp"
 
-// void buy(){
-//     // Controlla se hai abbastanza soldi, se ce li hai te li toglie
-// }
-
-// void inspectshop(){
-//     // Informazioni su tipo di oggetto, effetto, danni, cure ecc...
-// }
-
 void OpenChoiceShop(WINDOW * chWin, Item item){
 //     int syMax, sxMax;
 //     getmaxyx(stdscr, syMax, sxMax);
@@ -69,16 +61,28 @@ void openWeapon(WINDOW * WeaponWin, int sel, char category[]){
     //string oggetti[n] = {"o1", "o2", "o3", "o4", "annulla"};
     int choice;
     int highlights = 0;
+
+    Inventory * inv = current_game.getInventory();
+
     pitemlist cat = NULL;
     for(pitemlist q = allItems; q!=NULL; q = q->next) {
         int id = q->val.getId();
-        if(id>=sel*10 && id<sel*10+10)
-            cat = addItem(cat, q->val), n++;
+        if(id>=sel*10 && id<(sel+1)*10) {
+            bool okay = false;
+            //if(q->val.upgradesFrom()>0)
+                okay = inv->isPossessed(q->val.upgradesFrom());
+
+            if(okay) cat = addItem(cat, q->val), n++;
+            
+        }
+            
     }
 
     bool open = true;
     while (open){
         box(WeaponWin, 0, 0);
+
+        mvwprintw(WeaponWin, 1, 33, "[%s]", category);
 
         int i = 0;
         for (pitemlist q = cat; q != NULL; i++, q=q->next){ // costruisco il menu
@@ -88,6 +92,10 @@ void openWeapon(WINDOW * WeaponWin, int sel, char category[]){
             mvwprintw(WeaponWin, i+3, 32, itemname);
             wattroff(WeaponWin, A_REVERSE);
         }
+        if (i == highlights) wattron(WeaponWin, A_REVERSE);
+        mvwprintw(WeaponWin,i+4, 32, "Back");
+        wattroff(WeaponWin, A_REVERSE);
+
         choice = wgetch(WeaponWin);
 
         switch(choice){ // mi muovo nel menu

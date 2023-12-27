@@ -50,6 +50,7 @@ void Inventory::remove(int index) {
 void Inventory::giveItem(Item item) {
     this->inv = addItem(this->inv, item);
 }
+/*
 void Inventory::insItem(Item item, int pos) {
     if(this->inv == NULL) giveItem(item);
     else {
@@ -69,6 +70,7 @@ void Inventory::insItem(Item item, int pos) {
     
 
 }
+*/
 
 int Inventory::calcLen() {
     int i=0;
@@ -80,6 +82,19 @@ pitemlist Inventory::getInventoryItem(int index) {
     pitemlist l = this->inv;
     for(int i=0; i<index && l!=NULL; l = l->next) i++;
     return l;
+}
+
+bool Inventory::isPossessed(int id) {
+    bool found = false;
+    for(int i=0;i<2 && !found;i++)
+        for(int j=0;j<3 & !found;j++)
+            found = Inventory::getBarItem(i,j).getId()==id;
+        
+    if(!found)
+        for(pitemlist q = this->inv; q != NULL && !found; q = q->next)
+            found = q->val.getId()==id;
+
+    return found;
 }
 
 void Inventory::equip(int index) {
@@ -126,6 +141,7 @@ void Inventory::setSelected(int hot) {
     this->selected = hot;
 }
 int Inventory::getSelected() { return selected; }
+/*
 bool Inventory::isActive(bool hot_armor, int id) {
     if(!hot_armor) return hotbar[selected].getId() == id;
     else {
@@ -135,4 +151,4 @@ bool Inventory::isActive(bool hot_armor, int id) {
         }
         return found;
     }
-}
+}*/

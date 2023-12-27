@@ -157,9 +157,7 @@ void spawnHouse(WINDOW * win, int y, int w) {
         */
 }   
 
-void regenOldMap(WINDOW * win, bool refresh) {
-    if(!refresh) {
-        
+void clearMaps() {
         for(pcoords t = actual_map, q;t!=NULL;t = q) {  // Elimina la lista di coordinate actual_map
             q = t->next;
             t = NULL, delete(t);
@@ -172,6 +170,12 @@ void regenOldMap(WINDOW * win, bool refresh) {
             q = t->next;
             t = NULL, delete(t);
         }
+}
+
+void regenOldMap(WINDOW * win, bool refresh) {
+    if(!refresh) {
+        
+        clearMaps();
 
         std::ifstream in, ins, inp;
 

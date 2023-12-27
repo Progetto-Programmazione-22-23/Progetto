@@ -4,7 +4,7 @@ void MobSpawn(int len, pnemici& hd){
     // mapgenerator(win);
     srand(time(NULL));
     int i = 0;
-    int lv = current_game.getLevel();
+    int lv = current_game.getBestLvl();
     if (lv > 4) lv = 4;
     while (i<lv+2){
         int Xspawn = 15 + rand()%(len-15);
@@ -64,13 +64,15 @@ void GoNext(WINDOW * win, int len, pnemici& hd){
     int n = current_game.getMap(), l = current_game.getLevel();
     current_game.setMap(n+1);
 
-    
+    /*
     char mapname[20];
     sprintf(mapname, "map/%d.txt", n+1);
     ifstream f(mapname);
-
-    if(n == l || !f.good()) { 
+    */
+    if(n == l) { 
         current_game.setLevel(l+1);
+        current_game.setBestLvl(current_game.getBestLvl()+1);
+        //if(l==current_game.getBestLvl()) current_game.setBestLvl(l+1);
         mapgenerator(win); 
         MobSpawn(len, hd);
     } else 

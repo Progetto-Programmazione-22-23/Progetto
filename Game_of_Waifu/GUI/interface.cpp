@@ -67,6 +67,7 @@ void showStats(WINDOW * win) {
     wattroff(win,COLOR_PAIR(6));
 
     mvwprintw(win, 6 , 3, "Map: %d  ", current_game.getMap());
+    mvwprintw(win, 7 , 3, "Level: %d  ", current_game.getBestLvl());
 
     showBars(win);
 
