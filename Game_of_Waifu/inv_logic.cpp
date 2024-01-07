@@ -50,27 +50,26 @@ void Inventory::remove(int index) {
 void Inventory::giveItem(Item item) {
     this->inv = addItem(this->inv, item);
 }
-/*
-void Inventory::insItem(Item item, int pos) {
-    if(this->inv == NULL) giveItem(item);
-    else {
-        pitemlist q = new itemlist;
-        q->val = item;
 
-        pitemlist l = this->inv;
-        while(pos>0 && l->next!=NULL) {
-            l=l->next;
-            pos--;
-        }
-        if(l->next==NULL) q->next = NULL;
-        else q->next = l->next->next;
-        l->next = q;
-        
-    }
+//sostituisce il primo item 'base' che trova con l'item 'up'
+void Inventory::subItem(Item base, Item up) {
+    bool found = false;
+    for(int i=0;i<2 && !found;i++) 
+        for(int j=0;j<3 && !found;j++)
+            if(Inventory::getBarItem(i,j).getId() == base.getId()) {
+                Inventory::setBarItem(i,j,up);
+                found = true;
+            }
     
-
+    if(!found) {
+        int i = 0;
+        for(pitemlist q = this->inv; q != NULL && !found; q = q->next, i++)
+            if(q->val.getId() == base.getId()) {
+                q->val = up;
+                found = true;
+            } 
+    }
 }
-*/
 
 int Inventory::calcLen() {
     int i=0;

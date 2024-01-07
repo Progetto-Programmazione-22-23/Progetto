@@ -22,6 +22,7 @@ class Inventory {
         int getSelected();
         //bool isActive(bool hot_armor, int id);
         void giveItem(Item item);
+        void subItem(Item base, Item up);
         //void insItem(Item item, int pos);
         void equip(int index);
         void unequip(bool hot_armor, int index);

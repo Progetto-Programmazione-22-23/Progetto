@@ -4,9 +4,7 @@
 #include <stdio.h>
 using namespace std;
 
-void equip();
-void inspect();
-void sell();
 
+int printItemStats(WINDOW * choiceWin, Item item);
 void openchoice(WINDOW * win, int pos);
 void open_inventory(WINDOW * win);

@@ -17,7 +17,7 @@
 // #include "shop.cpp"
 using namespace std;
 
-void resetLife(WINDOW * win, pnemici& hd, Player p, bool& loop) {
+void resetLife(WINDOW * win, pnemici& hd, Player& p, bool& loop) {
     wclear(win);
     dead = false;
     int l = current_game.getLives();
@@ -28,7 +28,7 @@ void resetLife(WINDOW * win, pnemici& hd, Player p, bool& loop) {
         getmaxyx(win, ymax, xmax);
 
         current_game.setVita(10+current_game.getMaxVita());
-        p.teleport(2,ymax-3);
+        
         current_game.setLives(l-1);
         current_game.setMap(0);
         current_game.setLevel(0);
@@ -41,6 +41,8 @@ void resetLife(WINDOW * win, pnemici& hd, Player p, bool& loop) {
         }
         hd = NULL;
         MobSpawn(xmax, hd);
+
+        p.teleport(2,ymax-3);
     }
 }
 

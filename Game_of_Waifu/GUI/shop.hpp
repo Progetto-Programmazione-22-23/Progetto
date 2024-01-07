@@ -1,11 +1,9 @@
 #include <ncurses.h>
-#include <iostream>
-#include <string>
-#include <stdio.h>
 using namespace std;
 
-void buy();
-void inspectshop();
+void clearSelect(WINDOW * win, int start=56, int end=-1);
+
+void purchaseFeedback(WINDOW * win, bool success);
 
 void OpenChoiceShop(WINDOW * win, string[]);
 
