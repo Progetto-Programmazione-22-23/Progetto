@@ -44,22 +44,22 @@ void GoDown(WINDOW * win, int h, int l){
 
 // qui vanno create tutte le trappole ed i blocchi di aiuto (cure, spawn armi ecc...) che vengono poi selezionati dalle funzioni sotto in modo random
 
-void Bomb(){
-    current_game.setVita(current_game.getVita()-1);
-}
+// void Bomb(){
+//     current_game.setVita(current_game.getVita()-1);
+// }
 
-void Robberry(){
-    current_game.setMoney(current_game.getMoney()-1);
-}
+// void Robberry(){
+//     current_game.setMoney(current_game.getMoney()-1);
+// }
 
-void SpawnTrap(){
-    int i = rand() % 2;
-    if (i == 0){
-        Bomb();
-    }else if (i == 1){
-        Robberry();
-    }
-}
+// void SpawnTrap(){
+//     int i = rand() % 2;
+//     if (i == 0){
+//         Bomb();
+//     }else if (i == 1){
+//         Robberry();
+//     }
+// }
 
 void Heal(){
     current_game.setVita(current_game.getVita()+1);
@@ -70,7 +70,7 @@ void Money(){
 }
 
 void Ammos() {
-    current_game.setAmmo(current_game.getAmmo()+10);
+    current_game.setAmmo(current_game.getAmmo()+5);
 }
 
 void SpawnHelp(){
@@ -88,15 +88,15 @@ void SpecialBlock(WINDOW * win, int h, int l){
     addSpecial(l,h);
 }
 
-void UseLuckyBlock(){
+// void UseLuckyBlock(){
     
-    int i = rand() % 2;     // 50% tra blocco buono o cattivo
-    if (i == 0){
-        SpawnTrap();
-    }else{
-        SpawnHelp();
-    }
-}
+//     int i = rand() % 2;     // 50% tra blocco buono o cattivo
+//     if (i == 0){
+//         SpawnTrap();
+//     }else{
+//         SpawnHelp();
+//     }
+// }
 /// END SPECIAL BLOCK SECTION ///
 
 /*
