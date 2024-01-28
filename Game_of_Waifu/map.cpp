@@ -105,7 +105,7 @@ void SpecialBlock(WINDOW * win, int h, int l){
     addSpecial(l,h);
 }
 
-// void UseLuckyBlock(){
+void UseLuckyBlock(){
     
     int i = rand() % 2;     // 50% tra blocco buono o cattivo
     if (i == 0){

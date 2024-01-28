@@ -1,6 +1,6 @@
 #include "enemies.hpp"
 
-Mob::Mob (int y, int x, int l, int s, int d, int as, char ch, bool fl, bool rn, int color, int type) {
+Mob::Mob (int y, int x, int l, int s, int d, int as, char ch, int m, bool fl, bool rn, int color, int type) {
     this->stats.life = l;
     this->stats.speed = s;
     this->stats.dmg = d;
@@ -12,6 +12,7 @@ Mob::Mob (int y, int x, int l, int s, int d, int as, char ch, bool fl, bool rn, 
     this->ranged = rn;
     this->type = type;
     this->color = color;
+    this->moneyDrop = m;
 }
 
 /*get*/
@@ -27,6 +28,7 @@ int Mob::getspeed() {return this->stats.speed;}
 int Mob::getAtkSpeed() {return this->stats.atkSpeed;}
 int Mob::getDmg() {return this->stats.dmg;}
 int Mob::getColor() {return this->color;}
+int Mob::getMoneyDrop() {return this->moneyDrop;}
 
 /*movimenti*/
 void Mob::mvleft(){this->x--;}
@@ -47,11 +49,11 @@ void takeDmg(int dmg) {
 
 /*funzioni di inserimento dei diversi mob*/
 pnemici InsMob(pnemici hd, Mob x) {pnemici nhd = new nemico; nhd->nem = x; nhd->next = hd; return nhd;}
-pnemici InsZombie(pnemici& hd, int y, int x, int lv) {return InsMob(hd, Mob (y, x, lv+1, 10, (lv/2)+1, 0, 'Z', false, false, 10, 0));}
-pnemici InsGolem(pnemici& hd, int y, int x, int lv) {return InsMob(hd, Mob (y, x, 3+lv+lv/2, 20, lv+1, 0, 'G', false, false, 11, 1));}
-pnemici InsCerbottaniere(pnemici& hd, int y, int x, int lv) {return InsMob(hd, Mob (y, x, lv+1, 7, (lv/2)+1, 65, 'C', false, true, 12, 2));}
-pnemici InsBat(pnemici& hd, int y, int x, int lv) {return InsMob(hd, Mob (y, x, (lv/3)+1, 5, lv+1, 50, 'V', true, true, 20, 10));}
-pnemici InsDemon(pnemici& hd, int y, int x, int lv) {return InsMob(hd, Mob (y, x, (lv/2)+1, 13, (lv/3)+lv+1, 80, 'D', true, true, 21, 11));}
+pnemici InsZombie(pnemici& hd, int y, int x, int lv) {return InsMob(hd, Mob (y, x, lv+1, 10, (lv/2)+1, 0, 'Z', 2, false, false, 10, 0));}
+pnemici InsGolem(pnemici& hd, int y, int x, int lv) {return InsMob(hd, Mob (y, x, 3+lv+lv/2, 20, lv+1, 0, 'G', 4, false, false, 11, 1));}
+pnemici InsCerbottaniere(pnemici& hd, int y, int x, int lv) {return InsMob(hd, Mob (y, x, lv+1, 7, (lv/2)+1, 65, 'C', 3, false, true, 12, 2));}
+pnemici InsBat(pnemici& hd, int y, int x, int lv) {return InsMob(hd, Mob (y, x, (lv/3)+1, 5, lv+1, 50, 'V', 2, true, true, 20, 10));}
+pnemici InsDemon(pnemici& hd, int y, int x, int lv) {return InsMob(hd, Mob (y, x, (lv/2)+1, 13, (lv/3)+lv+1, 80, 'D', 4, true, true, 21, 11));}
 
 /*gestione coordinate*/
 pcoords InsCoords(pcoords& hd, int mx, int my) {
@@ -85,6 +87,7 @@ pnemici Death(pnemici& hd) {
     if (hd == NULL) return NULL;
     
     while (hd != NULL && hd->nem.getlife() <= 0){
+        current_game.setMoney(current_game.getMoney()+hd->nem.getMoneyDrop());
         pnemici dhd = hd; 
         hd = hd->next;
         dhd = NULL;
@@ -95,6 +98,7 @@ pnemici Death(pnemici& hd) {
     
     while (hd != NULL && hd->next != NULL){
         if (hd->next->nem.getlife() <= 0) {
+            current_game.setMoney(current_game.getMoney()+hd->nem.getMoneyDrop());
             pnemici dhd = hd->next;
             hd->next = hd->next->next;
             dhd = NULL;

@@ -20,8 +20,9 @@ class Mob{
         char character;
         bool fly, ranged;
         int color;
+        int moneyDrop;
     public:
-        Mob(int y = 0, int x = 0, int l = 0, int s = 0, int d = 0, int as = 0, char ch = ' ', bool f = false, bool r = false, int color = 0, int type = 0);
+        Mob(int y = 0, int x = 0, int l = 0, int s = 0, int d = 0, int as = 0, char ch = ' ', int m = 0, bool f = false, bool r = false, int color = 0, int type = 0);
         int getX();
         int getY();
         int getType();
@@ -36,6 +37,7 @@ class Mob{
         int getColor();
         int getBulletX();
         int getBulletY();
+        int getMoneyDrop();
 
         void stop();
         void mvleft();
