@@ -61,23 +61,40 @@ void GoDown(WINDOW * win, int h, int l){
 //     }
 // }
 
-void Heal(){
-    current_game.setVita(current_game.getVita()+1);
+void Heal(int amount){
+    if(current_game.getVita()>=10+current_game.getMaxVita())
+        Money(1), Ammos(2);
+    else {
+        int incr = current_game.getVita()+amount*(current_game.getLuck()+1);
+        if(incr > 10+current_game.getMaxVita())
+            incr = 10+current_game.getMaxVita();
+
+        current_game.setVita(incr);
+    }
 }
 
-void Money(){
-    current_game.setMoney(current_game.getMoney()+2);
+void Money(int amount){
+    current_game.setMoney(current_game.getMoney()+amount*(current_game.getLuck()+1));
 }
 
-void Ammos() {
-    current_game.setAmmo(current_game.getAmmo()+5);
+void Ammos(int amount) {
+    if(current_game.getAmmo()>=MAX_AMMO)
+        Money(2);
+    else {
+        int incr = current_game.getAmmo()+amount*(current_game.getLuck()+1);
+        if(incr > MAX_AMMO)
+            incr = MAX_AMMO;
+        current_game.setAmmo(incr);   
+    }
 }
 
 void SpawnHelp(){
-    int i = rand() % 3;
-    if (i == 0) Heal();
-    else if (i == 1) Money();
-    else if(i == 2) Ammos();
+    int tot = 3;
+    //if(current_game)
+    int i = rand() % tot;
+    if (i == 0) Money(2);
+    else if (i == 1) Heal(1);
+    else if(i == 2) Ammos(3);
 }
 
 void SpecialBlock(WINDOW * win, int h, int l){
@@ -90,13 +107,13 @@ void SpecialBlock(WINDOW * win, int h, int l){
 
 // void UseLuckyBlock(){
     
-//     int i = rand() % 2;     // 50% tra blocco buono o cattivo
-//     if (i == 0){
-//         SpawnTrap();
-//     }else{
-//         SpawnHelp();
-//     }
-// }
+    int i = rand() % 2;     // 50% tra blocco buono o cattivo
+    if (i == 0){
+        SpawnHelp();
+    }else{
+        SpawnHelp();
+    }
+}
 /// END SPECIAL BLOCK SECTION ///
 
 /*
@@ -161,10 +178,12 @@ void SpawnPlatform(WINDOW * win, int high, int len){
 }
 
 void mapgenerator(WINDOW * win){
-    int NumBullet = 0;
+    clearMaps();
     actual_map = NULL;
     specials = NULL;
     platforms = NULL;
+
+    int NumBullet = 0;
 
     srand(time(NULL));
     getmaxyx(win, high, len);

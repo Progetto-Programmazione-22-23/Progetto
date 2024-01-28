@@ -31,7 +31,7 @@ void loadItems() {
     char name[25], desc[60];
     bool bar;
     while(in>>id>>price>>name>>bar>>upgrade_id>>amount>>desc>>
-    plus[0]>>plus[1]>>plus[2]>>plus[3]>>plus[4]) {
+    plus[0]>>plus[1]>>plus[2]>>plus[3]) {
         //std::cout<<id<<price<<name<<shop<<bar<<rarity<<upgrade_id<<desc<<"\n";
         spacePhrase(name);
         spacePhrase(desc);

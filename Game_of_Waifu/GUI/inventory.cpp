@@ -1,24 +1,31 @@
 #include "inventory.hpp"
 
-void equip(){
-    // SE l'oggetto non è gia equipaggiato, si seleziona con quale sostituirlo tra i 3 equipaggiati
-    // Quello rimosso torna nell'inventario
-}
-
-void inspect(){
-    // Informazioni su tipo di oggetto, effetto, danni, cure ecc...
-}
-
-void sell(){
-    // oggetto rimosso dall'inventario e soldi aggiunti al player
-    // prima chiedi se sei sicuro di voler vendere (bisognerebbe poter vedere il valore prima)
-}
 Inventory * inv;
 
+int printItemStats(WINDOW * choiceWin, Item item) {
+    char itemname[20]; // PRINT NOME
+    item.getName(itemname);
+    mvwprintw(choiceWin, 1, 57, "Hai selezionato: %s", itemname);
+
+    char stats[CATEGORIES][20] = {"Bonus Health", "Atk. Damage", "Resistence", "Luck"}; 
+    int mod = 0, row = 0;
+    while(mod<CATEGORIES) { // PRINT DELLE STATS DIVERSE DA 0
+        double val = item.getModifier(mod);
+        if(val!=0) {
+            mvwprintw(choiceWin, 3+row, 57, " * %.1f %s", val, stats[mod]);
+            row++;
+        }
+        mod++;
+    }
+    // e desc. in basso
+    char desc[60];
+    item.getDesc(desc);
+    mvwprintw(choiceWin, 13, 56, "\"%s\"", desc);
+
+    return row;
+}
+
 void openchoice(WINDOW * choiceWin, int pos){
-    int syMax, sxMax;
-    getmaxyx(choiceWin, syMax, sxMax);
-    // WINDOW *choiceWin = newwin(syMax-(syMax/10)-2, sxMax-(sxMax/10)-2, syMax/20+2, sxMax/20+1);
     box(choiceWin, 0, 0);
     keypad(choiceWin, true);
     nodelay(choiceWin, TRUE);
@@ -28,7 +35,7 @@ void openchoice(WINDOW * choiceWin, int pos){
     char actions[n][20] = {"", "", "Back"};
 
     Item item;
-    int b = -(pos+1)/3;
+    int b = -(pos+1)/3; //INVEN
     if(pos>=0) item = (inv->getInventoryItem(pos))->val;
     else item = inv->getBarItem(b,pos+3*(b+1));
 
@@ -42,25 +49,7 @@ void openchoice(WINDOW * choiceWin, int pos){
     sprintf(actions[1], "Sell for %d$", item.getPrice()/2);
     int highlights = 0, select = 0, choice;
 
-    char itemname[20];
-    item.getName(itemname);
-    //char idk[10]; sprintf(idk, " %d",pos); strcat(itemname, idk);
-    mvwprintw(choiceWin, 1, 57, "Hai selezionato: %s", itemname);
-
-    char stats[CATEGORIES][20] = {"Bonus Health", "Atk. Damage", "Resistence", "Speed"};
-    int mod = 0, row = 0;
-    while(mod<CATEGORIES) {
-        double val = item.getModifier(mod);
-        if(val!=0) {
-            mvwprintw(choiceWin, 3+row, 57, " * %.1f %s", val, stats[mod]);
-            row++;
-        }
-        mod++;
-    }
-
-    char desc[60];
-    item.getDesc(desc);
-    mvwprintw(choiceWin, 13, 56, "\"%s\"", desc);
+    int row = printItemStats(choiceWin,item);
 
     bool open = true;
     while(open){
@@ -118,14 +107,9 @@ void open_inventory(WINDOW * invWin){
     keypad(invWin, true);
     nodelay(invWin, TRUE);
 
-    // gli oggetti nell'inventario saranno una lista, n la lunghezza della lista
-    //int n = 4;
-    //string oggetti[n] = {"spada lunga", "scudo di doran", "palle potenti", "freccia"};
     inv = current_game.getInventory();
     int len, choice, highlights = 0, lastItem = 0, column = 1, page = 1;
     int maxPage;
-    //if(len%(syMax-4)==0) maxPage--;
-    //init_pair(3, 245, COLOR_BLACK);
     bool open = true;
     while (open){
         len = inv->calcLen();
@@ -257,7 +241,7 @@ void open_inventory(WINDOW * invWin){
                 wclear(invWin);
                 break;
             case 10:
-                //SCROLLANDO LE PAGINE DELL'IVENTARIO
+                //SCEGLIENDO LE VARIE PAGINE DELL'INVENTARIO
                 if(column==0) {
                     lastItem -= syMax-4;
                     page--;
@@ -269,7 +253,7 @@ void open_inventory(WINDOW * invWin){
                     if(page==maxPage) column = 1;
                     wclear(invWin);
                 }
-                // SE NON STAI SELEZIONANDO NELL'HOTBAR IL VUOTO ->
+                // SE NON STAI SELEZIONANDO NELL'HOTBAR IL VUOTO -> APRI MENU CHOICE
                 else if(chosen.getId()>0 && (column != 1 || len>0)){
                     int pos;
                     if(column==1) pos = lastItem+highlights;

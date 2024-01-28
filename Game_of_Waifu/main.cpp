@@ -18,6 +18,35 @@
 // #include "shop.cpp"
 using namespace std;
 
+void resetLife(WINDOW * win, pnemici& hd, Player& p, bool& loop) {
+    wclear(win);
+    dead = false;
+    int l = current_game.getLives();
+    if(l==1) {
+        loop = false; //game over
+    } else {
+        int ymax, xmax;
+        getmaxyx(win, ymax, xmax);
+
+        current_game.setVita(10+current_game.getMaxVita());
+        
+        current_game.setLives(l-1);
+        current_game.setMap(0);
+        current_game.setLevel(0);
+        deleteOldMaps();
+        mapgenerator(win);
+
+        for(pnemici t = hd, q;t!=NULL;t = q) {  // Elimina la lista di nemici attuali
+            q = t->next;
+            t = NULL, delete(t);
+        }
+        hd = NULL;
+        MobSpawn(xmax, hd);
+
+        p.teleport(2,ymax-3);
+    }
+}
+
 void start(){
     pnemici hd = new nemico;
     hd = NULL;
@@ -75,8 +104,9 @@ void start(){
 
         /*CONTROLLO DEI MOB*/
         update(hd, &player, cont, playerwin, bullHd);           // movimenti
-        hd = Death(hd);                                         // elimino mob morti
-        display(hd, playerwin);                                 // disegno i mob in vita
+        hd = Death(hd);                                 // elimino mob morti
+        display(hd, playerwin);                         // disegno i mob in vita
+        if(dead) resetLife(playerwin, hd, player, loop);
 
         /*Proiettile Player*/
         player.moveBullet(playerwin);

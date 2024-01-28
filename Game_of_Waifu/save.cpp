@@ -1,7 +1,8 @@
 #include "save.hpp"
 
-igame fresh = {0,0,0,0,7,0,0,3,{0,0,0,0},Inventory(),true};
+igame fresh = {0,0,0,0,1,0,0,3,0,{0,0,0,0},Inventory(),true};
 Game current_game = Game(fresh);
+bool dead = false;
 
 Game::Game(igame s) { this->setting = s;  this->state = 0; }
 Inventory* Game::getInventory() { return &(this->setting.inventory); }
@@ -31,7 +32,8 @@ void Game::saveAll() {
     <<setting.vita<<"\n"
     <<setting.ammo<<"\n"
     <<setting.level<<"\n"
-    <<setting.lives<<"\n";
+    <<setting.lives<<"\n"
+    <<setting.bestlvl<<"\n";
     //for(int j=0;j<CATEGORIES;j++) 
     //    out<<setting.stats[j]<<"\n";
     for(int j=0;j<2;j++) for(int i=0;i<3;i++) 
@@ -59,9 +61,10 @@ void Game::continueLast() {
         else if(i==5) last.ammo = data;
         else if(i==6) last.level = data;
         else if(i==7) last.lives = data;
+        else if(i==8) last.bestlvl = data;
         //else if(i<=4+CATEGORIES) last.stats[i-5] = data; // i = 4
-        else if(i<=10) hotbar[i-8] = getItem(allItems, (int)data);
-        else if(i<=13) armor[i-11] = getItem(allItems, (int)data);
+        else if(i<=11) hotbar[i-9] = getItem(allItems, (int)data);
+        else if(i<=14) armor[i-12] = getItem(allItems, (int)data);
         else playerInv.giveItem(getItem(allItems, (int)data));
         i++;
     }
@@ -89,7 +92,10 @@ int Game::getPlayerX() {return setting.xplayer;}
 int Game::getPlayerY() {return setting.yplayer;}
 void Game::setMoney(int x) {setting.money = x;}
 int Game::getMoney() {return setting.money;}
-void Game::setVita(double x) {setting.vita = x;}
+void Game::setVita(double x) {
+    setting.vita = x;
+    if(x<=0) dead = true;
+}
 double Game::getVita() {return setting.vita;}
 double Game::getMaxVita() {return setting.stats[0];}
 int Game::getMap() {return setting.map;}
@@ -100,6 +106,8 @@ int Game::getLevel() {return setting.level;}
 void Game::setLevel(int i) {setting.level = i;}
 int Game::getLives() {return setting.lives;}
 void Game::setLives(int i) {setting.lives = i;}
+int Game::getBestLvl() {return setting.bestlvl;}
+void Game::setBestLvl(int i) {setting.bestlvl = i;}
 double Game::getAtk() {return setting.stats[1];}
 double Game::getRes() {return setting.stats[2];}
-double Game::getSpeed() {return setting.stats[3];}
+double Game::getLuck() {return setting.stats[3];}
