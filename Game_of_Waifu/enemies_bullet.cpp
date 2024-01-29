@@ -79,8 +79,8 @@ pbullets moveShoot(pbullets& hd, WINDOW * win){
         if (checkBulletCollision(hd->bull, win) || checkBullPlayerColl(hd->bull, win)) hd->bull.distance = maxShootDistance-1;
 
         mvwaddch(win, hd->bull.yBull, hd->bull.xBull, ' ');
-        if (hd->bull.direction == -1) {hd->bull.xBull--; mvwaddch(win, hd->bull.yBull, hd->bull.xBull, '-'); hd->bull.distance++;}
-        else if (hd->bull.direction == 1) {hd->bull.xBull++; mvwaddch(win, hd->bull.yBull, hd->bull.xBull, '-'); hd->bull.distance++;}
+        if (hd->bull.direction == -1) {hd->bull.xBull--; mvwaddch(win, hd->bull.yBull, hd->bull.xBull, '*'); hd->bull.distance++;}
+        else if (hd->bull.direction == 1) {hd->bull.xBull++; mvwaddch(win, hd->bull.yBull, hd->bull.xBull, '*'); hd->bull.distance++;}
         else if (hd->bull.direction == 0) {hd->bull.yBull++; mvwaddch(win, hd->bull.yBull, hd->bull.xBull, 'v'); hd->bull.distance++;}
         
         if (hd->bull.distance >= maxShootDistance) mvwaddch(win, hd->bull.yBull, hd->bull.xBull, ' ');

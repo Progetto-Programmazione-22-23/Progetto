@@ -198,6 +198,11 @@ bool Player::isSwording() {
   return this->swording;
 }
 
+swordXY Player::swordInfo(){
+  swordXY sword = {swordX, swordY, 1+swordL, ds};
+  return sword;
+}
+
 void Player::shoot(int i){
   if(!bulletFired){
     // if (i == 0 && ds == 1) {this->bulletX = getX()+1; this->bulletY = getY();}

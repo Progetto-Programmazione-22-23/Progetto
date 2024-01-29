@@ -12,6 +12,8 @@ struct statistics {
     int atkSpeed;
 };
 
+int absolute(int x);
+
 class Mob{
     protected:
         statistics stats;
@@ -56,6 +58,8 @@ struct nemico {
     nemico * next;
 };
 typedef nemico* pnemici;
+
+
 
 pnemici InsMob(pnemici hd, Mob x);
 pnemici InsZombie(pnemici& hd, int y, int x, int lv);

@@ -11,6 +11,13 @@
 
 int ActualTik = 0;
 
+struct swordXY {
+    int sX;
+    int sY;
+    int len;
+    int ds;
+};
+
 class Player {
     protected:
         int y, x, yMax, xMax;
@@ -42,6 +49,7 @@ class Player {
         void attack(WINDOW * win, bool dir);
         void swordAtk(WINDOW * win);
         bool isSwording();
+        swordXY swordInfo();
         int getX();
         int getY();
         int getBulletX();
@@ -62,3 +70,6 @@ class Player {
         void moveBullet(WINDOW * win);
         void display();
 };
+
+
+

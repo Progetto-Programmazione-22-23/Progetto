@@ -15,6 +15,11 @@ Mob::Mob (int y, int x, int l, int s, int d, int as, char ch, int m, bool fl, bo
     this->moneyDrop = m;
 }
 
+int absolute(int x){
+    if (x<0) return -x;
+    else return x;
+}
+
 /*get*/
 int Mob::getX() {return this->x;}
 int Mob::getY() {return this->y;}
@@ -161,7 +166,7 @@ void update(pnemici hd, Player* pl, int ActualTick, WINDOW * win, pbullets& bull
             if (hd->nem.getfly()) ds = 0;
             if (hd->nem.getRanged() && (ActualTick % (hd->nem.getAtkSpeed()) == 0)) 
                 bullHd = addBullet(bullHd, hd->nem.getX(), hd->nem.getY(), ds, hd->nem.getDmg());
-        
+
         /*danni da contatto al player*/
             if (pl->getX() == hd->nem.getX() && pl->getY() == hd->nem.getY()){
                 if (pl->getLastHit() < ActualTick-80) {
@@ -170,9 +175,18 @@ void update(pnemici hd, Player* pl, int ActualTick, WINDOW * win, pbullets& bull
                     pl->updateLastHit(ActualTick);
                 }
             }
+
+        /*danni da spada al mob*/
+            swordXY spada = pl->swordInfo();
+            if (hd->nem.getY() == spada.sY && absolute(hd->nem.getX() - pl->getX()) <= spada.len && (hd->nem.getX() - pl->getX())*ds >= 0){
+                hd->nem.NemDmg(current_game.getInventory()->getBarItem(0,current_game.getInventory()->getSelected()).getModifier(1));
+                // hd->nem.NemDmg(100);
+            }
+
         /*danni da sparo al mob*/
             if (pl->getBulletX() == hd->nem.getX() && pl->getBulletY() == hd->nem.getY()){
-                hd->nem.NemDmg(100);
+                hd->nem.NemDmg(current_game.getInventory()->getBarItem(0,current_game.getInventory()->getSelected()).getModifier(1));
+                // hd->nem.NemDmg(100);
                 pl->stopBullet();
             }
 
