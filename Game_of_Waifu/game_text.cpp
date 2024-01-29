@@ -21,11 +21,13 @@ void gameTitle(int xMax, int yMax){
 
 void gameOver(){
     int yMax, xMax;
+    bool OG = true;
     getmaxyx(stdscr, yMax, xMax);
 
     WINDOW * overWin = newwin(yMax, xMax, 0, 0);
     wborder(overWin, 0, 0, (int)'=', (int)'=', (int)'<', (int)'>', (int)'<', (int)'>');
     wclear(stdscr);
+    clear();
     refresh();
     wrefresh(overWin);
     keypad(overWin, true); // to get key input (up, down, left, right);
@@ -34,25 +36,26 @@ void gameOver(){
     int overYMax, overXMax;
     getmaxyx(overWin, overYMax, overXMax);
 
-    while (true){
         const char* myString;
 
-        mvwprintw(overWin, overYMax/2-10, overXMax/2-20, "%s", "( (                            ( /(                   )");
         myString = R"(                                 )                   )";
-        mvprintw(overYMax/2-10, overXMax/2-40, myString, overWin);
+        mvprintw(overYMax/2-10, overXMax/2-30, myString, overWin);
         myString = R"( (                            ( /(                   )";
-        mvprintw(overYMax/2-9, overXMax/2-40, myString, overWin);
+        mvprintw(overYMax/2-9, overXMax/2-30, myString, overWin);
         myString = R"( )\ )       )     )      (    )\())   )      (   (   )";
-        mvprintw(overYMax/2-8, overXMax/2-40, myString, overWin);
+        mvprintw(overYMax/2-8, overXMax/2-30, myString, overWin);
         myString = R"((()/(    ( /(    (      ))\  ((_)\   /((    ))\  )(  )";
-        mvprintw(overYMax/2-7, overXMax/2-40, myString, overWin);
+        mvprintw(overYMax/2-7, overXMax/2-30, myString, overWin);
         myString = R"( /(_))_  )(_))   )\  ' /((_)   ((_) (_))\  /((_)(()\ )";
-        mvprintw(overYMax/2-6, overXMax/2-40, myString, overWin);
+        mvprintw(overYMax/2-6, overXMax/2-30, myString, overWin);
         myString = R"((_)) __|((_)_  _((_)) (_))    / _ \ _)((_)(_))   ((_))";
-        mvprintw(overYMax/2-5, overXMax/2-40, myString, overWin);
+        mvprintw(overYMax/2-5, overXMax/2-30, myString, overWin);
         myString = R"(  | (_ |/ _` || '  \()/ -_)  | (_) |\ V / / -_) | '_|)";
-        mvprintw(overYMax/2-4, overXMax/2-40, myString, overWin);
+        mvprintw(overYMax/2-4, overXMax/2-30, myString, overWin);
         myString = R"(   \___|\__,_||_|_|_| \___|   \___/  \_/  \___| |_|   )";
-        mvprintw(overYMax/2-3, overXMax/2-40, myString, overWin);
+        mvprintw(overYMax/2-3, overXMax/2-30, myString, overWin);
+    while(OG){
+        int ch = getch();
+        if (ch == 10) OG = false;
     }
 }
