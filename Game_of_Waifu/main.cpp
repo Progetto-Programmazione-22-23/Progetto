@@ -110,6 +110,7 @@ void start(){
 
         /*Proiettile Player*/
         player.moveBullet(playerwin);
+        player.attack(palyerwin);
 
         /*Proiettili Nemici*/
         bullHd = moveShoot(bullHd, playerwin);
