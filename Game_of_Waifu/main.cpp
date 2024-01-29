@@ -117,10 +117,12 @@ void start(){
 
         box(playerwin, 0, 0);     // aggiorna le finestre
         box(userwin, 0, 0);
-        wrefresh(playerwin);
-        wrefresh(userwin);
+        
 
         player.getMv(playerwin, userwin, loop, cont); // prende user input 
+
+        wrefresh(playerwin);
+        wrefresh(userwin);
         if(!loop) saveMobs(hd);
 
         player.update(prxMax, playerwin, cont);
