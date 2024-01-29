@@ -104,8 +104,8 @@ void start(){
 
         /*CONTROLLO DEI MOB*/
         update(hd, &player, cont, playerwin, bullHd);           // movimenti
-        hd = Death(hd);                                 // elimino mob morti
-        display(hd, playerwin);                         // disegno i mob in vita
+        hd = Death(hd);                                         // elimino mob morti
+        display(hd, playerwin);                                 // disegno i mob in vita
         if(dead) resetLife(playerwin, hd, player, loop);
 
         /*Proiettile Player*/
