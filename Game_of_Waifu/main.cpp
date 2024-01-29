@@ -22,7 +22,7 @@ void resetLife(WINDOW * win, pnemici& hd, Player& p, bool& loop) {
     wclear(win);
     dead = false;
     int l = current_game.getLives();
-    if(l==1) {
+    if(l==3) {
         loop = false; //game over
     } else {
         int ymax, xmax;
@@ -132,10 +132,9 @@ void start(){
 
         // current_game.setLives(0);
 
-        if (current_game.getLives() <= 0) gameOver();
-
         napms(35);                  // 35ms di pausa (circa 30fps)
     } 
+    gameOver();
 }
 
 int main(int argc, char ** argv){

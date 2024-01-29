@@ -42,25 +42,6 @@ void GoDown(WINDOW * win, int h, int l){
 
 /// SPECIAL BLOCK SECTION ///
 
-// qui vanno create tutte le trappole ed i blocchi di aiuto (cure, spawn armi ecc...) che vengono poi selezionati dalle funzioni sotto in modo random
-
-// void Bomb(){
-//     current_game.setVita(current_game.getVita()-1);
-// }
-
-// void Robberry(){
-//     current_game.setMoney(current_game.getMoney()-1);
-// }
-
-// void SpawnTrap(){
-//     int i = rand() % 2;
-//     if (i == 0){
-//         Bomb();
-//     }else if (i == 1){
-//         Robberry();
-//     }
-// }
-
 void Heal(int amount){
     if(current_game.getVita()>=10+current_game.getMaxVita())
         Money(1), Ammos(2);
@@ -105,23 +86,7 @@ void SpecialBlock(WINDOW * win, int h, int l){
     addSpecial(l,h);
 }
 
-void UseLuckyBlock(){
-    
-    int i = rand() % 2;     // 50% tra blocco buono o cattivo
-    if (i == 0){
-        SpawnHelp();
-    }else{
-        SpawnHelp();
-    }
-}
 /// END SPECIAL BLOCK SECTION ///
-
-/*
-void SpawnBullet(WINDOW * win, int h, int l){
-    mvwaddch(win, h, l, 'O');
-    // salvare i proiettili in memoria :P
-}
-*/
 
 void SpawnPlatform(WINDOW * win, int high, int len){
     int NumSpecialBlock = 0;

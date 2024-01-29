@@ -16,17 +16,13 @@ void SpawnEnd(WINDOW * win, int h, int l);            // base di fine di ogni li
 int calcYmin(int x);
 
 void SpecialBlock(WINDOW * win, int h, int l);        // pezzo di strada dritta con blocco speciale;
-//void SpawnTrap();
 void SpawnHelp();
 void Heal(int amount);
 void Money(int amount);
 void Ammos(int amount);
-//void Bomb();
-//void UseLuckyBlock(WINDOW * win, int h, int l);
 
 void GoUp(WINDOW * win, int h, int l);
 void GoStraight(WINDOW * win, int h, int l);
 void GoDown(WINDOW * win, int h, int l);
 void SpawnPlatform(WINDOW * win, int high, int len);
-//void SpawnBullet(WINDOW * win, int h, int l);
 void mapgenerator(WINDOW * win);
