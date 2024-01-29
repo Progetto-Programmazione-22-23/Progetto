@@ -22,7 +22,7 @@ void resetLife(WINDOW * win, pnemici& hd, Player& p, bool& loop) {
     wclear(win);
     dead = false;
     int l = current_game.getLives();
-    if(l==3) {
+    if(l==1) {
         loop = false; //game over
     } else {
         int ymax, xmax;
