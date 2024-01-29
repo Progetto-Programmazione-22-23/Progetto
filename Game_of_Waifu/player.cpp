@@ -17,8 +17,6 @@ int Player::getX() {return x;}
 int Player::getY() {return y;}
 int Player::getBulletX() {return bulletX;}
 int Player::getBulletY() {return bulletY;}
-int Player::getSwordX() {return swordX:}
-int Player::getSwordY() {return swordY:}
 int Player::getLastHit() {return LastHit;}
 void Player::updateLastHit(int tick) {this->LastHit = tick;}
 char Player::getChar() {return character;}
@@ -164,20 +162,24 @@ void Player::attack(WINDOW * win, bool dir) {
   Item item = current_game.getInventory()->getBarItem(0,s);
   int id = item.getId(), special = item.getAmount();
 
-  this->swordX = getX();
-  this->swordY = getY();
-  this->swording = true;
+  
 
   if(id!=0) {
     if(id<10) {
       wattron(win,  COLOR_PAIR(3));
+
       for(int i=1;i<=1+special;i++) {
         mvwaddch(win, getY(), getX()+ds*i, '-');
       } 
-
-    
       wattroff(win, COLOR_PAIR(3));
-      refresh(); 
+
+
+      this->swordX = getX();
+      this->swordY = getY();
+      this->swordL = special;
+      this->swording = true;
+
+      
     }
     else if (id < 20) {
       shoot(dir);
@@ -186,10 +188,14 @@ void Player::attack(WINDOW * win, bool dir) {
 }
 
 void Player::swordAtk(WINDOW * win){
-  mvwaddch(win, swordY, swordX, ' ');   // Cancella il proiettile dalla posizione precedente
-  if (direction == 0) {this->swordX; mvwaddch(win, swordY, swordX, '-'); this->swordX++; mvwaddch(win, swordY, swordX, '-');}
-  else if (direction == 1) {this->swordX; mvwaddch(win, swordY, swordX, '-'); this->swordX--; mvwaddch(win, swordY, swordX, '-');}
-  refresh();                              // Aggiorna la finestra
+  for(int i=1;i<=1+this->swordL;i++) 
+        mvwaddch(win, swordY, swordX+ds*i, ' ');
+
+  this->swording = false;
+}
+
+bool Player::isSwording() {
+  return this->swording;
 }
 
 void Player::shoot(int i){

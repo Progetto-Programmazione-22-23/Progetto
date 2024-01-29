@@ -110,7 +110,6 @@ void start(){
 
         /*Proiettile Player*/
         player.moveBullet(playerwin);
-        player.attack(palyerwin);
 
         /*Proiettili Nemici*/
         bullHd = moveShoot(bullHd, playerwin);
@@ -119,7 +118,7 @@ void start(){
         box(playerwin, 0, 0);     // aggiorna le finestre
         box(userwin, 0, 0);
         
-
+        if(player.isSwording()) player.swordAtk(playerwin);
         player.getMv(playerwin, userwin, loop, cont); // prende user input 
 
         wrefresh(playerwin);
