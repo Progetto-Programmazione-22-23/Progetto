@@ -136,11 +136,11 @@ void Player::getMv(WINDOW * playerwin, WINDOW * userwin, bool &loop, int tik) {
       break;
     case 10:  // press enter 
       if (!bulletFired) direction = ds;
-      attack(0);
+      attack(playerwin, 0);
       break;
     case 'q':
       if (!bulletFired) direction = 2;
-      attack(1);
+      attack(playerwin, 1);
       break;
     case ERR:
       stop();
@@ -157,19 +157,27 @@ void Player::getMv(WINDOW * playerwin, WINDOW * userwin, bool &loop, int tik) {
 }
 
 // 0: destra, 1: sinistra
-void Player::attack(bool dir) {
+void Player::attack(WINDOW * win, bool dir) {
   // booleano che controlla se ho un'arma selezionata
   // true -> uso l'arma
   // false -> attacco base corpo a corpo
   int s = current_game.getInventory()->getSelected();
-  int id = current_game.getInventory()->getBarItem(0,s).getId();
-  int startX = current_game.getPlayerX()+7, startY = current_game.getPlayerY()+3;
+  Item item = current_game.getInventory()->getBarItem(0,s);
+  int id = item.getId(), special = item.getAmount();
   if(id!=0) {
     if(id<10) {
-      attron(COLOR_PAIR(1));
-      mvaddch(startY, startX+ds, '-'), mvaddch(startY, startX+2*ds, '-');
-      attroff(COLOR_PAIR(1));
-      //checkHit(startX, startY);
+      wattron(win,  COLOR_PAIR(3));
+      for(int i=1;i<=1+special;i++) {
+        mvwaddch(win, getY(), getX()+ds*i, '-');
+      } 
+
+      
+
+      
+
+      wattroff(win, COLOR_PAIR(3));
+      //for(int i=1;i<=1+special;i++) mvwaddch(win, getY(), getX()+ds*i, ' ');
+      refresh(); 
     }
     else if (id < 20) {
       shoot(dir);

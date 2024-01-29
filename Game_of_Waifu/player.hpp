@@ -37,7 +37,7 @@ class Player {
         void move_right();
         void stop();
         void jump(int tik);
-        void attack(bool dir);
+        void attack(WINDOW * win, bool dir);
         int getX();
         int getY();
         int getBulletX();
