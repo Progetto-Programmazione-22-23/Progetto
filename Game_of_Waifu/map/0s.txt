@@ -1,3 +1,6 @@
+<<<<<<< HEAD
 68 17
 82 13
 176 15
+=======
+>>>>>>> refs/remotes/origin/main
