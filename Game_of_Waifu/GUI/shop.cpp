@@ -77,7 +77,8 @@ void OpenChoiceShop(WINDOW * choiceWin, Item item){
                 clearSelect(choiceWin); 
 
                 if(highlights==0) {
-                    if(current_game.getMoney()>=item.getPrice()) {
+                    bool enough = current_game.getMoney()>=item.getPrice();
+                    if(enough) {
                         current_game.setMoney(current_game.getMoney()-item.getPrice());
                         if(item.getId() == 19) {
                             current_game.setAmmo(current_game.getAmmo()+5); // ECCEZIONE PER QUANDO SI COMPRANO I PROIETTILI
@@ -88,7 +89,7 @@ void OpenChoiceShop(WINDOW * choiceWin, Item item){
                             else inv->giveItem(item);
                         }
                     }
-                    purchaseFeedback(choiceWin,current_game.getMoney()>=item.getPrice());
+                    purchaseFeedback(choiceWin,enough);
                 }
                 break;
             default:
