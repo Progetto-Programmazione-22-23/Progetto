@@ -1,5 +1,4 @@
 #include "inv_logic.cpp"
-#define MAX_AMMO 24
 
 struct igame {
     double xplayer, yplayer, map, money, vita, ammo, level, lives, bestlvl, stats[CATEGORIES];

@@ -78,14 +78,8 @@ void Money(int amount){
 }
 
 void Ammos(int amount) {
-    if(current_game.getAmmo()>=MAX_AMMO)
-        Money(2);
-    else {
         int incr = current_game.getAmmo()+amount*(current_game.getLuck()+1);
-        if(incr > MAX_AMMO)
-            incr = MAX_AMMO;
         current_game.setAmmo(incr);   
-    }
 }
 
 void SpawnHelp(){

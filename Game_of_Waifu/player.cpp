@@ -165,24 +165,22 @@ void Player::attack(WINDOW * win, bool dir) {
   
 
   if(id!=0) {
+    int ammos = current_game.getAmmo();
     if(id<10) {
       wattron(win,  COLOR_PAIR(3));
-
-      for(int i=1;i<=1+special;i++) {
+      for(int i=1;i<=1+special;i++)
         mvwaddch(win, getY(), getX()+ds*i, '-');
-      } 
       wattroff(win, COLOR_PAIR(3));
-
 
       this->swordX = getX();
       this->swordY = getY();
       this->swordL = special;
       this->swording = true;
 
-      
     }
-    else if (id < 20) {
+    else if (id < 20 && ammos > 0) {
       shoot(dir);
+      current_game.setAmmo(ammos-1);
     }
   }
 }

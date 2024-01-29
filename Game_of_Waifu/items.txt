@@ -4,6 +4,7 @@
 4 10 Spada-di-Diamante 0 3 1 Creeper..-Aww-Man 0 8 0 0
 10 2 Arco 0 0 1 Spara-da-lontano 0 1 0 0
 11 4 Arco-Lungo 0 10 2 Spara-ancora-piu'-lontano 0 2 0 0
+19 2 *5X-AMMOS* 0 0 0 5-munzioni-in-piu' 0 0 0 0
 40 1 Armatura 1 0 0 Copriti-un-po' 0 0 1 0
 41 3 Armatura-d'Acciaio 1 40 0 Bello-resistente 0 0 2 0
 42 10 Armatura-di-Diamante 1 41 0 Indistruttibile-(uncle-pear) 0 0 3 0

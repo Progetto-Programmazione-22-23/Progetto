@@ -1,6 +1,6 @@
 #include "save.hpp"
 
-igame fresh = {0,0,0,0,1,0,0,3,0,{0,0,0,0},Inventory(),true};
+igame fresh = {0,0,0,0,9,0,0,3,0,{0,0,0,0},Inventory(),true};
 Game current_game = Game(fresh);
 bool dead = false;
 
