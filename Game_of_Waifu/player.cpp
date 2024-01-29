@@ -171,10 +171,7 @@ void Player::attack(WINDOW * win, bool dir) {
         mvwaddch(win, getY(), getX()+ds*i, '-');
       } 
 
-      
-
-      
-
+    
       wattroff(win, COLOR_PAIR(3));
       //for(int i=1;i<=1+special;i++) mvwaddch(win, getY(), getX()+ds*i, ' ');
       refresh(); 
