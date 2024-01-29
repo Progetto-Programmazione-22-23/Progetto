@@ -18,7 +18,8 @@ class Player {
         // Object bullet;
         int bulletX, bulletY;
         int bulletDistance = 0;
-        const int maxBulletDistance = 10;
+        const int ogBulletDistance = 10;
+        int maxBulletDistance = 10;
         float x_velocity, y_velocity;
         bool is_jumping;
         bool bulletFired = false;
@@ -36,7 +37,7 @@ class Player {
         void move_right();
         void stop();
         void jump(int tik);
-        void attack();
+        void attack(bool dir);
         int getX();
         int getY();
         int getBulletX();
