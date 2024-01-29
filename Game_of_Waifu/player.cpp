@@ -17,6 +17,8 @@ int Player::getX() {return x;}
 int Player::getY() {return y;}
 int Player::getBulletX() {return bulletX;}
 int Player::getBulletY() {return bulletY;}
+int Player::getSwordX() {return swordX:}
+int Player::getSwordY() {return swordY:}
 int Player::getLastHit() {return LastHit;}
 void Player::updateLastHit(int tick) {this->LastHit = tick;}
 char Player::getChar() {return character;}
@@ -158,12 +160,14 @@ void Player::getMv(WINDOW * playerwin, WINDOW * userwin, bool &loop, int tik) {
 
 // 0: destra, 1: sinistra
 void Player::attack(WINDOW * win, bool dir) {
-  // booleano che controlla se ho un'arma selezionata
-  // true -> uso l'arma
-  // false -> attacco base corpo a corpo
   int s = current_game.getInventory()->getSelected();
   Item item = current_game.getInventory()->getBarItem(0,s);
   int id = item.getId(), special = item.getAmount();
+
+  this->swordX = getX();
+  this->swordY = getY();
+  this->swording = true;
+
   if(id!=0) {
     if(id<10) {
       wattron(win,  COLOR_PAIR(3));
@@ -173,13 +177,19 @@ void Player::attack(WINDOW * win, bool dir) {
 
     
       wattroff(win, COLOR_PAIR(3));
-      //for(int i=1;i<=1+special;i++) mvwaddch(win, getY(), getX()+ds*i, ' ');
       refresh(); 
     }
     else if (id < 20) {
       shoot(dir);
     }
   }
+}
+
+void Player::swordAtk(WINDOW * win){
+  mvwaddch(win, swordY, swordX, ' ');   // Cancella il proiettile dalla posizione precedente
+  if (direction == 0) {this->swordX; mvwaddch(win, swordY, swordX, '-'); this->swordX++; mvwaddch(win, swordY, swordX, '-');}
+  else if (direction == 1) {this->swordX; mvwaddch(win, swordY, swordX, '-'); this->swordX--; mvwaddch(win, swordY, swordX, '-');}
+  refresh();                              // Aggiorna la finestra
 }
 
 void Player::shoot(int i){
