@@ -144,9 +144,9 @@ void mobSwordDmg(Player* pl, Mob& nem, int ds){
     }
 }
 
-void mobShootDmg(Player* pl, Mob nem){
-    if (pl->getBulletX() == hd->nem.getX() && pl->getBulletY() == hd->nem.getY()){
-        hd->nem.NemDmg(current_game.getInventory()->getBarItem(0,current_game.getInventory()->getSelected()).getModifier(1));
+void mobShootDmg(Player* pl, Mob& nem){
+    if (pl->getBulletX() == nem.getX() && pl->getBulletY() == nem.getY()){
+        nem.NemDmg(current_game.getInventory()->getBarItem(0,current_game.getInventory()->getSelected()).getModifier(1));
         pl->stopBullet();
     }
 }
