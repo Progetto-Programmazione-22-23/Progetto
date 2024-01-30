@@ -1,7 +1,5 @@
 #include "map.hpp"
 
-
-
 void SpawnStart(WINDOW * win, int h){
     int l = 0;
     while (l < Lstart){
@@ -28,17 +26,9 @@ int calcYmin(int x) {
   return 0;
 }
 
-void GoStraight(WINDOW * win, int h, int l){
-    mvwaddch(win, h, l, '_') ;
-}
-
-void GoUp(WINDOW * win, int h, int l){
-    mvwaddch(win, h, l, '/'), addCoord(l,h);
-}
-
-void GoDown(WINDOW * win, int h, int l){
-    mvwaddch(win, h, l, '\\'), addCoord(l,h-1);
-}
+void GoStraight(WINDOW * win, int h, int l){mvwaddch(win, h, l, '_') ;}
+void GoUp(WINDOW * win, int h, int l){mvwaddch(win, h, l, '/'), addCoord(l,h);}
+void GoDown(WINDOW * win, int h, int l){mvwaddch(win, h, l, '\\'), addCoord(l,h-1);}
 
 /// SPECIAL BLOCK SECTION ///
 
@@ -65,7 +55,6 @@ void Ammos(int amount) {
 
 void SpawnHelp(){
     int tot = 3;
-    //if(current_game)
     int i = rand() % tot;
     if (i == 0) Money(2);
     else if (i == 1) Heal(1);
@@ -85,7 +74,7 @@ void SpecialBlock(WINDOW * win, int h, int l){
 void SpawnPlatform(WINDOW * win, int high, int len){
     int NumSpecialBlock = 0;
     int i, L = 15, h = 0;                                               // i:Possibilità di Spawn, L:No spawn prima di x = 15, h:H dal cielo
-    int LastX = -100, LastYspawn = 0;                                   // X di fine e inizio dell'ultima piattaforma, Y di inizio dell'ultima piattaforma
+    int LastX = -100, LastYspawn = 0;                                   // X di fine dell'ultima piattaforma, Y di inizio dell'ultima piattaforma
     int counter = 0;
     bool buildable = true;
     while(L < len-15){
@@ -109,7 +98,7 @@ void SpawnPlatform(WINDOW * win, int high, int len){
 
             /*Controllo non ci siano collisioni con la mappa*/
             for (int k = 0; k<lenPlat; k++){
-                if (calcYmin(k+L)-h < 3) buildable = false;
+                if (calcYmin(k+L)-h < 3) buildable = false;             // Se mi scontro con la mappa, non posso costruire
                 k++;
             }
 
@@ -132,7 +121,7 @@ void SpawnPlatform(WINDOW * win, int high, int len){
                 lenPlat = 0;
             } else {L++; buildable = true;}
         }
-        L+=3;
+        L+=3;           // almeno 3 blocchi di distanza tra due piattaforme
     }
 }
 

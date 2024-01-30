@@ -247,10 +247,6 @@ void regenOldMap(WINDOW * win, bool refresh) {
         w++;
     }
 
-        
-    
-    
-
     for(pcoords q = specials;q!=NULL;q = q->next) {
         if(refresh){
             wattron(win, COLOR_PAIR(104));

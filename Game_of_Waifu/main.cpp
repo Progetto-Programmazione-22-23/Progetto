@@ -92,9 +92,7 @@ void start(){
     bool loop = true; 
     int state = -1;   
     while (loop){
-        cont++;
-        // controlla l'armatura WIP
-        // current_game.setMaxVita(14);
+        cont++;     // aumento tick di gioco
         if(state!=current_game.getState()) {
             current_game.updateStats();
             state = current_game.getState();
@@ -113,15 +111,14 @@ void start(){
         /*Proiettili Nemici*/
         bullHd = moveShoot(bullHd, playerwin);
         bullHd = removeShoot(bullHd);
-
-        box(playerwin, 0, 0);     // aggiorna le finestre
-        box(userwin, 0, 0);
         
         if(player.isSwording()) player.swordAtk(playerwin);
         player.getMv(playerwin, userwin, loop, cont); // prende user input 
 
         if(dead) resetLife(playerwin, hd, player, loop);
 
+        box(playerwin, 0, 0);     // aggiorna le finestre
+        box(userwin, 0, 0);
         wrefresh(playerwin);
         wrefresh(userwin);
         if(!loop) saveMobs(hd);

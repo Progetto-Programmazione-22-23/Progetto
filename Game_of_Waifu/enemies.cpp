@@ -40,7 +40,7 @@ void Mob::mvleft(){this->x--;}
 void Mob::mvright(){this->x++;}
 void Mob::mvup(){this->y--;}
 void Mob::mvdown(){this->y++;}
-void Mob::setY(int yx) {this->y = yx;}
+void Mob::setY(int nY) {this->y = nY;}
 
 /*Danno al Mob*/
 void Mob::NemDmg(int dmg){this->stats.life -= dmg;};
@@ -54,11 +54,11 @@ void takeDmg(int dmg) {
 
 /*funzioni di inserimento dei diversi mob*/
 pnemici InsMob(pnemici hd, Mob x) {pnemici nhd = new nemico; nhd->nem = x; nhd->next = hd; return nhd;}
-pnemici InsZombie(pnemici& hd, int y, int x, int lv) {return InsMob(hd, Mob (y, x, lv+1, 10, (lv/2)+1, 0, 'Z', 2, false, false, 10, 0));}
-pnemici InsGolem(pnemici& hd, int y, int x, int lv) {return InsMob(hd, Mob (y, x, 3+lv+lv/2, 20, lv+1, 0, 'G', 4, false, false, 11, 1));}
-pnemici InsCerbottaniere(pnemici& hd, int y, int x, int lv) {return InsMob(hd, Mob (y, x, lv+1, 7, (lv/2)+1, 65, 'C', 3, false, true, 12, 2));}
-pnemici InsBat(pnemici& hd, int y, int x, int lv) {return InsMob(hd, Mob (y, x, (lv/3)+1, 5, lv+1, 50, 'V', 2, true, true, 20, 10));}
-pnemici InsDemon(pnemici& hd, int y, int x, int lv) {return InsMob(hd, Mob (y, x, (lv/2)+1, 13, (lv/3)+lv+1, 80, 'D', 4, true, true, 21, 11));}
+pnemici InsZombie(pnemici& hd, int y, int x, int lv) {return InsMob(hd, Mob (y, x, lv+1, 10, (lv/2)+1, 0, 'Z', 1, false, false, 10, 0));}
+pnemici InsGolem(pnemici& hd, int y, int x, int lv) {return InsMob(hd, Mob (y, x, 3+lv+lv/2, 20, lv+1, 0, 'G', 3, false, false, 11, 1));}
+pnemici InsCerbottaniere(pnemici& hd, int y, int x, int lv) {return InsMob(hd, Mob (y, x, lv+1, 7, (lv/2)+1, 65, 'C', 2, false, true, 12, 2));}
+pnemici InsBat(pnemici& hd, int y, int x, int lv) {return InsMob(hd, Mob (y, x, (lv/3)+1, 5, lv+1, 50, 'V', 1, true, true, 20, 10));}
+pnemici InsDemon(pnemici& hd, int y, int x, int lv) {return InsMob(hd, Mob (y, x, (lv/2)+1, 13, (lv/3)+lv+1, 80, 'D', 3, true, true, 21, 11));}
 
 /*gestione coordinate*/
 pcoords InsCoords(pcoords& hd, int mx, int my) {
@@ -127,6 +127,30 @@ void checkMin(WINDOW * win, pnemici hd, int minY){
     }
 }
 
+void playerContactDmg(Player* pl, Mob nem, int ActualTick){
+    if (pl->getX() == nem.getX() && pl->getY() == nem.getY()){
+        if (pl->getLastHit() < ActualTick-80) {
+            if (nem.getRanged()) takeDmg(1);
+            else takeDmg(nem.getDmg()); 
+            pl->updateLastHit(ActualTick);
+        }
+    }
+}
+
+void mobSwordDmg(Player* pl, Mob& nem, int ds){
+    swordXY spada = pl->swordInfo();
+    if (nem.getY() == spada.sY && absolute(nem.getX() - pl->getX()) <= spada.len && (nem.getX() - pl->getX())*ds <= 0 && pl->isSwording()){
+        nem.NemDmg(current_game.getInventory()->getBarItem(0,current_game.getInventory()->getSelected()).getModifier(1));
+    }
+}
+
+void mobShootDmg(Player* pl, Mob nem){
+    if (pl->getBulletX() == hd->nem.getX() && pl->getBulletY() == hd->nem.getY()){
+        hd->nem.NemDmg(current_game.getInventory()->getBarItem(0,current_game.getInventory()->getSelected()).getModifier(1));
+        pl->stopBullet();
+    }
+}
+
 void update(pnemici hd, Player* pl, int ActualTick, WINDOW * win, pbullets& bullHd) {       // simil pathfinding
     int yMax, xMax;
     getmaxyx(win, yMax, xMax);   
@@ -140,13 +164,13 @@ void update(pnemici hd, Player* pl, int ActualTick, WINDOW * win, pbullets& bull
         /*se è il loro turno, si muovono a dx o sx*/
             if (ActualTick % (hd->nem.getspeed()) == 0){
                 mvwaddch(win, hd->nem.getY(), hd->nem.getX(), ' ');
-                if (!hd->nem.getfly()){
+                if (!hd->nem.getfly()){         // mob non volanti (sx, dx)
                     if (pl->getX() < hd->nem.getX() && !InList(Chd, hd->nem.getX()-1, hd->nem.getY())) 
                         hd->nem.mvleft();
                     else if (pl->getX() > hd->nem.getX() && !InList(Chd, hd->nem.getX()+1, hd->nem.getY())) 
                         hd->nem.mvright();
                     Chd = InsCoords(Chd, hd->nem.getX(), hd->nem.getY());
-                } else if (hd->nem.getfly()){
+                } else if (hd->nem.getfly()){   // mob volanti (sx, dx, su, giu)
                     if (pl->getX() < hd->nem.getX() && !InList(Chd, hd->nem.getX()-1, hd->nem.getY())) 
                         hd->nem.mvleft();
                     else if (pl->getX() > hd->nem.getX() && !InList(Chd, hd->nem.getX()+1, hd->nem.getY())) 
@@ -167,28 +191,9 @@ void update(pnemici hd, Player* pl, int ActualTick, WINDOW * win, pbullets& bull
             if (hd->nem.getRanged() && (ActualTick % (hd->nem.getAtkSpeed()) == 0)) 
                 bullHd = addBullet(bullHd, hd->nem.getX(), hd->nem.getY(), ds, hd->nem.getDmg());
 
-        /*danni da contatto al player*/
-            if (pl->getX() == hd->nem.getX() && pl->getY() == hd->nem.getY()){
-                if (pl->getLastHit() < ActualTick-80) {
-                    if (hd->nem.getRanged()) takeDmg(1);
-                    else takeDmg(hd->nem.getDmg()); 
-                    pl->updateLastHit(ActualTick);
-                }
-            }
-
-        /*danni da spada al mob*/
-            swordXY spada = pl->swordInfo();
-            if (hd->nem.getY() == spada.sY && absolute(hd->nem.getX() - pl->getX()) <= spada.len && (hd->nem.getX() - pl->getX())*ds <= 0 && pl->isSwording()){
-                hd->nem.NemDmg(current_game.getInventory()->getBarItem(0,current_game.getInventory()->getSelected()).getModifier(1));
-                // hd->nem.NemDmg(100);
-            }
-
-        /*danni da sparo al mob*/
-            if (pl->getBulletX() == hd->nem.getX() && pl->getBulletY() == hd->nem.getY()){
-                hd->nem.NemDmg(current_game.getInventory()->getBarItem(0,current_game.getInventory()->getSelected()).getModifier(1));
-                // hd->nem.NemDmg(100);
-                pl->stopBullet();
-            }
+            playerContactDmg(pl, hd->nem, ActualTick);      // danni da contatto al player
+            mobSwordDmg(pl, hd->nem, ds);                   // danni da spada al mob
+            mobShootDmg(pl, hd->nem);                       // danni da freccia al mob
 
             hd = hd->next;
         }

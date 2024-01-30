@@ -203,9 +203,6 @@ swordXY Player::swordInfo(){
 
 void Player::shoot(int i){
   if(!bulletFired){
-    // if (i == 0 && ds == 1) {this->bulletX = getX()+1; this->bulletY = getY();}
-    // else if (i == 0 && ds == -1) {this->bulletX = getX()-1; this->bulletY = getY();}
-    // else if (i == 1) {this->bulletX = getX(); this->bulletY = getY()-1;}
     this->bulletX = getX();
     this->bulletY = getY();
     this->bulletFired = true;
