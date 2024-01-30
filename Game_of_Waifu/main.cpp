@@ -102,6 +102,11 @@ void start(){
         //interface(yMax, xMax);
         showStats(userwin);
 
+        /*CONTROLLO DEI MOB*/
+        update(hd, &player, cont, playerwin, bullHd);           // movimenti
+        hd = Death(hd);                                         // elimino mob morti
+        display(hd, playerwin);                                 // disegno i mob in vita
+
         /*Proiettile Player*/
         player.moveBullet(playerwin);
 
@@ -115,10 +120,6 @@ void start(){
         if(player.isSwording()) player.swordAtk(playerwin);
         player.getMv(playerwin, userwin, loop, cont); // prende user input 
 
-        /*CONTROLLO DEI MOB*/
-        update(hd, &player, cont, playerwin, bullHd);           // movimenti
-        hd = Death(hd);                                         // elimino mob morti
-        display(hd, playerwin);                                 // disegno i mob in vita
         if(dead) resetLife(playerwin, hd, player, loop);
 
         wrefresh(playerwin);

@@ -178,7 +178,7 @@ void update(pnemici hd, Player* pl, int ActualTick, WINDOW * win, pbullets& bull
 
         /*danni da spada al mob*/
             swordXY spada = pl->swordInfo();
-            if (hd->nem.getY() == spada.sY && absolute(hd->nem.getX() - pl->getX()) <= spada.len && (hd->nem.getX() - pl->getX())*ds >= 0){
+            if (hd->nem.getY() == spada.sY && absolute(hd->nem.getX() - pl->getX()) <= spada.len && (hd->nem.getX() - pl->getX())*ds <= 0 && pl->isSwording()){
                 hd->nem.NemDmg(current_game.getInventory()->getBarItem(0,current_game.getInventory()->getSelected()).getModifier(1));
                 // hd->nem.NemDmg(100);
             }
