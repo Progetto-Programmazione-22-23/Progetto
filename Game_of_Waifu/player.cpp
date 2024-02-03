@@ -162,8 +162,6 @@ void Player::attack(WINDOW * win, bool dir) {
   Item item = current_game.getInventory()->getBarItem(0,s);
   int id = item.getId(), special = item.getAmount();
 
-  
-
   if(id!=0) {
     int ammos = current_game.getAmmo();
     if(id<10) {
