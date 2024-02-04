@@ -4,7 +4,7 @@
 4 10 Spada-di-Diamante 0 3 1 Creeper..-Aww-Man 0 8 0 0
 5 10 Spada-Lunga 0 3 2 Bella-spada-fra,-voto-8/10 0 6 0 0
 6 20 Lancelot 0 5 3 Untouchable 0 10 0 0
-7 20 Frammento-d'Infinito 0 4 1
+7 20 Frammento-d'Infinito 0 4 1 Infinitamente-forte 0 11 0 0
 16 2 Arco 0 0 1 Spara-da-lontano 0 1 0 0
 11 4 Arco-Lungo 0 10 2 Spara-ancora-piu'-lontano 0 2 0 0
 12 10 Arcobaleno 0 11 3 Dall'altra-parte-del-cielo 0 4 0 0
