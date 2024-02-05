@@ -80,4 +80,3 @@ void mobSwordDmg(Player* pl, Mob& nem, int ds);
 void mobShootDmg(Player* pl, Mob& nem);
 void update(pnemici hd, Player* pl, int ActualTick, WINDOW * win, pbullets& bullHd);
 void display(pnemici hd, WINDOW * win);
-void takeDmg(int dmg);

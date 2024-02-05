@@ -2,8 +2,15 @@
 2 1 Spada-di-Pietra 0 1 1 Dura-come-la-roccia 0 2 0 0
 3 4 Spada-di-Ferro 0 2 1 Direttamente-dal-Medioevo 0 4 0 0
 4 10 Spada-di-Diamante 0 3 1 Creeper..-Aww-Man 0 8 0 0
-10 2 Arco 0 0 1 Spara-da-lontano 0 1 0 0
+5 10 Spada-Lunga 0 3 2 Bella-spada-fra,-voto-8/10 0 6 0 0
+6 20 Lancelot 0 5 3 Untouchable 0 10 0 0
+7 20 Frammento-d'Infinito 0 4 1 Infinitamente-forte 0 11 0 0
+16 2 Arco 0 0 1 Spara-da-lontano 0 1 0 0
 11 4 Arco-Lungo 0 10 2 Spara-ancora-piu'-lontano 0 2 0 0
+12 10 Arcobaleno 0 11 3 Dall'altra-parte-del-cielo 0 4 0 0
+13 20 Katniss-Everdeen 0 12 4 Vincitrice-della-74esima-edizione-degli-HG 0 8 0 0
+14 6 Balestra 0 10 1 Precisa-e-potente 0 5 0 0
+15 20 Balestra-Regale 0 14 1 God-bless-the-Queen 0 10 0 0
 19 2 *5X-AMMOS* 0 0 0 5-munzioni-in-piu' 0 0 0 0
 40 1 Armatura 1 0 0 Copriti-un-po' 0 0 1 0
 41 3 Armatura-d'Acciaio 1 40 0 Bello-resistente 0 0 2 0

@@ -51,21 +51,23 @@ bool checkBulletCollision(shoot sh, WINDOW * win){
     return false;
 }
 
-void dmgPlayer(shoot sh){
-    current_game.setVita(current_game.getVita()-sh.bDmg);
+/*Danno al Player*/
+void dmgPlayer(int dmg){
+    double total = dmg / (1+current_game.getRes()/10);
+    current_game.setVita(current_game.getVita()-total);
 }
 
 bool checkBullPlayerColl(shoot sh, WINDOW * win){
     if (mvwinch(win, sh.yBull+1, sh.xBull) == '@' && sh.direction == 0) {
-        dmgPlayer(sh);
+        dmgPlayer(sh.bDmg);
         return true; 
     }
     if (mvwinch(win, sh.yBull, sh.xBull+1) == '@' && sh.direction == 1){
-        dmgPlayer(sh);
+        dmgPlayer(sh.bDmg);
         return true; 
     }
     if (mvwinch(win, sh.yBull, sh.xBull-1) == '@' && sh.direction == -1){
-        dmgPlayer(sh);
+        dmgPlayer(sh.bDmg);
         return true; 
     }
 

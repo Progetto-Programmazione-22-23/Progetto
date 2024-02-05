@@ -45,12 +45,6 @@ void Mob::setY(int nY) {this->y = nY;}
 /*Danno al Mob*/
 void Mob::NemDmg(int dmg){this->stats.life -= dmg;};
 
-/*Danno al Player*/
-void takeDmg(int dmg) {
-    int total = current_game.getVita() - dmg;
-    if(total < 0) total = 0;
-    current_game.setVita(total);
-}
 
 /*funzioni di inserimento dei diversi mob*/
 pnemici InsMob(pnemici hd, Mob x) {pnemici nhd = new nemico; nhd->nem = x; nhd->next = hd; return nhd;}
@@ -130,8 +124,8 @@ void checkMin(WINDOW * win, pnemici hd, int minY){
 void playerContactDmg(Player* pl, Mob nem, int ActualTick){
     if (pl->getX() == nem.getX() && pl->getY() == nem.getY()){
         if (pl->getLastHit() < ActualTick-80) {
-            if (nem.getRanged()) takeDmg(1);
-            else takeDmg(nem.getDmg()); 
+            if (nem.getRanged()) dmgPlayer(1);
+            else dmgPlayer(nem.getDmg()); 
             pl->updateLastHit(ActualTick);
         }
     }
@@ -140,13 +134,13 @@ void playerContactDmg(Player* pl, Mob nem, int ActualTick){
 void mobSwordDmg(Player* pl, Mob& nem, int ds){
     swordXY spada = pl->swordInfo();
     if (nem.getY() == spada.sY && absolute(nem.getX() - pl->getX()) <= spada.len && (nem.getX() - pl->getX())*ds <= 0 && pl->isSwording()){
-        nem.NemDmg(current_game.getInventory()->getBarItem(0,current_game.getInventory()->getSelected()).getModifier(1));
+        nem.NemDmg(current_game.getAtk());
     }
 }
 
 void mobShootDmg(Player* pl, Mob& nem){
     if (pl->getBulletX() == nem.getX() && pl->getBulletY() == nem.getY()){
-        nem.NemDmg(current_game.getInventory()->getBarItem(0,current_game.getInventory()->getSelected()).getModifier(1));
+        nem.NemDmg(current_game.getAtk());
         pl->stopBullet();
     }
 }

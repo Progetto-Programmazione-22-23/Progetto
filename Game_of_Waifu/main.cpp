@@ -18,12 +18,14 @@
 // #include "shop.cpp"
 using namespace std;
 
+bool endGame = false;
 void resetLife(WINDOW * win, pnemici& hd, Player& p, bool& loop) {
     wclear(win);
     dead = false;
     int l = current_game.getLives();
     if(l==1) {
         loop = false; //game over
+        endGame = true;
     } else {
         int ymax, xmax;
         getmaxyx(win, ymax, xmax);
@@ -97,7 +99,7 @@ void start(){
             current_game.updateStats();
             state = current_game.getState();
         }
-        //interface(yMax, xMax);
+        
         showStats(userwin);
 
         /*CONTROLLO DEI MOB*/
@@ -111,11 +113,11 @@ void start(){
         /*Proiettili Nemici*/
         bullHd = moveShoot(bullHd, playerwin);
         bullHd = removeShoot(bullHd);
+
+        if(dead) resetLife(playerwin, hd, player, loop);
         
         if(player.isSwording()) player.swordAtk(playerwin);
         player.getMv(playerwin, userwin, loop, cont); // prende user input 
-
-        if(dead) resetLife(playerwin, hd, player, loop);
 
         box(playerwin, 0, 0);     // aggiorna le finestre
         box(userwin, 0, 0);
@@ -132,7 +134,7 @@ void start(){
 
         napms(35);                  // 35ms di pausa (circa 30fps)
     } 
-    gameOver();
+    if(endGame) gameOver();
 }
 
 int main(int argc, char ** argv){
