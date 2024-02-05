@@ -84,6 +84,8 @@ pitemlist Inventory::getInventoryItem(int index) {
 }
 
 bool Inventory::isPossessed(int id) {
+    if(id==0) return true;
+
     bool found = false;
     for(int i=0;i<2 && !found;i++)
         for(int j=0;j<3 & !found;j++)

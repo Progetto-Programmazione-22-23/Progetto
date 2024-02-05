@@ -57,16 +57,27 @@ void dmgPlayer(int dmg){
     current_game.setVita(current_game.getVita()-total);
 }
 
-bool checkBullPlayerColl(shoot sh, WINDOW * win){
+void reflectShoot(int dir, int dmg, Player &p) {
+    direction = dir;
+    isReflecting = true;
+    reflectingDmg = dmg;
+    p.shoot();
+}
+
+bool checkBullPlayerColl(shoot sh, WINDOW * win, Player &p){
+    bool reflect = current_game.getInventory()->getBarItem(0,current_game.getInventory()->getSelected()).getId()==24;
     if (mvwinch(win, sh.yBull+1, sh.xBull) == '@' && sh.direction == 0) {
+        if(reflect) reflectShoot(2,sh.bDmg,p);
         dmgPlayer(sh.bDmg);
         return true; 
     }
     if (mvwinch(win, sh.yBull, sh.xBull+1) == '@' && sh.direction == 1){
+        if(reflect) reflectShoot(-1,sh.bDmg,p);
         dmgPlayer(sh.bDmg);
         return true; 
     }
     if (mvwinch(win, sh.yBull, sh.xBull-1) == '@' && sh.direction == -1){
+        if(reflect) reflectShoot(1,sh.bDmg,p);
         dmgPlayer(sh.bDmg);
         return true; 
     }
@@ -74,11 +85,11 @@ bool checkBullPlayerColl(shoot sh, WINDOW * win){
     return false;
 }
 
-pbullets moveShoot(pbullets& hd, WINDOW * win){
+pbullets moveShoot(pbullets& hd, WINDOW * win, Player &p){
     pbullets nhd = hd;
 
     while (hd != NULL) {
-        if (checkBulletCollision(hd->bull, win) || checkBullPlayerColl(hd->bull, win)) hd->bull.distance = maxShootDistance-1;
+        if (checkBulletCollision(hd->bull, win) || checkBullPlayerColl(hd->bull, win, p)) hd->bull.distance = maxShootDistance-1;
 
         mvwaddch(win, hd->bull.yBull, hd->bull.xBull, ' ');
         if (hd->bull.direction == -1) {hd->bull.xBull--; mvwaddch(win, hd->bull.yBull, hd->bull.xBull, '*'); hd->bull.distance++;}

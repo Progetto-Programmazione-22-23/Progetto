@@ -18,7 +18,8 @@ typedef bullet* pbullets;
 
 pbullets addBullet(pbullets& hd, int x, int y, int ds, int bD);
 pbullets removeShoot(pbullets& hd);
-pbullets moveShoot(pbullets& hd, WINDOW * win);
+pbullets moveShoot(pbullets& hd, WINDOW * win, Player &p);
 void dmgPlayer(int dmg);
 bool checkBulletCollision(shoot x, WINDOW * win);
-bool checkBullPlayerColl(shoot x, WINDOW * win);
+bool checkBullPlayerColl(shoot x, WINDOW * win, Player &p);
+void reflectShoot(int dir, int dmg, Player &p);

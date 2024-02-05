@@ -46,7 +46,7 @@ class Player {
         void move_right();
         void stop();
         void jump(int tik);
-        void attack(WINDOW * win, bool dir);
+        void attack(WINDOW * win);
         void swordAtk(WINDOW * win);
         bool isSwording();
         swordXY swordInfo();
@@ -64,7 +64,7 @@ class Player {
         void dropFromPlatfrorm(WINDOW * win);
         bool onLucky(WINDOW * win);
         void update(int end, WINDOW * win, int tik);
-        void shoot(int i);
+        void shoot();
         void shooting(WINDOW * win, int direction);
         void stopBullet();
         void moveBullet(WINDOW * win);

@@ -75,6 +75,7 @@ void start(){
         deleteOldMaps();
         mapgenerator(playerwin);
         MobSpawn(prxMax, hd);
+        current_game.getInventory()->setBarItem(0,0,getItem(allItems,1)); // "Spada di Legno" aggiunta nel primo slot della Hotbar
     }
     else {
         regenOldMap(playerwin, false);
@@ -98,6 +99,9 @@ void start(){
         if(state!=current_game.getState()) {
             current_game.updateStats();
             state = current_game.getState();
+
+            wclear(userwin);
+            wrefresh(userwin);
         }
         
         showStats(userwin);
@@ -111,7 +115,7 @@ void start(){
         player.moveBullet(playerwin);
 
         /*Proiettili Nemici*/
-        bullHd = moveShoot(bullHd, playerwin);
+        bullHd = moveShoot(bullHd, playerwin, player);
         bullHd = removeShoot(bullHd);
 
         if(dead) resetLife(playerwin, hd, player, loop);

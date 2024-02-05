@@ -36,7 +36,7 @@ void Heal(int amount){
     if(current_game.getVita()>=10+current_game.getMaxVita())
         Money(1), Ammos(2);
     else {
-        int incr = current_game.getVita()+amount*(current_game.getLuck()+1);
+        int incr = current_game.getVita()+amount*(1+current_game.getLuck()/5);
         if(incr > 10+current_game.getMaxVita())
             incr = 10+current_game.getMaxVita();
 
@@ -45,11 +45,11 @@ void Heal(int amount){
 }
 
 void Money(int amount){
-    current_game.setMoney(current_game.getMoney()+amount*(current_game.getLuck()+1));
+    current_game.setMoney(current_game.getMoney()+amount*(current_game.getLuck()/5+1));
 }
 
 void Ammos(int amount) {
-        int incr = current_game.getAmmo()+amount*(current_game.getLuck()+1);
+        int incr = current_game.getAmmo()+amount*(current_game.getLuck()/5+1);
         current_game.setAmmo(incr);   
 }
 

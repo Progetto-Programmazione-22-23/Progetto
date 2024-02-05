@@ -127,7 +127,7 @@ void Player::getMv(WINDOW * playerwin, WINDOW * userwin, bool &loop, int tik) {
       open_inventory(userwin);
       break;
     case 'o':
-      if(current_game.getMap()%5==0) //&& Player::getX()>=lastHouseX && Player::getX()<=lastHouseX+7)
+      if(current_game.getMap()%3==0) //&& Player::getX()>=lastHouseX && Player::getX()<=lastHouseX+7)
         open_shop(userwin);
       break;
     case 27:
@@ -136,11 +136,11 @@ void Player::getMv(WINDOW * playerwin, WINDOW * userwin, bool &loop, int tik) {
       break;
     case 10:  // press enter 
       if (!bulletFired) direction = ds;
-      attack(playerwin, 0);
+      attack(playerwin);
       break;
     case 'q':
       if (!bulletFired) direction = 2;
-      attack(playerwin, 1);
+      attack(playerwin);
       break;
     case ERR:
       stop();
@@ -156,8 +156,7 @@ void Player::getMv(WINDOW * playerwin, WINDOW * userwin, bool &loop, int tik) {
   }
 }
 
-// 0: destra, 1: sinistra
-void Player::attack(WINDOW * win, bool dir) {
+void Player::attack(WINDOW * win) {
   int s = current_game.getInventory()->getSelected();
   Item item = current_game.getInventory()->getBarItem(0,s);
   int id = item.getId(), special = item.getAmount();
@@ -177,8 +176,23 @@ void Player::attack(WINDOW * win, bool dir) {
 
     }
     else if (id < 20 && ammos > 0) {
-      shoot(dir);
+      shoot();
       current_game.setAmmo(ammos-1);
+    }
+    else if(id < 40 && id >= 30) {
+
+      if(id == 32)
+        current_game.setLives(current_game.getLives()+1);
+      
+      else {
+        int total = current_game.getVita()+item.getModifier(0);
+        if(total > 10+current_game.getMaxVita()) 
+          total = 10+current_game.getMaxVita();
+        current_game.setVita(total);
+      }
+
+      inv->setBarItem(0,inv->getSelected(),Item());
+      current_game.UpState();
     }
   }
 }
@@ -199,7 +213,7 @@ swordXY Player::swordInfo(){
   return sword;
 }
 
-void Player::shoot(int i){
+void Player::shoot(){
   if(!bulletFired){
     this->bulletX = getX();
     this->bulletY = getY();
@@ -219,8 +233,11 @@ void Player::shooting(WINDOW * win, int direction){
 
 void Player::stopBullet() {this->bulletDistance = maxBulletDistance;}
 
+bool isReflecting = false;
+int reflectingDmg = 0;
 void Player::moveBullet(WINDOW * win){
   double m = (1+current_game.getInventory()->getBarItem(0,current_game.getInventory()->getSelected()).getAmount())/2.0; // 2 -> lungo, 1 -> normale
+  if(isReflecting) m = 1;
   //3 -> 4/2, 2 -> 3/2, 1-> 2/2
   maxBulletDistance = m * ogBulletDistance;
 
@@ -239,6 +256,7 @@ void Player::moveBullet(WINDOW * win){
     bulletDistance = 0;
     this->bulletX = -1;
     this->bulletY = -1;
+    if(isReflecting) isReflecting = false;
   }
 }
 

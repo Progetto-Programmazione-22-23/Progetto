@@ -34,8 +34,8 @@ void OpenChoiceShop(WINDOW * choiceWin, Item item){
     char azioni[n][20] = {"", "Back"};
     int highlights = 0, choice;
 
-    if(upgrade) sprintf(azioni[0],"Upgrade for %d$", item.getPrice());
-    else sprintf(azioni[0],"Buy for %d$", item.getPrice());
+    if(upgrade) sprintf(azioni[0],"Upgrade for ", item.getPrice());
+    else sprintf(azioni[0],"Buy for ", item.getPrice());
 
     int row = printItemStats(choiceWin, item);
 
@@ -51,6 +51,11 @@ void OpenChoiceShop(WINDOW * choiceWin, Item item){
         }
         wattroff(choiceWin, A_REVERSE);
 
+        if(highlights==0) wattron(choiceWin, COLOR_PAIR(104));
+        else wattron(choiceWin, COLOR_PAIR(5));
+            mvwprintw(choiceWin, row+4, 66+upgrade*4, "%d$", item.getPrice());
+        wattroff(choiceWin, COLOR_PAIR(104));
+        wattroff(choiceWin, COLOR_PAIR(5));
 
         if (highlights == 1) wattron(choiceWin, A_REVERSE);
         mvwprintw(choiceWin, row+5+upgrade, 58, azioni[1]);
@@ -80,12 +85,15 @@ void OpenChoiceShop(WINDOW * choiceWin, Item item){
                     bool enough = current_game.getMoney()>=item.getPrice();
                     if(enough) {
                         current_game.setMoney(current_game.getMoney()-item.getPrice());
-                        if(item.getId() == 19) {
+                        if(item.getId() == 19) 
                             current_game.setAmmo(current_game.getAmmo()+5); // ECCEZIONE PER QUANDO SI COMPRANO I PROIETTILI
-                        }
+                        
                         else {
                             Inventory *inv = current_game.getInventory();
-                            if(upgrade) inv->subItem(baseItem,item);
+                            if(upgrade) {
+                                inv->subItem(baseItem,item);
+                                current_game.UpState();
+                            } 
                             else inv->giveItem(item);
                         }
                     }
@@ -108,13 +116,9 @@ void openWeapon(WINDOW * WeaponWin, int sel, char category[]){
     pitemlist cat = NULL;
         for(pitemlist q = allItems; q!=NULL; q = q->next) {
             int id = q->val.getId();
-            if(id>=sel*10 && id<(sel+1)*10) {
-                bool okay = false;
-                //if(q->val.upgradesFrom()>0)
-                    okay = inv->isPossessed(q->val.upgradesFrom());
-
-                if(okay) cat = addItem(cat, q->val), n++;
-                
+            if(id>=sel*10 && (id<(sel+1)*10 || sel==4)) {
+                if(inv->isPossessed(q->val.upgradesFrom())) 
+                    cat = addItem(cat, q->val), n++;
             }
                 
         }

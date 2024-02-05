@@ -14,8 +14,12 @@ void Game::updateStats() {
         for(int j=0;j<CATEGORIES;j++)
             s[j] += setting.inventory.getBarItem(1,i).getModifier(j);
 
-    for(int j=0;j<CATEGORIES;j++)
-        s[j] += setting.inventory.getBarItem(0,setting.inventory.getSelected()).getModifier(j);
+    for(int j=0;j<CATEGORIES;j++) {
+        Item item = setting.inventory.getBarItem(0,setting.inventory.getSelected());
+        if(item.getId()<30 || item.getId()>=40) 
+            s[j] += item.getModifier(j);
+    }
+        
     
     for(int i=0;i<CATEGORIES;i++) {
         setting.stats[i] = s[i];

@@ -135,12 +135,19 @@ void mobSwordDmg(Player* pl, Mob& nem, int ds){
     swordXY spada = pl->swordInfo();
     if (nem.getY() == spada.sY && absolute(nem.getX() - pl->getX()) <= spada.len && (nem.getX() - pl->getX())*ds <= 0 && pl->isSwording()){
         nem.NemDmg(current_game.getAtk());
+        
+        // INTERAZIONE CON ITEM "BRAMASANGUE"
+        if(current_game.getInventory()->getBarItem(0,current_game.getInventory()->getSelected()).getId()==8) 
+            if(current_game.getVita()<10+current_game.getMaxVita())
+                current_game.setVita(current_game.getVita()+1);
     }
 }
 
 void mobShootDmg(Player* pl, Mob& nem){
     if (pl->getBulletX() == nem.getX() && pl->getBulletY() == nem.getY()){
-        nem.NemDmg(current_game.getAtk());
+        int dmg = current_game.getAtk();
+        if(isReflecting) dmg = reflectingDmg;
+        nem.NemDmg(dmg);
         pl->stopBullet();
     }
 }

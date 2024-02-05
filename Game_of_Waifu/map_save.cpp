@@ -237,7 +237,7 @@ void regenOldMap(WINDOW * win, bool refresh) {
     
     */
     
-    if(current_game.getMap()%5 == 0) {
+    if(current_game.getMap()%3 == 0) {
         spawnHouse(win, t->y, w); 
         w+=13;
     }
