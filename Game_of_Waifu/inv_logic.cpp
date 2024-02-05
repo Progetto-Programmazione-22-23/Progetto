@@ -142,14 +142,3 @@ void Inventory::setSelected(int hot) {
     this->selected = hot;
 }
 int Inventory::getSelected() { return selected; }
-/*
-bool Inventory::isActive(bool hot_armor, int id) {
-    if(!hot_armor) return hotbar[selected].getId() == id;
-    else {
-        bool found = false;
-        for(int i=0;i<3 && !found;i++) {
-            found = armor[i].getId() == id;
-        }
-        return found;
-    }
-}*/
