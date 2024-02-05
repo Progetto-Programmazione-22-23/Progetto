@@ -161,7 +161,7 @@ void update(pnemici hd, Player* pl, int ActualTick, WINDOW * win, pbullets& bull
             int minY = calcYmin(hd->nem.getX());
         /*controllo sempre che non siano sotto il blocco minimo*/
             checkMin(win, hd, minY);
-        /*se è il loro turno, si muovono a dx o sx*/
+        /*se è il loro turno, si muovono*/
             if (ActualTick % (hd->nem.getspeed()) == 0){
                 mvwaddch(win, hd->nem.getY(), hd->nem.getX(), ' ');
                 if (!hd->nem.getfly()){         // mob non volanti (sx, dx)
