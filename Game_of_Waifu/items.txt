@@ -16,7 +16,7 @@
 20 1 Scudo-in-Legno 0 0 0 POtrebbe-essere-utile 0 0 1 0
 21 3 Scudo-d'Acciaio 0 20 0 A-prova-di-drago 0 0 3 0
 23 8 Scudo-di-Hermes 0 21 0 Dall'Olimpo-degli-dei 0 0 6 0
-24 24 Specchio-Riflesso 0 0 0 Riflette-i-proiettili-dei-nemici 0 0 4 0
+24 24 Specchio-Riflesso 0 0 1 Riflette-i-proiettili-dei-nemici 0 0 4 0
 30 2 Zuppa-guaritrice 0 0 0 Cura-5-istantanea 5 0 0 0
 31 5 Revilatizzante-Max 0 0 0 Cura-10-cuori-subito 10 0 0 0
 32 50 One-Life-Up 0 0 1 +1-Vita 0 0 0 0

@@ -237,8 +237,7 @@ bool isReflecting = false;
 int reflectingDmg = 0;
 void Player::moveBullet(WINDOW * win){
   double m = (1+current_game.getInventory()->getBarItem(0,current_game.getInventory()->getSelected()).getAmount())/2.0; // 2 -> lungo, 1 -> normale
-  if(isReflecting) m = 1;
-  //3 -> 4/2, 2 -> 3/2, 1-> 2/2
+  
   maxBulletDistance = m * ogBulletDistance;
 
   if (bulletFired && direction == 1 && bulletDistance < maxBulletDistance) {
