@@ -2,7 +2,6 @@
 #include "GUI/inventory.cpp"
 #include "GUI/shop.cpp"
 #include "map.cpp"
-// #include "collision.cpp"
 
 #define GRAVITY 0.6
 #define JUMP_VELOCITY -3

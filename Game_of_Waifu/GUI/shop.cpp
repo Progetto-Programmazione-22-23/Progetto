@@ -1,5 +1,6 @@
 #include "shop.hpp"
 
+/* FUNZIONE UTILITY: PULISCE LA PARTE FINALE DEL MENU SHOP QUANDO SI PROVA AD ACQUISTARE QUALCOSA */
 bool need2clear = false, wasGood = false;
 void clearSelect(WINDOW * win, int start, int end) { // di default cancella solo la parte finale del menu
     if(end<0) {
@@ -13,6 +14,7 @@ void clearSelect(WINDOW * win, int start, int end) { // di default cancella solo
     need2clear = start<56; // non c'è più bisogno di pulire solo nel caso abbia cancellato davvero l'ultima parte
 }
 
+/* MESSAGGIO DI RIUSCITA/FALLIMENTO NEL COMPRARE UN ITEM */
 void purchaseFeedback(WINDOW * win, bool success) {
     wattron(win, COLOR_PAIR(1+success));
     mvwprintw(win,3,59-(2*!success),"Item acquistato");
@@ -22,6 +24,7 @@ void purchaseFeedback(WINDOW * win, bool success) {
     need2clear = true, wasGood = success; // messaggio stampato: c'è bisogno di pulire
 }
 
+/* MENU DI CONFERMA/VISUALIZZAZIONE DETTAGLI DELL'ITEM CHE SI VUOLE COMPRARE */
 void OpenChoiceShop(WINDOW * choiceWin, Item item){
     box(choiceWin, 0, 0);
     keypad(choiceWin, true);
@@ -34,14 +37,15 @@ void OpenChoiceShop(WINDOW * choiceWin, Item item){
     char azioni[n][20] = {"", "Back"};
     int highlights = 0, choice;
 
-    if(upgrade) sprintf(azioni[0],"Upgrade for ", item.getPrice());
-    else sprintf(azioni[0],"Buy for ", item.getPrice());
+    if(upgrade) sprintf(azioni[0],"Upgrade for ", item.getPrice()); // "UPGRADE" NEL CASO L'ITEM SI EVOLVA DA QUALCOSA
+    else sprintf(azioni[0],"Buy for ", item.getPrice());            // "BUY" ALTRIMENTI
 
-    int row = printItemStats(choiceWin, item);
+    int row = printItemStats(choiceWin, item);  // PRINT STATS e DESCRIZIONE
 
     bool open = true;
     while(open){
         
+        /* STAMPA DELLE 2 OPZIONI SELEZIONABILI DEL MENU */
         if (highlights == 0) wattron(choiceWin, A_REVERSE);
         mvwprintw(choiceWin, row+4, 58, azioni[0]);
         if(upgrade) {
@@ -81,14 +85,14 @@ void OpenChoiceShop(WINDOW * choiceWin, Item item){
                 open = false;
                 clearSelect(choiceWin); 
 
-                if(highlights==0) {
+                if(highlights==0) {     // DECIDI DI COMPRARE
                     bool enough = current_game.getMoney()>=item.getPrice();
                     if(enough) {
                         current_game.setMoney(current_game.getMoney()-item.getPrice());
                         if(item.getId() == 19) 
                             current_game.setAmmo(current_game.getAmmo()+5); // ECCEZIONE PER QUANDO SI COMPRANO I PROIETTILI
                         
-                        else {
+                        else {                                              // AGGIUNGE/UPGRADA L'ITEM NELL'INV.
                             Inventory *inv = current_game.getInventory();
                             if(upgrade) {
                                 inv->subItem(baseItem,item);
@@ -97,7 +101,7 @@ void OpenChoiceShop(WINDOW * choiceWin, Item item){
                             else inv->giveItem(item);
                         }
                     }
-                    purchaseFeedback(choiceWin,enough);
+                    purchaseFeedback(choiceWin,enough); // POSITIVO SE AVEVI ABBASTANZA SOLDI
                 }
                 break;
             default:
@@ -113,15 +117,18 @@ void openWeapon(WINDOW * WeaponWin, int sel, char category[]){
 
     Inventory * inv = current_game.getInventory();
 
+    /* RIEMPIO LA LISTA DI ITEM "cat" con QUELLI CHE POSSO ACQUISTARE DELLA CATEGORIA SELEZIONATA */
     pitemlist cat = NULL;
-        for(pitemlist q = allItems; q!=NULL; q = q->next) {
-            int id = q->val.getId();
-            if(id>=sel*10 && (id<(sel+1)*10 || sel==4)) {
-                if(inv->isPossessed(q->val.upgradesFrom())) 
-                    cat = addItem(cat, q->val), n++;
+    for(pitemlist q = allItems; q!=NULL; q = q->next) {
+        int id = q->val.getId();
+
+        /* (id) SPADE: 0-9, ARCHI: 10-19, SCUDI: 20-29, POZ.: 30-39, ARMATURA: 40+ */
+        if(id>=sel*10 && (id<(sel+1)*10 || sel==4)) 
+            if(inv->isPossessed(q->val.upgradesFrom())) {
+                cat = addItem(cat, q->val);
+                n++;
             }
-                
-        }
+    }
 
     bool open = true;
     while(open){
@@ -129,11 +136,10 @@ void openWeapon(WINDOW * WeaponWin, int sel, char category[]){
 
         mvwprintw(WeaponWin, 1, 33, "[%s]", category);
 
-        
-
+        /* COSTRUISCO IL MENU CON GLI ITEM SELEZIONABILI */
         Item chosen;
         int i = 0;
-        for (pitemlist q = cat; q != NULL; i++, q=q->next){ // costruisco il menu
+        for (pitemlist q = cat; q != NULL; i++, q=q->next){
             if (i == highlights) {
                 wattron(WeaponWin, A_REVERSE);
                 chosen = q->val;
@@ -144,7 +150,7 @@ void openWeapon(WINDOW * WeaponWin, int sel, char category[]){
             wattroff(WeaponWin, A_REVERSE);
         }
         if (i == highlights) wattron(WeaponWin, A_REVERSE);
-        mvwprintw(WeaponWin,i+4, 32, "Back");
+        mvwprintw(WeaponWin,i+4, 32, "Back");                   // + OPZIONE "BACK"
         wattroff(WeaponWin, A_REVERSE);
 
         choice = wgetch(WeaponWin);
@@ -168,9 +174,9 @@ void openWeapon(WINDOW * WeaponWin, int sel, char category[]){
                     open = false;
                 }
                 else {
-                    if(need2clear) clearSelect(WeaponWin);
+                    if(need2clear) clearSelect(WeaponWin); // PULISCE IL MESSAGGIO DI FEEDBACK NEL CASO CI SIA
                     OpenChoiceShop(WeaponWin, chosen);
-                    if(wasGood) clearSelect(WeaponWin,32,55);
+                    if(wasGood) clearSelect(WeaponWin,32,55); // E DOPO AVER COMPRATO (se è andato a buon fine): PULISCE ANCHE QUESTO MENU 
                     open = !wasGood;
                 }
                 break;
@@ -187,7 +193,7 @@ void open_shop(WINDOW * shopWin){
     keypad(shopWin, true);
     nodelay(shopWin, TRUE);
 
-    // n lunghezza shop
+    // n lunghezza shop, 5 categorie di items
     int n = 5;
     char oggetti[n][20] = {"Spade", "Archi", "Scudi", "Pozioni", "Armature"};
     int choice;

@@ -2,7 +2,6 @@
 
 Player::Player(WINDOW * win, int y, int x, char c) {
   this->curwin = win;
-  // this->invnt = inv;
   this->x = x;
   this->y = y;
   this->LastHit = -1000;
@@ -103,6 +102,7 @@ void Player::update(int end, WINDOW * win, int tik) {
   }
 }
 
+// ds 1: DESTRA | -1: SINISTRA
 int ds = 1;
 int direction;
 void Player::getMv(WINDOW * playerwin, WINDOW * userwin, bool &loop, int tik) {
@@ -128,25 +128,33 @@ void Player::getMv(WINDOW * playerwin, WINDOW * userwin, bool &loop, int tik) {
       break;
     case 'o':
       if(current_game.getMap()%3==0 && Player::getX()>=lastHouseX && Player::getX()<=lastHouseX+7)
-        open_shop(userwin);
+        open_shop(userwin);   // SHOP DISPONIBILE OGNI 3 LIVELLI, SOLO A FINE MAPPA
       break;
     case 27:
-      current_game.saveAll();
+      current_game.saveAll(); // CON [ESC] ESCE DAL GAME LOOP, SALVANDO I PROGRESSI
       loop = false;
       break;
     case 10:  // press enter 
-      if (!bulletFired) direction = ds;
+      if (!bulletFired) direction = ds; // SPARO ORIZZONTALE
       attack(playerwin);
       break;
     case 'q':
-      if (!bulletFired) direction = 2;
+      if (!bulletFired) direction = 2; // SPARO VERSO L'ALTO
       attack(playerwin);
+      break;
+    case KEY_UP:
+      break;
+    case KEY_DOWN:
+      break;
+    case KEY_LEFT:
+      break;
+    case KEY_RIGHT:
       break;
     case ERR:
       stop();
       break;
 
-    default:
+    default:                          // 1, 2, 3 ti selezionano i rispettivi slot nell'hotbar
       int digit = ch-'0';
       if(digit >= 1 && digit <= 3) {
         current_game.getInventory()->setSelected(digit-1);
@@ -159,44 +167,49 @@ void Player::getMv(WINDOW * playerwin, WINDOW * userwin, bool &loop, int tik) {
 void Player::attack(WINDOW * win) {
   int s = current_game.getInventory()->getSelected();
   Item item = current_game.getInventory()->getBarItem(0,s);
-  int id = item.getId(), special = item.getAmount();
+  int id = item.getId(), special = item.getAmount(); // ID dell'ITEM IN MANO ed il suo "special amount"
 
   if(id!=0) {
     int ammos = current_game.getAmmo();
+
+    /* GESTIONE INTERAZIONI CON LA SPADA */
     if(id<10) {
       wattron(win,  COLOR_PAIR(3));
-      for(int i=1;i<=1+special;i++)
+      for(int i=1;i<=1+special;i++)   // STAMPA SPADA LUNGA 'special' A SCHERMO
         mvwaddch(win, getY(), getX()+ds*i, '-');
       wattroff(win, COLOR_PAIR(3));
 
       this->swordX = getX();
       this->swordY = getY();
       this->swordL = special;
-      this->swording = true;
+      this->swording = true; // AVVISA CHE STIAMO ATTACCANDO CON LA SPADA
 
     }
+    /* INTERAZIONI CON L'ARCO */
     else if (id < 20 && ammos > 0) {
       shoot();
       current_game.setAmmo(ammos-1);
     }
+    /* INTERAZIONI CON LE POZIONI */
     else if(id < 40 && id >= 30) {
 
       if(id == 32)
-        current_game.setLives(current_game.getLives()+1);
+        current_game.setLives(current_game.getLives()+1); // pozione "One Life Up"
       
       else {
-        int total = current_game.getVita()+item.getModifier(0);
+        int total = current_game.getVita()+item.getModifier(0); // rimanenti pozioni di guarigione
         if(total > 10+current_game.getMaxVita()) 
           total = 10+current_game.getMaxVita();
         current_game.setVita(total);
       }
 
-      inv->setBarItem(0,inv->getSelected(),Item());
+      inv->setBarItem(0,inv->getSelected(),Item());   // "Consuma" l'item
       current_game.UpState();
     }
   }
 }
 
+/* CANCELLA LA SPADA STAMPATA A SCHERMO */
 void Player::swordAtk(WINDOW * win){
   for(int i=1;i<=1+this->swordL;i++) 
         mvwaddch(win, swordY, swordX+ds*i, ' ');
@@ -204,14 +217,9 @@ void Player::swordAtk(WINDOW * win){
   this->swording = false;
 }
 
-bool Player::isSwording() {
-  return this->swording;
-}
+bool Player::isSwording() {return this->swording;}
+swordXY Player::swordInfo(){return {swordX, swordY, 1+swordL, ds};}
 
-swordXY Player::swordInfo(){
-  swordXY sword = {swordX, swordY, 1+swordL, ds};
-  return sword;
-}
 
 void Player::shoot(){
   if(!bulletFired){
@@ -233,10 +241,13 @@ void Player::shooting(WINDOW * win, int direction){
 
 void Player::stopBullet() {this->bulletDistance = maxBulletDistance;}
 
+/* NEL CASO STIA RIFLETTENDO UN COLPO AVVERSARIO CON LO SCUDO */
 bool isReflecting = false;
 int reflectingDmg = 0;
+
 void Player::moveBullet(WINDOW * win){
-  double m = (1+current_game.getInventory()->getBarItem(0,current_game.getInventory()->getSelected()).getAmount())/2.0; // 2 -> lungo, 1 -> normale
+  // (MULTIPLIER) amount: 1 -> m = 2/2 = 1 | 2 -> m = 3/2 = 1.5 | 3 -> m = 4/2 = 2
+  double m = (1+current_game.getInventory()->getBarItem(0,current_game.getInventory()->getSelected()).getAmount())/2.0; 
   
   maxBulletDistance = m * ogBulletDistance;
 

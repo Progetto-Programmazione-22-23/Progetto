@@ -1,5 +1,6 @@
 #include "interface.hpp"
 
+/* STAMPA A SCHERMO HOTBAR e ARMOR NELLA STESSA POS IN CUI SONO NELL'INV. */
 void showBars(WINDOW * invWin) {
     Inventory * inv = current_game.getInventory();
 
@@ -14,10 +15,8 @@ void showBars(WINDOW * invWin) {
             mvwprintw(invWin, i+3, 32, "[%d] %s", i+1, itemname);
             wattroff(invWin, A_REVERSE);
         }
-    
 
         mvwprintw(invWin, 7, 33, "ARMOR");
-
         for(int i=0;i<3;i++) {
             char itemname[20];
             Item item = inv->getBarItem(1,i);
@@ -33,6 +32,7 @@ void showStats(WINDOW * win) {
     int yMax, xMax;
     getmaxyx(win, yMax, xMax);
 
+    /* STAMPA QUANTITÀ DI VITA IN CUORI */
     char cuori_pieni[15] ="";
     int actual, missing;
     for(actual=0;actual<current_game.getVita();actual++) {
@@ -43,6 +43,7 @@ void showStats(WINDOW * win) {
     mvwprintw(win, 1 , 2,cuori_pieni);
     wattroff(win, COLOR_PAIR(1));
     
+    /* STAMPA CUORI MANCANTI */
     char cuori_vuoti[15] = "";
     for(missing=actual;missing<10+current_game.getMaxVita();missing++) {
         if(missing%2==0) strcat(cuori_vuoti,"<");
@@ -52,12 +53,14 @@ void showStats(WINDOW * win) {
     mvwprintw(win, 1 , 2+actual,"%s    ",cuori_vuoti);
     wattroff(win,COLOR_PAIR(3));
 
+    /* STAMPA QUANTITÀ DI VITE IN PALLINI VERDI */
     char lives[current_game.getLives()] = "";
     for(int i=0;i<current_game.getLives();i++) strcat(lives,"o");
     wattron(win, COLOR_PAIR(2));
     mvwprintw(win, 1 , 13+current_game.getMaxVita(),"%s        ", lives);
     wattroff(win, COLOR_PAIR(2));
 
+    /* STAMPA MONETE, MUNIZIONI, MAPPA E LIVELLO ATTUALE */
     wattron(win,COLOR_PAIR(5));
     mvwprintw(win, 3 , 3, "Money: %d$  ", current_game.getMoney());
     wattroff(win,COLOR_PAIR(5));
@@ -71,6 +74,7 @@ void showStats(WINDOW * win) {
 
     showBars(win);
 
+    /* STAMPA STATISTICHE */
     mvwprintw(win, 3, 57, " * %.1f Atk. Damage", current_game.getAtk());
     mvwprintw(win, 4, 57, " * %.1f Resistence", current_game.getRes());
     mvwprintw(win, 5, 57, " * %.1f Luck", current_game.getLuck());

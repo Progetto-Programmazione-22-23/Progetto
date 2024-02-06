@@ -2,6 +2,7 @@
 
 Inventory * inv;
 
+/* STAMPA A SCHERMO NOME, STATS E DESC DELL'ITEM -> RITORNA IL N° DI RIGHE UTILIZZATE */
 int printItemStats(WINDOW * choiceWin, Item item) {
     char itemname[20]; // PRINT NOME
     item.getName(itemname);
@@ -30,15 +31,15 @@ void openchoice(WINDOW * choiceWin, int pos){
     keypad(choiceWin, true);
     nodelay(choiceWin, TRUE);
 
-
     int n = 3;
     char actions[n][20] = {"", "", "Back"};
 
     Item item;
-    int b = -(pos+1)/3; //INVEN
+    int b = -(pos+1)/3; 
     if(pos>=0) item = (inv->getInventoryItem(pos))->val;
     else item = inv->getBarItem(b,pos+3*(b+1));
 
+    /* IN BASE ALLA POSIZIONE E AL TIPO DI ITEM: potremmo Equipaggiarlo in Hotbar/Armor o Disequippaggiarlo */
     if(pos>=0) {
         strcpy(actions[0],"Equip ");
         if(item.getBar()) strcat(actions[0], "to ARMOR");
@@ -46,10 +47,11 @@ void openchoice(WINDOW * choiceWin, int pos){
 
     } else strcpy(actions[0],"Unequip");
 
+    /* O VENDERLO ALLA METÀ DEL PREZZO */
     sprintf(actions[1], "Sell for %d$", item.getPrice()/2);
     int highlights = 0, select = 0, choice;
 
-    int row = printItemStats(choiceWin,item);
+    int row = printItemStats(choiceWin,item); // PRINTO LE STATS DELL'ITEM VISUALIZZATO
 
     bool open = true;
     while(open){
@@ -75,12 +77,12 @@ void openchoice(WINDOW * choiceWin, int pos){
                 break;
             case 10:
                 open = false;
-                if (select == 0) {
+                if (select == 0) {                      // HO SCELTO DI EQUIP./UNEQUIP.
                     if(pos>=0) inv->equip(pos);
                     else inv->unequip(b,pos+3*(b+1));
                     current_game.UpState();
                 }
-                else if (select == 1) {
+                else if (select == 1) {                 // HO SCELTO DI VENDERLO
                     current_game.setMoney(current_game.getMoney()+item.getPrice()/2);
                     if(pos>=0) inv->remove(pos);
                     else {
@@ -112,11 +114,13 @@ void open_inventory(WINDOW * invWin){
     int maxPage;
     bool open = true;
     while (open){
+        /* CALCOLA QUANTE PAGINE DI INV. DOVRANNO ESSERCI IN BASE ALL'ALTEZZA DELLA GUI */
         len = inv->calcLen();
         maxPage = (len/(syMax-4))+1;
 
         box(invWin, 0, 0);
 
+        /* PER MUOVERSI DA UNA PAGINA ALL'ALTRA DELL'INV */
         if(page <= 1) wattron(invWin, COLOR_PAIR(3));
         else if(column == 0) wattron(invWin, A_REVERSE);
         mvwprintw(invWin, 1, 1, "[<]");
@@ -133,7 +137,7 @@ void open_inventory(WINDOW * invWin){
         wattroff(invWin, COLOR_PAIR(3));
         wattroff(invWin, A_REVERSE);
 
-        //int hots = inv->firstSlot(0);
+        /* COSTRUISCE MENU HOTBAR */
         Item chosen;
         if(column == 3) wattron(invWin, A_REVERSE);
         mvwprintw(invWin, 2, 33, "HOTBAR");
@@ -150,9 +154,7 @@ void open_inventory(WINDOW * invWin){
             wattroff(invWin, A_REVERSE);
         }
     
-
-        //int armors = inv->firstSlot(1);
-        //if(armors<0) wattron(invWin, COLOR_PAIR(3));
+        /* COSTRUISCE MENU ARMOR */
         if(column == 4) wattron(invWin, A_REVERSE);
         mvwprintw(invWin, 7, 33, "ARMOR");
         wattroff(invWin, A_REVERSE);
@@ -171,6 +173,7 @@ void open_inventory(WINDOW * invWin){
             wattroff(invWin, COLOR_PAIR(3));
         }
         
+        /* COSTRUISCE MENU INVENTARIO, MOSTRANDO GLI ITEM DELLA PAGINA CORRETTA */
         pitemlist l = inv->getInventoryItem(lastItem);
         int i = 0;
         while(l!=NULL && i<syMax-4) {
@@ -211,7 +214,8 @@ void open_inventory(WINDOW * invWin){
                         highlights--;
                 break;
 
-            //SKIPPANO LA COLONNA DELLE FRECCETTE SE NON POSSONO ESSERE USATE
+            /* SCROLLA FRA INVENTARIO-HOTBAR-ARMOR
+                (SKIPPANO LA COLONNA DELLE FRECCETTE SE NON POSSONO ESSERE USATE) */ 
             case KEY_LEFT:
                 if(column>0) {
                     if(column==1 && page == 1)
@@ -257,7 +261,7 @@ void open_inventory(WINDOW * invWin){
                 else if(chosen.getId()>0 && (column != 1 || len>0)){
                     int pos;
                     if(column==1) pos = lastItem+highlights;
-                    else pos = highlights-3*(column-2);
+                    else pos = highlights-3*(column-2); // CODIFICA LA POSIZIONE DELL'ITEM E LA BARRA IN CUI È
                     openchoice(invWin, pos);
                     highlights=0;
                 } 

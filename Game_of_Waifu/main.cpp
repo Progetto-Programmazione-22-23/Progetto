@@ -4,48 +4,42 @@
 #include <string>
 #include <cstdlib>
 #include "save.cpp"
-// #include "gui.cpp"
-// #include "collision.cpp"
-// #include "enemies.cpp"
-// #include "inventory.cpp"
-// #include "map_save.cpp"
 #include "map_setting.cpp"
 #include "GUI/interface.cpp"
 #include "game_text.cpp"
-// #include "map.cpp"
-// #include "oggetti.cpp"
-// #include "player.cpp"
-// #include "shop.cpp"
 using namespace std;
 
+/* GESTIONE PERDITA DI UNA VITA */
 bool endGame = false;
 void resetLife(WINDOW * win, pnemici& hd, Player& p, bool& loop) {
     wclear(win);
     dead = false;
     int l = current_game.getLives();
-    if(l==1) {
-        loop = false; //game over
+
+    if(l==1) {          // ERA L'ULTIMA VITA -> GAME OVER
+        loop = false; 
         endGame = true;
-    } else {
+    
+    } else {            
         int ymax, xmax;
         getmaxyx(win, ymax, xmax);
 
-        current_game.setVita(10+current_game.getMaxVita());
+        current_game.setVita(10+current_game.getMaxVita()); // REFULLA LA HEALTH-BAR
         
         current_game.setLives(l-1);
         current_game.setMap(0);
         current_game.setLevel(0);
-        deleteOldMaps();
+        deleteOldMaps();            // ELIMINA LE MAPPE SALVATE PRIMA e poi NE GENERA UNA NUOVA
         mapgenerator(win);
 
-        for(pnemici t = hd, q;t!=NULL;t = q) {  // Elimina la lista di nemici attuali
+        for(pnemici t = hd, q;t!=NULL;t = q) {  // Elimina la lista di nemici attuali e poi NE SPAWNA DI NUOVI
             q = t->next;
             t = NULL, delete(t);
         }
         hd = NULL;
         MobSpawn(xmax, hd);
 
-        p.teleport(2,ymax-3);
+        p.teleport(2,ymax-3);   // Riporta il player alle coords iniziali
     }
 }
 
@@ -70,18 +64,21 @@ void start(){
     box(userwin, 0, 0);
     nodelay(userwin, TRUE);
 
-    if(current_game.eNuovo()) {                        // disegna la mappa
+    if(current_game.eNuovo()) {                        // È STATO CLICKATO 'start' -> NUOVO GAME
         current_game.setPlayerPos(2,pryMax-3);
         deleteOldMaps();
         mapgenerator(playerwin);
         MobSpawn(prxMax, hd);
         current_game.getInventory()->setBarItem(0,0,getItem(allItems,1)); // "Spada di Legno" aggiunta nel primo slot della Hotbar
     }
-    else {
+    else {                              // È STATO CLICKATO 'continue' -> RIPRISTINA VECCHIA MAPPA E MOBS
         regenOldMap(playerwin, false);
         mobRespawn(hd);
     }
+
     Player player = Player(playerwin, current_game.getPlayerY(), current_game.getPlayerX(), '@');
+
+    /* COLORI USATI NEL GIOCO */
     start_color();
     init_pair(1, COLOR_RED, COLOR_BLACK);
     init_pair(2, COLOR_GREEN, COLOR_BLACK);
@@ -90,12 +87,15 @@ void start(){
     init_pair(104, COLOR_BLACK, COLOR_YELLOW);
     init_pair(5, COLOR_YELLOW, COLOR_BLACK);
     init_pair(6, COLOR_CYAN, COLOR_BLACK);
+
     // Loop di gioco
     int cont = 0;     /*numero di loop di gioco (Tick)*/
     bool loop = true; 
     int state = -1;   
     while (loop){
         cont++;     // aumento tick di gioco
+
+        /* GESTIONE DELLO STATO DELL'INVENTARIO: SE IL GIOCO NON È AL PASSO -> AGGIORNA LE STATS */
         if(state!=current_game.getState()) {
             current_game.updateStats();
             state = current_game.getState();
@@ -118,27 +118,27 @@ void start(){
         bullHd = moveShoot(bullHd, playerwin, player);
         bullHd = removeShoot(bullHd);
 
+        /* CONTROLLO MORTE DEL PLAYER */
         if(dead) resetLife(playerwin, hd, player, loop);
         
-        if(player.isSwording()) player.swordAtk(playerwin);
+        if(player.isSwording()) player.swordAtk(playerwin); // CANCELLA LA SPADA DA SCHERMO SE È STATA USATA
         player.getMv(playerwin, userwin, loop, cont); // prende user input 
 
         box(playerwin, 0, 0);     // aggiorna le finestre
         box(userwin, 0, 0);
         wrefresh(playerwin);
         wrefresh(userwin);
-        if(!loop) saveMobs(hd);
+
+        if(!loop) saveMobs(hd); // SE STIAMO USCENDO DAL GAME -> SALVA I MOB SU FILE
 
         player.update(prxMax, playerwin, cont);
         ChangeMap(&player, playerwin, prxMax, pryMax, hd); 
 
         player.display();           // disegna il player
 
-        // current_game.setLives(0);
-
         napms(35);                  // 35ms di pausa (circa 30fps)
     } 
-    if(endGame) gameOver();
+    if(endGame) gameOver(); // GAMEOVER SE HAI PERSO TUTTE LE VITE
 }
 
 int main(int argc, char ** argv){
@@ -198,7 +198,10 @@ int main(int argc, char ** argv){
 
     if (highlights <= 1){
         clear();
-        if(highlights == 1) current_game.continueLast();
+
+        /* "continue" -> SETTA "current_game" CON IL SALVATAGGIO PRECEDENTE  */
+        if(highlights == 1) current_game.continueLast(); 
+        
         start();
     }
 

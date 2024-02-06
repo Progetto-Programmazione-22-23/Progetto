@@ -4,10 +4,8 @@ struct igame {
     double xplayer, yplayer, map, money, vita, ammo, level, lives, bestlvl, stats[CATEGORIES];
     Inventory inventory;
     bool nuovo2;
-    //Inventory inventory;
 
 };
-
 
 class Game {
     igame setting;
@@ -43,5 +41,4 @@ class Game {
         int getBestLvl();
         void setBestLvl(int i);
         Inventory* getInventory();
-        
 };

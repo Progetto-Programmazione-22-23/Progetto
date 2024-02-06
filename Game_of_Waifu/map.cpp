@@ -33,7 +33,7 @@ void GoDown(WINDOW * win, int h, int l){mvwaddch(win, h, l, '\\'), addCoord(l,h-
 /// SPECIAL BLOCK SECTION ///
 
 void Heal(int amount){
-    if(current_game.getVita()>=10+current_game.getMaxVita())
+    if(current_game.getVita()>=10+current_game.getMaxVita()) // SE HA VITA MASSIMA AGGIUNGE MONEY E AMMOS
         Money(1), Ammos(2);
     else {
         int incr = current_game.getVita()+amount*(1+current_game.getLuck()/5);
@@ -44,14 +44,8 @@ void Heal(int amount){
     }
 }
 
-void Money(int amount){
-    current_game.setMoney(current_game.getMoney()+amount*(current_game.getLuck()/5+1));
-}
-
-void Ammos(int amount) {
-        int incr = current_game.getAmmo()+amount*(current_game.getLuck()/5+1);
-        current_game.setAmmo(incr);   
-}
+void Money(int amount){ current_game.setMoney(current_game.getMoney()+amount*(current_game.getLuck()/5+1)); }
+void Ammos(int amount) { current_game.setAmmo(current_game.getAmmo()+amount*(current_game.getLuck()/5+1)); }
 
 void SpawnHelp(){
     int tot = 3;

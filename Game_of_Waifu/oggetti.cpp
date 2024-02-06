@@ -1,14 +1,15 @@
 #include "oggetti.hpp"
-//#include <iostream>
 
-void spacePhrase(char s[]) {
+/* FUNZIONE DI UTILITY: SOSTITUISCE '-' CON SPAZI (per lettura da file) */
+void spacePhrase(char s[]) {        
     for(int i=0; i<strlen(s); i++) 
         if(s[i]=='-') 
             s[i]=' ';
 }
 
+/* LISTA DI ITEM CHE CONTIENE TUTTI QUELLI ESISTENTI NEL GIOCO */
 pitemlist allItems;
-Item getItem(pitemlist l, int index) {
+Item getItem(pitemlist l, int index) { // RESTITUISCE L'ITEM CORRISPONDENTE AL SUO ID in "items.txt" DA UNA LISTA
     Item item;
     for(pitemlist t = l; t != NULL; t = t->next) {
         if((t->val).getId()==index) item = t->val;
@@ -22,6 +23,7 @@ pitemlist addItem(pitemlist l, Item item) {
     return q;
 }
 
+/* CARICA TUTTI GLI ITEM DESCRITTI IN "items.txt" NELLA LISTA "allItems" */
 void loadItems() {
     allItems = NULL;
     std::ifstream in;
@@ -30,12 +32,10 @@ void loadItems() {
     double plus[CATEGORIES];
     char name[25], desc[60];
     bool bar;
-    while(in>>id>>price>>name>>bar>>upgrade_id>>amount>>desc>>
+    while(in>>id>>price>>name>>bar>>upgrade_id>>amount>>desc>> // LEGGE TUTTI GLI ARGOMENTI DI OGNI RIGA DEL FILE
     plus[0]>>plus[1]>>plus[2]>>plus[3]) {
-        //std::cout<<id<<price<<name<<shop<<bar<<rarity<<upgrade_id<<desc<<"\n";
         spacePhrase(name);
         spacePhrase(desc);
-        //allItems = addItem(allItems, Item(id,price,name,shop,bar,rarity,upgrade_id,desc));
         allItems = addItem(allItems, Item(id,price,name,bar,upgrade_id,desc, amount));
         allItems->val.setModifiers(plus);
     }
@@ -43,7 +43,6 @@ void loadItems() {
 }
 
 Item::Item(int id, int price, char name[], bool hot_armor, int upgrade, char desc[], int amount) {
-//Item::Item(int id, int price, char name[], bool shoppable, bool hot_armor, char desc[]) {
     this->id = id;
     this->price = price;
     strcpy(this->name, name);

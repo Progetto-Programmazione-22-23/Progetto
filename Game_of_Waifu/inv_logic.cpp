@@ -1,5 +1,6 @@
 #include "inv_logic.hpp"
 
+// DI BASE: BARRE RIEMPITE DI ITEM VUOTI
 Inventory::Inventory(pitemlist inv) {
     this->inv = inv;
     for(int i=0;i<3;i++) {
@@ -16,19 +17,7 @@ void Inventory::setBars(Item hotbar[], Item armor[]) {
     }
 }
 
-int Inventory::firstSlot(bool hot_armor) {
-    int free=-1;
-    for(int i=0;i<3 && free<0;i++) {
-        if(!hot_armor) {
-            if(this->hotbar[i].getId() == 0) free = i;
-        }
-        else {
-            if(this->armor[i].getId() == 0) free = i;
-        }
-    }  
-    return free;
-}
-
+// RIMUOVE DALLA LISTA INVENTARIO l'index-esimo ITEM
 void Inventory::remove(int index) {
     pitemlist q;
     if(index==0) {
@@ -77,12 +66,14 @@ int Inventory::calcLen() {
     return i;
 }
 
+// RESTITUISCE UN PUNTATORE all'index-esimo ITEM NELLA LISTA
 pitemlist Inventory::getInventoryItem(int index) {
     pitemlist l = this->inv;
     for(int i=0; i<index && l!=NULL; l = l->next) i++;
     return l;
 }
 
+// SE IL PLAYER HA NELLE BARS/INVENTARIO UN ITEM CON QUELL'ID -> TRUE
 bool Inventory::isPossessed(int id) {
     if(id==0) return true;
 
@@ -98,6 +89,21 @@ bool Inventory::isPossessed(int id) {
     return found;
 }
 
+// PRIMO SLOT LIBERO DELLA HOTBAR/ARMOR
+int Inventory::firstSlot(bool hot_armor) {
+    int free=-1;
+    for(int i=0;i<3 && free<0;i++) {
+        if(!hot_armor) {
+            if(this->hotbar[i].getId() == 0) free = i;
+        }
+        else {
+            if(this->armor[i].getId() == 0) free = i;
+        }
+    }  
+    return free;
+}
+
+// EQUIPAGGIA NELLA GIUSTA BARRA L'index-esimo ITEM NELLA LISTA DELL'INV.
 void Inventory::equip(int index) {
     pitemlist item = Inventory::getInventoryItem(index);
     if(item->val.getBar()) {
@@ -123,6 +129,8 @@ void Inventory::equip(int index) {
         }
     }
 }
+
+// TOGLIE DALL'HOTBAR/ARMOR UN ITEM -> LO AGGIUNGE ALLA LISTA DELL'INV.
 void Inventory::unequip(bool hot_armor, int index) {
     Inventory::giveItem(Inventory::getBarItem(hot_armor,index));
     Inventory::setBarItem(hot_armor, index, Item());
@@ -137,8 +145,7 @@ void Inventory::setBarItem(bool hot_armor, int i, Item item) {
     if(!hot_armor) this->hotbar[i] = item;
     else this->armor[i] = item;
 }
-pitemlist Inventory::getInventoryHead() { return this->inv;}
-void Inventory::setSelected(int hot) {
-    this->selected = hot;
-}
+
+// GESTISCE LO SLOT SELEZIONATO DELL'HOTBAR
+void Inventory::setSelected(int hot) { this->selected = hot; }
 int Inventory::getSelected() { return selected; }

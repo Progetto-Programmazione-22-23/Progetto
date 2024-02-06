@@ -1,7 +1,6 @@
 #include "map_setting.hpp"
 
 void MobSpawn(int len, pnemici& hd){
-    // mapgenerator(win);
     srand(time(NULL));
     int i = 0;
     int lv = current_game.getBestLvl();
@@ -19,6 +18,7 @@ void MobSpawn(int len, pnemici& hd){
     }
 }
 
+/* SALVA LE STATS DEI MOB DELL'ULTIMA MAPPA, 1 PER RIGA */
 void saveMobs(pnemici hd){
     std::ofstream out;
     out.open("enemies.txt");
@@ -29,6 +29,7 @@ void saveMobs(pnemici hd){
     out.close();
 }
 
+/* (PROCEDIMENTO INVERSO) RICOSTRUISCE POS. E TIPO DI MOB IN BASE ALLE RIGHE DI "enemies.txt" */
 void mobRespawn(pnemici& hd) {
     int lvl = current_game.getLevel();
     std::ifstream in;
@@ -59,28 +60,23 @@ void mobRespawn(pnemici& hd) {
     }
 }
 
-void GoNext(WINDOW * win, int len, pnemici& hd){
+/* GESTIONE IL CAMBIAMENTO DI MAPPA AVANTI/DIETRO */
+void GoNext(WINDOW * win, int len, pnemici& hd){    // (AVANTI)
     wclear(win);
     int n = current_game.getMap(), l = current_game.getLevel();
     current_game.setMap(n+1);
 
-    /*
-    char mapname[20];
-    sprintf(mapname, "map/%d.txt", n+1);
-    ifstream f(mapname);
-    */
-    if(n == l) { 
+    if(n == l) {                                                // MAPPA NUOVA -> AUMENTO LIVELLO, NUOVI MOB
         current_game.setLevel(l+1);
         current_game.setBestLvl(current_game.getBestLvl()+1);
-        //if(l==current_game.getBestLvl()) current_game.setBestLvl(l+1);
         mapgenerator(win); 
         MobSpawn(len, hd);
-    } else 
+    } else                                                      // MAPPA GIÀ VISTA -> LA RIPRISTINA        
         regenOldMap(win, false);
 
 }
 
-void GoPrev(WINDOW * win, pnemici hd) {
+void GoPrev(WINDOW * win, pnemici hd) {             // (INDIETRO) SALVA I MOB, RIPRISTINA MAPPA PRECEDENTE
     saveMobs(hd);
     wclear(win);
     current_game.setMap(current_game.getMap()-1);
