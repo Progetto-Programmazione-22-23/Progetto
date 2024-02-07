@@ -8,7 +8,7 @@ int printItemStats(WINDOW * choiceWin, Item item) {
     item.getName(itemname);
     mvwprintw(choiceWin, 1, 57, "Hai selezionato: %s", itemname);
 
-    char stats[CATEGORIES][20] = {"Bonus Health", "Atk. Damage", "Resistence", "Luck"}; 
+    char stats[CATEGORIES][20] = {"Bonus Health", "Atk. Damage", "Resistance", "Luck"}; 
     int mod = 0, row = 0;
     while(mod<CATEGORIES) { // PRINT DELLE STATS DIVERSE DA 0
         double val = item.getModifier(mod);

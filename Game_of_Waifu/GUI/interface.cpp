@@ -76,6 +76,6 @@ void showStats(WINDOW * win) {
 
     /* STAMPA STATISTICHE */
     mvwprintw(win, 3, 57, " * %.1f Atk. Damage", current_game.getAtk());
-    mvwprintw(win, 4, 57, " * %.1f Resistence", current_game.getRes());
+    mvwprintw(win, 4, 57, " * %.1f Resistance", current_game.getRes());
     mvwprintw(win, 5, 57, " * %.1f Luck", current_game.getLuck());
 }
