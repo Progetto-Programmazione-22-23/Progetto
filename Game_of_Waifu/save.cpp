@@ -3,7 +3,7 @@
 /* VALORI INIZIALI DEL GAME, VARIABILE GLOBALE A CUI TUTTI I FILE POSSONO ACCEDERE */
 igame fresh = {0,0,0,0,10,0,0,3,0,{0,0,0,0},Inventory(),true}; 
 Game current_game = Game(fresh);
-bool dead = false;
+bool dead = false, damaged = false;
 
 Game::Game(igame s) { this->setting = s;  this->state = 0; }
 Inventory* Game::getInventory() { return &(this->setting.inventory); }
@@ -95,6 +95,7 @@ int Game::getPlayerY() {return setting.yplayer;}
 void Game::setMoney(int x) {setting.money = x;}
 int Game::getMoney() {return setting.money;}
 void Game::setVita(double x) {
+    if(x<setting.vita) damaged = true;
     setting.vita = x;
     if(x<=0) dead = true; // CONTROLLO DI SICUREZZA -> FA SCATTARE LA MORTE
 }

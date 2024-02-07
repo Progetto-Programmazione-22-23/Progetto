@@ -51,11 +51,22 @@ void start(){
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
 
+    /* COLORI USATI NEL GIOCO */
+    start_color();
+    init_pair(1, COLOR_RED, COLOR_BLACK);
+    init_pair(2, COLOR_GREEN, COLOR_BLACK);
+    init_pair(3, 245, COLOR_BLACK);
+    init_pair(4, COLOR_BLACK, COLOR_WHITE);
+    init_pair(104, COLOR_BLACK, COLOR_YELLOW);
+    init_pair(5, COLOR_YELLOW, COLOR_BLACK);
+    init_pair(6, COLOR_CYAN, COLOR_BLACK);
+
     /*FINESTRA CON PG*/
     WINDOW * playerwin = newwin(yMax-(yMax/10)-20, xMax-(xMax/10)-2, yMax/20+20, xMax/20+1);
-    box(playerwin, 0, 0);
     keypad(playerwin, true);
     nodelay(playerwin, TRUE);
+    box(playerwin, 0, 0);
+
     int pryMax, prxMax;
     getmaxyx(playerwin, pryMax, prxMax);
 
@@ -77,16 +88,6 @@ void start(){
     }
 
     Player player = Player(playerwin, current_game.getPlayerY(), current_game.getPlayerX(), '@');
-
-    /* COLORI USATI NEL GIOCO */
-    start_color();
-    init_pair(1, COLOR_RED, COLOR_BLACK);
-    init_pair(2, COLOR_GREEN, COLOR_BLACK);
-    init_pair(3, 245, COLOR_BLACK);
-    init_pair(4, COLOR_BLACK, COLOR_WHITE);
-    init_pair(104, COLOR_BLACK, COLOR_YELLOW);
-    init_pair(5, COLOR_YELLOW, COLOR_BLACK);
-    init_pair(6, COLOR_CYAN, COLOR_BLACK);
 
     // Loop di gioco
     int cont = 0;     /*numero di loop di gioco (Tick)*/
@@ -124,7 +125,11 @@ void start(){
         if(player.isSwording()) player.swordAtk(playerwin); // CANCELLA LA SPADA DA SCHERMO SE È STATA USATA
         player.getMv(playerwin, userwin, loop, cont); // prende user input 
 
-        box(playerwin, 0, 0);     // aggiorna le finestre
+        /* AGGIORNA/COLORA LE FINESTRE */
+        if(damaged) wattron(playerwin, COLOR_PAIR(1)), damaged = false;
+        box(playerwin, 0, 0);   
+        wattroff(playerwin, COLOR_PAIR(1));
+
         box(userwin, 0, 0);
         wrefresh(playerwin);
         wrefresh(userwin);
